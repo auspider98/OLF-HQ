@@ -17,40 +17,38 @@ const SITE_CONFIG = {
   "preloaderTagline": "Alabama • Tennessee • Georgia",
   "pageHeaders": {
     "about": {
-      "label": "About Us",
-      "title": "Meet Our Team",
+      "label": "Commissioners Office",
+      "title": "The Man, The Myth, The Legend",
       "subtitle": ""
     },
     "contact": {
       "label": "Smash Us"
     }
   },
-  "attorneyName": "Amy Michelle Osborne",
-  "attorneyDegree": "J.D., Birmingham School of Law",
+  "attorneyName": "the Commish",
+  "attorneyDegree": "School of Winners",
   "attorneyCredentials": [
-    "AL State Bar",
-    "J.D., Birmingham Law",
-    "ABA Member",
-    "Super Lawyers",
-    "AAAA Member"
+    "31+ Fantasy Seasons",
+    "4 OFL Titles",
+    "15+ Commissioner Years",
+    "92% Commish Approval Rating"
   ],
-  "aboutBio1": "For over 20 years, Amy Osborne has dedicated her practice exclusively to adoption and family formation law in Alabama. She has helped more than 500 families complete adoptions — from straightforward stepparent cases to complex interstate and contested matters.",
-  "aboutBio2": "Amy grew up watching her own family navigate a difficult adoption, which gave her a deeply personal understanding of what families go through. She founded Osborne Law Firm, LLC with a single mission: to make adoption less daunting and more accessible for every family, regardless of their background or circumstances. She is a member of the Alabama Bar Association, the American Academy of Adoption Attorneys (AAAA), and has been recognized as a Super Lawyer in Alabama Family Law for eight consecutive years. She is admitted to practice in all Alabama courts and regularly handles cases in Jefferson, Shelby, St. Clair, and Cullman counties. When she's not advocating for families in court, Amy volunteers with the Alabama Foster Care Association and speaks at community workshops on adoption awareness.",
-  "attorneyPhoto": "images/ladybug.png",
+  "aboutBio1": "As the architect and driving force behind the Osborne Fantasy League (OFL), Spider brings over three decades of competitive experience and a deep-rooted passion for sports strategy to the digital gridiron and hardwood. With 31+ fantasy seasons under his belt, he has navigated the evolution of the game, securing 4 OFL Titles through a combination of savvy drafting and waiver-wire intuition.",
+  "aboutBio2": "Spider’s leadership extends far beyond the scoreboard. Serving as Commissioner for 15+ years, he has successfully guided the league through its most significant era of growth. This year marks a major milestone under his direction, as he oversaw the unification of the OFC (Osborne Football Club) and the BRC (Blue Ribbon Cup) March Madness challenge into one cohesive powerhouse: the OFL. His tenure is defined by a remarkable 92% Commissioner Approval Rating, a testament to his ability to balance competitive intensity with the camaraderie that defines the league. Whether he’s coordinating the next big draft or managing the high-stakes drama of the bracket season, Spider remains dedicated to growing the league’s legacy and ensuring the OFL remains the premier destination for fantasy excellence.",
+  "attorneyPhoto": "images/spider.png",
   "attorneys": [
     {
-      "name": "Amy Michelle Osborne",
-      "degree": "J.D., Birmingham School of Law",
-      "photo": "images/ladybug.png",
+      "name": "the Commish",
+      "degree": "School of Winners",
+      "photo": "images/spider.png",
       "credentials": [
-        "AL State Bar",
-        "J.D., Birmingham Law",
-        "ABA Member",
-        "Super Lawyers",
-        "AAAA Member"
+        "31+ Fantasy Seasons",
+        "4 OFL Titles",
+        "15+ Commissioner Years",
+        "92% Commish Approval Rating"
       ],
-      "bio1": "For over 20 years, Amy Osborne has dedicated her practice exclusively to adoption and family formation law in Alabama. She has helped more than 500 families complete adoptions — from straightforward stepparent cases to complex interstate and contested matters.",
-      "bio2": "Amy grew up watching her own family navigate a difficult adoption, which gave her a deeply personal understanding of what families go through. She founded Osborne Law Firm, LLC with a single mission: to make adoption less daunting and more accessible for every family, regardless of their background or circumstances. She is a member of the Alabama Bar Association, the American Academy of Adoption Attorneys (AAAA), and has been recognized as a Super Lawyer in Alabama Family Law for eight consecutive years. She is admitted to practice in all Alabama courts and regularly handles cases in Jefferson, Shelby, St. Clair, and Cullman counties. When she's not advocating for families in court, Amy volunteers with the Alabama Foster Care Association and speaks at community workshops on adoption awareness."
+      "bio1": "As the architect and driving force behind the Osborne Fantasy League (OFL), Spider brings over three decades of competitive experience and a deep-rooted passion for sports strategy to the digital gridiron and hardwood. With 31+ fantasy seasons under his belt, he has navigated the evolution of the game, securing 4 OFL Titles through a combination of savvy drafting and waiver-wire intuition.",
+      "bio2": "Spider’s leadership extends far beyond the scoreboard. Serving as Commissioner for 15+ years, he has successfully guided the league through its most significant era of growth. This year marks a major milestone under his direction, as he oversaw the unification of the OFC (Osborne Football Club) and the BRC (Blue Ribbon Cup) March Madness challenge into one cohesive powerhouse: the OFL. His tenure is defined by a remarkable 92% Commissioner Approval Rating, a testament to his ability to balance competitive intensity with the camaraderie that defines the league. Whether he’s coordinating the next big draft or managing the high-stakes drama of the bracket season, Spider remains dedicated to growing the league’s legacy and ensuring the OFL remains the premier destination for fantasy excellence."
     }
   ],
   "phone": "(555) 448-8787 // HIT-USUP",
@@ -147,10 +145,10 @@ const SITE_CONFIG = {
   "googleAnalyticsId": "",
   "formEndpoint": "",
   "pageTitles": {
-    "home": "OFL Headquarters",
-    "about": "About the Us",
-    "contact": "Contact Us",
-    "privacy": "Privacy Policy"
+    "home": "OFL HQ",
+    "about": "Commish",
+    "contact": "Smash Us",
+    "privacy": "There's No Privacy Policy"
   },
   "heroBg": {
     "type": "video",
@@ -1395,7 +1393,7 @@ const SITE_CONFIG = {
   "footerBio": "Where Legends Are Made & Legacies Are Settled",
   "aboutBio3": "She is a member of the Alabama Bar Association, the American Academy of Adoption Attorneys (AAAA), and has been recognized as a Super Lawyer in Alabama Family Law for eight consecutive years. She is admitted to practice in all Alabama courts and regularly handles cases in Jefferson, Shelby, St. Clair, and Cullman counties.",
   "aboutBio4": "When she's not advocating for families in court, Amy volunteers with the Alabama Foster Care Association and speaks at community workshops on adoption awareness.",
-  "_savedAt": 1775851365469,
+  "_savedAt": 1775853381255,
   "contactSubmitLabel": "Request Free Abuse",
   "contactSuccessMsg": "Ugh...you're so unworthy."
 };
