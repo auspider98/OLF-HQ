@@ -1,0 +1,4239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title id="pageTitle">Site</title>
+<meta name="description" id="metaDesc" content=""/>
+<meta name="keywords" id="metaKeys" content=""/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link id="googleFontLink" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="icon" type="image/png" href="favicon.png">
+
+<style>
+/* =============================================
+   CSS CUSTOM PROPERTIES — CONFIG DRIVEN
+   ============================================= */
+:root {
+  --navy:       #0f2340;
+  --navy-light: #1a3560;
+  --navy-mid:   #162d50;
+  --gold:       #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-pale:  #faf6ec;
+  --chrome:     #060f1d;
+  --cream:      #f9f6f0;
+  --warm-white: #fffdf9;
+  --text-body:  #4a4740;
+  --text-muted: #7a7670;
+  --text-head:  #0f2340;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --section-pad: clamp(80px, 10vw, 140px);
+  --container:   1240px;
+  --gutter:      clamp(20px, 5vw, 60px);
+}
+
+/* =============================================
+   RESET & BASE
+   ============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--font-body);
+  color: var(--text-body);
+  background: var(--warm-white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+img { display: block; max-width: 100%; }
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* =============================================
+   PRELOADER
+   ============================================= */
+#preloader {
+  position: fixed; inset: 0;
+  background: var(--navy);
+  z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.7s var(--ease-out), visibility 0.7s;
+}
+#preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.preloader-inner {
+  text-align: center;
+}
+.preloader-wordmark {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5vw, 52px);
+  color: var(--warm-white);
+  letter-spacing: 0.02em;
+  overflow: hidden;
+}
+.preloader-wordmark span {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: wordReveal 0.8s var(--ease-out) forwards;
+}
+.preloader-wordmark span:nth-child(2) { animation-delay: 0.12s; }
+.preloader-bar {
+  height: 1px;
+  background: var(--gold);
+  width: 0;
+  animation: barFill 1.4s var(--ease-out) 0.3s forwards;
+  margin-top: 18px;
+}
+.preloader-sub {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-top: 12px;
+  opacity: 0;
+  animation: fadeUp 0.6s var(--ease-out) 1s forwards;
+}
+@keyframes wordReveal { to { transform: translateY(0); } }
+@keyframes barFill { to { width: 100%; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* =============================================
+   HEADER / NAV — hamburger-only, scroll-fade bg
+   ============================================= */
+#site-header {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1000;
+  /* background fades in based on scroll via JS inline style */
+  transition: background 0.4s var(--ease-out),
+              box-shadow 0.4s var(--ease-out);
+}
+#site-header.scrolled {
+  box-shadow: 0 1px 0 rgba(255,255,255,0.07);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 88px;
+}
+
+/* Logo */
+.site-logo {
+  display: flex; flex-direction: column; gap: 2px;
+  cursor: pointer;
+}
+.logo-name {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+}
+.logo-tagline {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  line-height: 1;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out);
+}
+/* Show tagline once header has background (scrolled or non-home page) */
+#site-header.scrolled .logo-tagline,
+#site-header.solid .logo-tagline {
+  opacity: 1;
+}
+
+/* Hide old desktop nav — always hamburger now */
+nav.main-nav { display: none !important; }
+.btn-nav-cta { display: none !important; }
+
+/* Hamburger button — always visible */
+.hamburger {
+  display: flex;
+  flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 8px;
+  background: none; border: none;
+  z-index: 1001;
+  position: relative;
+}
+.hamburger span {
+  display: block;
+  width: 26px; height: 1.5px;
+  background: #fff;
+  transition: all 0.35s var(--ease-out);
+  transform-origin: center;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Drawer nav */
+.nav-clip {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 998;
+}
+.nav-clip.active { pointer-events: all; }
+
+/* Style the page scrollbar to match the site */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--chrome); }
+::-webkit-scrollbar-thumb { background: var(--chrome); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--chrome); }
+
+.nav-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(9,20,38,0.55);
+  backdrop-filter: blur(3px);
+  z-index: 998;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s var(--ease-out);
+}
+.nav-backdrop.visible { opacity: 1; pointer-events: all; }
+
+.mobile-nav {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(320px, 85vw);
+  background: var(--chrome);
+  border-left: 1px solid rgba(201,168,76,0.25);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 32px;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  pointer-events: none;
+}
+.mobile-nav.open {
+  transform: translateX(0);
+  pointer-events: all;
+}
+
+/* Drawer links */
+.drawer-links {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 88px 0 0;
+  overflow-y: auto;
+}
+.mobile-nav .nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  padding: 15px 28px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, padding-left 0.2s;
+  opacity: 0;
+  transform: translateX(16px);
+  transition: color 0.2s, background 0.2s, padding-left 0.2s, opacity 0.3s, transform 0.3s;
+}
+.mobile-nav.open .nav-link { opacity: 1; transform: translateX(0); }
+.mobile-nav.open .nav-link:nth-child(1) { transition-delay: 0.05s; }
+.mobile-nav.open .nav-link:nth-child(2) { transition-delay: 0.10s; }
+.mobile-nav.open .nav-link:nth-child(3) { transition-delay: 0.15s; }
+.mobile-nav.open .nav-link:nth-child(4) { transition-delay: 0.20s; }
+.mobile-nav.open .nav-link:nth-child(5) { transition-delay: 0.25s; }
+.mobile-nav.open .nav-link:nth-child(6) { transition-delay: 0.30s; }
+.mobile-nav.open .nav-link:nth-child(7) { transition-delay: 0.35s; }
+.mobile-nav .nav-link:hover,
+.mobile-nav .nav-link.active { color: #fff; background: rgba(255,255,255,0.04); padding-left: 36px; }
+.mobile-nav .nav-link .nav-arrow { font-size: 11px; opacity: 0.35; transition: opacity 0.2s, transform 0.2s; }
+.mobile-nav .nav-link:hover .nav-arrow { opacity: 1; transform: translateX(4px); }
+
+.mobile-nav-divider { display: none; }
+
+/* CTA button at bottom */
+.mobile-nav .btn-nav-cta {
+  display: block !important;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--gold);
+  padding: 15px 28px;
+  margin: 16px 24px 0;
+  border-radius: 3px;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+  transition: background 0.2s;
+  opacity: 0;
+  transition: background 0.2s, opacity 0.3s 0.4s;
+}
+.mobile-nav.open .btn-nav-cta { opacity: 1; }
+.mobile-nav .btn-nav-cta:hover { background: var(--gold-light); }
+
+/* =============================================
+   HERO
+   ============================================= */
+#hero {
+  position: relative;
+  height: 100vh; min-height: 600px;
+  overflow: hidden;
+}
+#hero > .container {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  width: 100%;
+  max-width: var(--container);
+  padding: 88px var(--gutter) clamp(40px, 6vh, 70px);
+  box-sizing: border-box;
+  max-height: 100%;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.hero-slides {
+  position: absolute; inset: 0;
+}
+.hero-slide {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center top;
+  opacity: 0;
+  transition: opacity 2s ease;
+  transform: scale(1.05);
+  animation: kenBurns 20s linear infinite;
+}
+.hero-slide.active { opacity: 1; }
+.hero-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  opacity: 1;
+  transition: opacity 1.8s ease;
+}
+.hero-video.fading { opacity: 0; }
+.hero-video-poster {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center center;
+  opacity: 0;
+  transition: opacity 1.8s ease;
+}
+.hero-video-poster.visible { opacity: 1; }
+@keyframes kenBurns {
+  0%   { transform: scale(1.05) translate(0,0); }
+  50%  { transform: scale(1.1) translate(-1%, 0.5%); }
+  100% { transform: scale(1.05) translate(0,0); }
+}
+
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(9,20,38,0.92) 0%,
+    rgba(9,20,38,0.55) 50%,
+    rgba(9,20,38,0.2) 100%
+  );
+  z-index: 1;
+}
+.hero-content {
+  position: relative; z-index: 2;
+  width: 100%;
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 6vw, 76px);
+  font-weight: 500;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  max-width: 780px;
+  margin-bottom: clamp(16px, 2.5vh, 28px);
+}
+.hero-headline .line {
+  display: block; overflow: hidden;
+}
+.hero-headline .line span {
+  display: block;
+  transform: translateY(110%);
+  animation: heroReveal 0.9s var(--ease-out) forwards;
+}
+.hero-headline .line:nth-child(1) span { animation-delay: 2s; }
+.hero-headline .line:nth-child(2) span { animation-delay: 2.12s; }
+.hero-headline .line:nth-child(3) span { animation-delay: 2.24s; }
+
+.hero-subline {
+  font-size: clamp(15px, 2vw, 18px);
+  color: rgba(255,255,255,0.75);
+  line-height: 1.7;
+  max-width: 540px;
+  margin-bottom: clamp(20px, 3vh, 36px);
+  opacity: 0;
+  animation: heroReveal 0.8s var(--ease-out) 2.5s forwards;
+}
+
+.hero-actions {
+  display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
+  margin-bottom: clamp(24px, 4vh, 48px);
+  opacity: 0;
+  animation: heroReveal 0.8s var(--ease-out) 2.7s forwards;
+}
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 16px 32px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.btn-primary:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(201,168,76,0.3);
+}
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 15px 28px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.45);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.btn-outline:hover { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.08); }
+
+.hero-trust-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: clamp(12px, 2vw, 32px);
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding-top: clamp(16px, 2vh, 28px);
+  opacity: 0;
+  animation: heroReveal 0.8s var(--ease-out) 2.9s forwards;
+  animation-fill-mode: forwards;
+}
+.trust-item {
+  display: flex; align-items: center; gap: 10px;
+}
+.trust-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+.trust-text {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+}
+
+/* Slide dots */
+.hero-dots {
+  position: absolute;
+  bottom: 28px; right: var(--gutter);
+  z-index: 3;
+  display: flex; gap: 8px;
+}
+.hero-dot {
+  width: 24px; height: 2px;
+  background: rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: background 0.3s, width 0.3s;
+}
+.hero-dot.active { background: var(--gold); width: 40px; }
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 32px; left: 50%; transform: translateX(-50%);
+  z-index: 3;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  opacity: 0;
+  animation: heroReveal 0.8s var(--ease-out) 3.2s forwards;
+}
+.scroll-indicator-line {
+  width: 1px; height: 48px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.5; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(0.7); }
+}
+@keyframes heroReveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =============================================
+   STATS BAR
+   ============================================= */
+#stats-bar {
+  background: var(--navy);
+  padding: 0;
+  overflow: hidden;
+}
+.stats-inner {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-left: 1px solid rgba(255,255,255,0.08);
+}
+.stat-cell {
+  padding: 36px 24px;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  text-align: center;
+  transition: background 0.3s;
+}
+.stat-cell:hover { background: rgba(255,255,255,0.04); }
+.stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-label {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+
+/* =============================================
+   SECTION COMMONS
+   ============================================= */
+.section { padding: calc(var(--section-pad) / 2) 0; }
+.section-after-banner { padding-top: clamp(32px, 4vw, 48px); }
+.section-alt { background: var(--cream); }
+.section-dark { background: var(--navy); }
+
+.section-label {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 20px;
+}
+.section-label-line { width: 32px; height: 1px; background: var(--gold-light); }
+.section-label-text {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+.section-dark .section-label-text { color: var(--gold-light); }
+
+h2.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4vw, 52px);
+  font-weight: 500;
+  color: var(--text-head);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.section-dark h2.section-title { color: #fff; }
+
+.section-subtitle {
+  font-size: clamp(15px, 1.5vw, 17px);
+  color: var(--text-muted);
+  line-height: 1.75;
+  max-width: 560px;
+  margin-top: 16px;
+}
+.section-dark .section-subtitle { color: rgba(255,255,255,0.6); }
+
+/* =============================================
+   WHY CHOOSE US
+   ============================================= */
+#why .why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-top: 64px;
+  border: 1px solid #e8e3d8;
+}
+.why-card {
+  padding: clamp(36px, 5vw, 56px);
+  border-right: 1px solid #e8e3d8;
+  border-bottom: 1px solid #e8e3d8;
+  transition: background 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.why-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0;
+  height: 2px; width: 0;
+  background: var(--gold);
+  transition: width 0.4s var(--ease-out);
+}
+.why-card:hover { background: var(--gold-pale); }
+.why-card:hover::after { width: 100%; }
+.why-card:nth-child(2n) { border-right: none; }
+.why-card-num {
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: 400;
+  color: rgba(15,35,64,0.07);
+  line-height: 1;
+  margin-bottom: 16px;
+  transition: color 0.3s;
+}
+.why-card:hover .why-card-num { color: rgba(201,168,76,0.2); }
+.why-card h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-head);
+  margin-bottom: 10px;
+}
+.why-card p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+
+/* Badge */
+.why-badge-wrap {
+  display: flex; align-items: flex-start; gap: 56px;
+  flex-wrap: wrap;
+}
+.why-text { flex: 1; min-width: 280px; }
+.why-badge {
+  flex-shrink: 0;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  margin-top: 8px;
+}
+.why-badge-num {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1;
+}
+.why-badge-label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* =============================================
+   CUSTOM PAGE — FEATURE CARDS
+   ============================================= */
+.cps-fc-header {
+  display: flex; align-items: flex-start; gap: 56px;
+  flex-wrap: wrap;
+  margin-bottom: 64px;
+}
+.cps-fc-header-text { flex: 1; min-width: 280px; }
+.cps-fc-badge {
+  flex-shrink: 0;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  margin-top: 8px;
+}
+.cps-fc-badge-num {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1;
+}
+.cps-fc-badge-label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.cps-fc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid #e8e3d8;
+}
+.cps-fc-card {
+  padding: clamp(36px, 5vw, 56px);
+  border-right: 1px solid #e8e3d8;
+  border-bottom: 1px solid #e8e3d8;
+  transition: background 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.cps-fc-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0;
+  height: 2px; width: 0;
+  background: var(--gold);
+  transition: width 0.4s var(--ease-out);
+}
+.cps-fc-card:hover { background: var(--gold-pale); }
+.cps-fc-card:hover::after { width: 100%; }
+.cps-fc-card:nth-child(2n) { border-right: none; }
+.cps-fc-num {
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: 400;
+  color: rgba(15,35,64,0.07);
+  line-height: 1;
+  margin-bottom: 16px;
+  transition: color 0.3s;
+}
+.cps-fc-card:hover .cps-fc-num { color: rgba(201,168,76,0.2); }
+.cps-fc-card h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-head);
+  margin-bottom: 10px;
+}
+.cps-fc-card p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin: 0;
+}
+.cps-fc-link {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.cps-fc-link:hover { color: var(--navy); }
+
+/* dark / alt overrides */
+.cps-section-dark .cps-fc-badge { border-color: var(--gold-light); }
+.cps-section-dark .cps-fc-badge-num { color: #fff; }
+.cps-section-dark .cps-fc-badge-label { color: rgba(255,255,255,0.55); }
+.cps-section-dark .cps-fc-grid { border-color: rgba(255,255,255,0.12); }
+.cps-section-dark .cps-fc-card { border-color: rgba(255,255,255,0.12); }
+.cps-section-dark .cps-fc-card:hover { background: rgba(255,255,255,0.05); }
+.cps-section-dark .cps-fc-num { color: rgba(255,255,255,0.06); }
+.cps-section-dark .cps-fc-card:hover .cps-fc-num { color: rgba(201,168,76,0.2); }
+.cps-section-dark .cps-fc-card h3 { color: #fff; }
+.cps-section-dark .cps-fc-card p { color: rgba(255,255,255,0.65); }
+.cps-section-dark .cps-fc-link { color: var(--gold-light); }
+.cps-section-dark .cps-fc-link:hover { color: #fff; }
+.cps-section-alt .cps-fc-grid { border-color: #ddd8cc; }
+.cps-section-alt .cps-fc-card { border-color: #ddd8cc; }
+
+/* =============================================
+   SERVICES
+   ============================================= */
+#services { background: var(--cream); }
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 56px;
+  background: #ddd8cc;
+}
+.service-card {
+  background: var(--warm-white);
+  padding: clamp(28px, 4vw, 44px);
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.service-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 2px; height: 0;
+  background: var(--gold);
+  transition: height 0.35s var(--ease-out);
+}
+.service-card:hover { background: var(--navy); transform: translateY(-2px); }
+.service-card:hover::before { height: 100%; }
+.service-icon {
+  font-size: 28px;
+  margin-bottom: 18px;
+  transition: transform 0.3s;
+}
+.service-card:hover .service-icon { transform: scale(1.1); }
+.service-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-head);
+  margin-bottom: 10px;
+  transition: color 0.3s;
+}
+.service-card:hover .service-title { color: #fff; }
+.service-desc {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  transition: color 0.3s;
+}
+.service-card:hover .service-desc { color: rgba(255,255,255,0.65); }
+.service-more {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 16px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  transition: gap 0.2s;
+}
+.service-card:hover .service-more { gap: 10px; }
+.service-card:hover .service-more { color: var(--gold-light); }
+
+/* Service modal */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(9,20,38,0.85);
+  z-index: 2000;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+  padding: 20px;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal-box {
+  background: var(--warm-white);
+  max-width: 600px; width: 100%;
+  padding: clamp(32px, 5vw, 56px);
+  border-radius: 4px;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.3s var(--ease-out);
+  max-height: 85vh; overflow-y: auto;
+}
+.modal-overlay.open .modal-box { transform: translateY(0); }
+.modal-close {
+  position: absolute; top: 20px; right: 20px;
+  background: none; border: none; cursor: pointer;
+  font-size: 24px; color: var(--text-muted);
+  line-height: 1;
+}
+.modal-icon { font-size: 36px; margin-bottom: 20px; }
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--text-head);
+  margin-bottom: 16px;
+}
+.modal-body { font-size: 15px; line-height: 1.8; color: var(--text-body); }
+.modal-cta { margin-top: 28px; }
+
+/* =============================================
+   PAGE BANNERS (inner pages)
+   ============================================= */
+.page-banner {
+  background: var(--cream);
+  padding: 100px var(--gutter) 20px;
+  border-bottom: 1px solid #e8e3d8;
+}
+.page-banner-dark {
+  background: var(--navy);
+  border-bottom: none;
+}
+.page-banner-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 58px);
+  font-weight: 500;
+  color: var(--text-head);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin-top: 8px;
+}
+.page-banner-title-light { color: #fff; }
+
+/* =============================================
+   ABOUT — new 1/3 + 2/3 layout
+   ============================================= */
+.about-top-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: start;
+  margin-bottom: 64px;
+}
+.about-photo-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  flex-shrink: 0;
+}
+.about-photo-frame {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  overflow: hidden;
+  border-radius: 2px;
+  z-index: 1;
+}
+.about-photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+.about-photo-accent {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 100px;
+  height: 100px;
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  z-index: 0;
+  pointer-events: none;
+}
+.about-identity {
+  padding-top: 8px;
+}
+.about-attorney-name {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.5vw, 38px);
+  font-weight: 500;
+  color: var(--text-head);
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.about-attorney-degree {
+  font-size: 14px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 28px;
+}
+.about-credentials {
+  display: flex; flex-direction: row; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 0;
+}
+.credential-pill {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 5px 14px;
+  border-radius: 2px;
+}
+.about-bio-full {
+  display: flex; flex-direction: column; gap: 20px;
+  padding-top: 48px;
+  border-top: 1px solid #e8e3d8;
+}
+.about-bio-full p { font-size: 15px; line-height: 1.9; color: var(--text-body); }
+.about-bio-full p:first-child {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-style: italic;
+  color: var(--text-head);
+  line-height: 1.65;
+}
+
+/* =============================================
+   PROCESS TIMELINE — fixed line + scroll circles
+   ============================================= */
+#process { background: var(--navy); }
+#process .section-title { color: #fff; }
+.process-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+/* Vertical line runs through the CENTER of the circles (left:28px = half of 56px circle) */
+.process-timeline::before {
+  content: '';
+  position: absolute;
+  left: 28px; top: 28px; bottom: 28px; /* start/end at circle centres */
+  width: 1px;
+  background: linear-gradient(to bottom, var(--gold) 0%, rgba(201,168,76,0.15) 100%);
+  z-index: 0;
+}
+.process-step {
+  display: flex; gap: 40px;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  position: relative;
+}
+.process-step:last-child { border-bottom: none; }
+.step-num-wrap {
+  flex-shrink: 0;
+  width: 56px; height: 56px;
+  background: var(--navy); /* same as section bg — hides line behind circle */
+  border: 1px solid rgba(201,168,76,0.35);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 1;
+  transition: background 0.5s var(--ease-out), border-color 0.5s var(--ease-out);
+}
+/* Active state — filled gold circle */
+.process-step.step-active .step-num-wrap {
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 0 4px rgba(201,168,76,0.15);
+}
+.step-num {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--gold);
+  transition: color 0.4s;
+}
+.process-step.step-active .step-num { color: var(--navy); }
+.step-body { flex: 1; padding-top: 12px; padding-bottom: 24px; }
+.step-body.has-step-link { padding-bottom: 0; }
+.step-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding-bottom: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.step-link:hover { opacity: 0.75; }
+.cps-section-dark .step-link { color: var(--gold-light); }
+.step-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 8px;
+  transition: color 0.3s;
+}
+.process-step.step-active .step-title { color: #fff; }
+.step-desc {
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.5);
+  max-width: 680px;
+  transition: color 0.3s;
+}
+.process-step.step-active .step-desc { color: rgba(255,255,255,0.75); }
+
+/* Process steps light/alt section theming */
+.cps-section-light .process-step,
+.cps-section-alt .process-step { border-bottom-color: var(--border); }
+.cps-section-light .step-num-wrap,
+.cps-section-alt .step-num-wrap { background: var(--warm-white); border-color: rgba(201,168,76,0.45); }
+.cps-section-alt .step-num-wrap { background: var(--cream); }
+.cps-section-light .step-title,
+.cps-section-alt .step-title { color: var(--navy); }
+.cps-section-light .process-step.step-active .step-title,
+.cps-section-alt .process-step.step-active .step-title { color: var(--navy); }
+.cps-section-light .step-desc,
+.cps-section-alt .step-desc { color: var(--text-muted); }
+.cps-section-light .process-step.step-active .step-desc,
+.cps-section-alt .process-step.step-active .step-desc { color: var(--text-body); }
+
+/* =============================================
+   TESTIMONIALS
+   ============================================= */
+#testimonials { background: var(--cream); }
+.testimonials-track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+.testimonial-card {
+  background: var(--warm-white);
+  padding: clamp(28px, 4vw, 40px);
+  border-radius: 2px;
+  border: 1px solid #e8e3d8;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(15,35,64,0.1);
+}
+.testimonial-quote {
+  font-family: var(--font-display);
+  font-size: 64px;
+  color: var(--gold);
+  line-height: 0.8;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+.testimonial-stars { margin-bottom: 16px; color: var(--gold); font-size: 14px; }
+.testimonial-text {
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: var(--text-body);
+  font-style: italic;
+  margin-bottom: 24px;
+}
+.testimonial-author {
+  display: flex; align-items: center; gap: 14px;
+  padding-top: 20px;
+  border-top: 1px solid #e8e3d8;
+}
+.testimonial-initials {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+.testimonial-name { font-weight: 600; font-size: 14px; color: var(--text-head); }
+.testimonial-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+/* =============================================
+   FAQ
+   ============================================= */
+#faq { background: var(--warm-white); }
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 80px;
+  margin-top: 56px;
+}
+.faq-item {
+  border-bottom: 1px solid #e8e3d8;
+  padding: 0;
+}
+.faq-question {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 0;
+  cursor: pointer;
+  gap: 16px;
+}
+.faq-question-text {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-head);
+  line-height: 1.4;
+}
+.faq-toggle {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid #e8e3d8;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+.faq-item.open .faq-toggle { background: var(--gold); border-color: var(--gold); }
+.faq-toggle-icon {
+  font-size: 18px;
+  color: var(--text-muted);
+  transition: transform 0.3s, color 0.2s;
+  line-height: 1;
+}
+.faq-item.open .faq-toggle-icon { transform: rotate(45deg); color: var(--navy); }
+.faq-answer {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s var(--ease-out);
+}
+.faq-answer-inner {
+  padding-bottom: 20px;
+  font-size: 14px; line-height: 1.85;
+  color: var(--text-muted);
+}
+.faq-answer-inner.has-faq-link { padding-bottom: 0; }
+.faq-item-link {
+  display: block;
+  margin-top: 8px;
+  margin-left: 12px;
+  padding-bottom: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.faq-item-link:hover { opacity: 0.75; }
+.cps-section-dark .faq-item-link { color: var(--gold-light); }
+.faq-item.open .faq-answer { max-height: 300px; }
+
+/* FAQ dark/alt section theming */
+.cps-section-dark .faq-item { border-color: rgba(255,255,255,0.12); }
+.cps-section-dark .faq-question-text { color: #fff; }
+.cps-section-dark .faq-toggle { border-color: rgba(255,255,255,0.25); }
+.cps-section-dark .faq-toggle-icon { color: rgba(255,255,255,0.6); }
+.cps-section-dark .faq-answer-inner { color: rgba(255,255,255,0.65); }
+.cps-section-alt .faq-item { border-color: var(--border); }
+
+/* =============================================
+   BLOG
+   ============================================= */
+#blog { background: var(--cream); }
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+.blog-card {
+  background: var(--warm-white);
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid #e8e3d8;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+}
+.blog-card.has-link { cursor: pointer; }
+.blog-card.has-link:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(15,35,64,0.1);
+}
+/* Featured card spans full width with horizontal layout */
+.blog-card.blog-featured {
+  grid-column: 1 / -1;
+  flex-direction: row;
+}
+.blog-card.blog-featured .blog-card-top {
+  width: 340px;
+  flex-shrink: 0;
+  min-height: 220px;
+}
+.blog-card.blog-featured .blog-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 36px 40px;
+}
+.blog-card.blog-featured .blog-title {
+  font-size: 22px;
+  margin-bottom: 14px;
+}
+.blog-card-top {
+  background: var(--navy);
+  padding: 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  min-height: 110px;
+}
+.blog-card-top-img {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+.blog-card-top-overlay {
+  position: absolute; inset: 0;
+  background: rgba(15,35,64,0.45);
+}
+.blog-card-top > * { position: relative; z-index: 1; }
+.blog-emoji { font-size: 32px; }
+.blog-tag {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(201,168,76,0.4);
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+.blog-card-body {
+  padding: 24px 28px 28px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.blog-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text-head);
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+.blog-excerpt { font-size: 13px; line-height: 1.75; color: var(--text-muted); }
+.blog-card-meta {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+}
+.blog-date {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.blog-read-time {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+.blog-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  align-self: flex-end;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border-bottom: 1px solid rgba(201,168,76,0.35);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.blog-card.has-link:hover .blog-cta { color: var(--gold-light); border-color: var(--gold-light); }
+@media (max-width: 900px) {
+  .blog-grid { grid-template-columns: 1fr 1fr; }
+  .blog-card.blog-featured { flex-direction: column; }
+  .blog-card.blog-featured .blog-card-top { width: 100%; min-height: 160px; }
+}
+@media (max-width: 600px) {
+  .blog-grid { grid-template-columns: 1fr; }
+}
+
+/* =============================================
+   CONTACT
+   ============================================= */
+#contact { background: var(--navy); }
+#contact .section-title { color: #fff; }
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 80px;
+  margin-top: 56px;
+  align-items: start;
+}
+.contact-info { color: rgba(255,255,255,0.7); }
+.contact-info h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: #fff;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+.contact-detail {
+  display: flex; gap: 16px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+.contact-detail-icon {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.contact-detail-text { font-size: 14px; line-height: 1.7; }
+.contact-detail-text strong { display: block; color: #fff; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+.contact-hours { margin-top: 32px; }
+.hours-row {
+  display: flex; justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-size: 13px;
+}
+.hours-row:last-child { border-bottom: none; }
+.hours-days { color: rgba(255,255,255,0.7); }
+.hours-time { color: var(--gold); font-weight: 500; }
+
+/* Form */
+.contact-form {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  padding: clamp(28px, 4vw, 44px);
+}
+.contact-form h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: #fff;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.contact-form p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 8px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  padding: 12px 16px;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 14px;
+  transition: border-color 0.2s, background 0.2s;
+  outline: none;
+  -webkit-appearance: none;
+}
+.form-group input:focus,
+.form-group select,
+.form-group textarea:focus {
+  border-color: var(--gold);
+  background: rgba(255,255,255,0.09);
+}
+.form-group select option { background: var(--navy); }
+.form-group textarea { resize: vertical; min-height: 110px; }
+.form-privacy {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 12px;
+  line-height: 1.6;
+}
+.btn-submit {
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px;
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+/* =============================================
+   FOOTER
+   ============================================= */
+footer {
+  background: var(--chrome);
+  padding: 60px 0 32px;
+  color: rgba(255,255,255,0.5);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 60px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 32px;
+}
+.footer-brand .logo-name { font-size: 20px; margin-bottom: 4px; }
+.footer-brand p {
+  font-size: 13px;
+  line-height: 1.8;
+  margin-top: 16px;
+  color: rgba(255,255,255,0.4);
+  max-width: 280px;
+}
+.footer-social-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.footer-social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+.footer-social-icon:hover { background: var(--gold); color: var(--navy); }
+.footer-social-icon svg { width: 16px; height: 16px; }
+.footer-heading {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.footer-links { display: flex; flex-direction: column; gap: 10px; }
+.footer-links a {
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+  transition: color 0.2s;
+  cursor: pointer;
+}
+.footer-links a:hover { color: rgba(255,255,255,0.85); }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px;
+  flex-wrap: wrap; gap: 12px;
+}
+
+/* =============================================
+   SCROLL ANIMATIONS
+   ============================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 1024px) {
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-top-grid { grid-template-columns: 1fr 1.5fr; gap: 40px; }
+  .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .faq-grid { grid-template-columns: 1fr; gap: 0; }
+  .stats-inner { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .hero-trust-strip { flex-direction: column; gap: 12px; }
+  .about-top-grid { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: 1fr; }
+  .why-card { border-right: none; }
+  .cps-fc-grid { grid-template-columns: 1fr; }
+  .cps-fc-card { border-right: none; }
+  .cps-fc-header { flex-direction: column; }
+  .cps-fc-badge { display: none; }
+  .services-grid { grid-template-columns: 1fr; }
+  .testimonials-track { grid-template-columns: 1fr; }
+  .blog-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .stats-inner { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr; }
+  .why-badge-wrap { flex-direction: column; }
+  .process-timeline::before { left: 27px; }
+}
+@media (max-width: 480px) {
+  .stats-inner { grid-template-columns: 1fr 1fr; }
+  .stat-cell:last-child { grid-column: span 2; }
+  .hero-actions { flex-direction: column; align-items: flex-start; }
+}
+
+/* Privacy section */
+#privacy { padding: var(--section-pad) 0; }
+#privacy h2 { font-family: var(--font-display); font-size: 36px; color: var(--text-head); margin-bottom: 32px; }
+#privacy h3 { font-family: var(--font-display); font-size: 20px; color: var(--text-head); margin: 28px 0 12px; }
+#privacy p, #privacy li { font-size: 15px; line-height: 1.85; color: var(--text-body); margin-bottom: 12px; }
+#privacy ul { padding-left: 24px; list-style: disc; }
+
+/* Page nav underline active */
+.page-section { display: none; }
+.page-section.active-page { display: block; }
+
+/* =============================================
+   CUSTOM PAGE SECTIONS
+   ============================================= */
+
+/* Text Block */
+.cps-text-block .cps-heading {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 500;
+  color: var(--text-head);
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+.cps-text-block .cps-body {
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--text-body);
+  max-width: 780px;
+}
+.cps-text-block .cps-body p { margin-bottom: 16px; }
+
+/* Two Column */
+.cps-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: start;
+}
+.cps-two-col.image-right { }
+.cps-two-col.image-left { direction: rtl; }
+.cps-two-col.image-left > * { direction: ltr; }
+.cps-two-col-text .cps-heading {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.8vw, 34px);
+  font-weight: 500;
+  color: var(--text-head);
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+.cps-two-col-text .cps-body {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--text-body);
+}
+.cps-two-col-text .cps-body p { margin-bottom: 14px; }
+.cps-two-col-img {
+  width: 100%;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+.cps-two-col-img img {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  object-fit: cover;
+  display: block;
+}
+.cps-two-col-img-placeholder {
+  background: var(--navy);
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.2);
+  font-size: 48px;
+}
+@media (max-width: 768px) {
+  .cps-two-col { grid-template-columns: 1fr; direction: ltr; }
+  .cps-two-col.image-left > * { direction: ltr; }
+}
+
+/* Stats Bar (custom) */
+.cps-stats-bar { padding: 0; }
+.cps-stats-bar .stats-inner { }
+
+/* Stats bar light/alt section theming */
+.cps-section-light .stats-inner,
+.cps-section-alt .stats-inner { border-left-color: var(--border); }
+.cps-section-light .stat-cell,
+.cps-section-alt .stat-cell { border-right-color: var(--border); }
+.cps-section-light .stat-cell:hover,
+.cps-section-alt .stat-cell:hover { background: var(--gold-pale); }
+.cps-section-light .stat-label,
+.cps-section-alt .stat-label { color: var(--text-muted); }
+
+/* Bullet / Checklist */
+.cps-bullets-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  margin-top: 40px;
+  border: 1px solid #e8e3d8;
+}
+.cps-bullet-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: clamp(20px, 3vw, 32px);
+  border-right: 1px solid #e8e3d8;
+  border-bottom: 1px solid #e8e3d8;
+  transition: background 0.25s;
+}
+.cps-bullet-item:nth-child(2n) { border-right: none; }
+.cps-bullet-item:hover { background: var(--gold-pale); }
+.cps-bullet-linked:hover { background: var(--gold-pale); }
+.cps-bullet-linked .cps-bullet-text h4 { color: var(--navy); }
+.cps-bullet-arrow { margin-left: 6px; font-size: 13px; color: var(--gold); opacity: 0; transition: opacity 0.2s, transform 0.2s; display: inline-block; transform: translateX(-4px); }
+.cps-bullet-linked:hover .cps-bullet-arrow { opacity: 1; transform: translateX(0); }
+.cps-section-dark .cps-bullet-linked:hover .cps-bullet-text h4 { color: #fff; }
+.cps-bullet-icon {
+  flex-shrink: 0;
+  width: 32px; height: 32px;
+  background: var(--gold-pale);
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  color: var(--navy);
+  margin-top: 2px;
+}
+.cps-bullet-text h4 {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-head);
+  margin-bottom: 4px;
+}
+.cps-bullet-text p {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+@media (max-width: 640px) { .cps-bullets-list { grid-template-columns: 1fr; } .cps-bullet-item { border-right: none; } }
+
+/* Bullets dark/alt section theming */
+.cps-section-dark .cps-bullets-list,
+.cps-section-dark .cps-bullet-item { border-color: rgba(255,255,255,0.12); }
+.cps-section-dark .cps-bullet-item:hover { background: rgba(255,255,255,0.05); }
+.cps-section-dark .cps-bullet-icon { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.25); color: var(--gold); }
+.cps-section-dark .cps-bullet-text h4 { color: #fff; }
+.cps-section-dark .cps-bullet-text p { color: rgba(255,255,255,0.65); }
+.cps-section-alt .cps-bullets-list,
+.cps-section-alt .cps-bullet-item { border-color: var(--border); }
+
+/* CTA Banner */
+.cps-cta-banner {
+  background: var(--navy);
+  padding: clamp(48px, 7vw, 80px) var(--gutter);
+  text-align: center;
+}
+.cps-cta-banner .cps-heading {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.5vw, 44px);
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.cps-cta-banner .cps-body {
+  font-size: 16px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0 auto 32px;
+}
+.cps-cta-banner .cps-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Document Checklist */
+.cps-doc-checklist { }
+.cps-doc-category {
+  margin-bottom: 32px;
+  border: 1px solid #e8e3d8;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.cps-doc-category-title {
+  background: var(--navy);
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 14px 24px;
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+.cps-doc-items {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+}
+.cps-doc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  border-right: 1px solid #e8e3d8;
+  border-bottom: 1px solid #e8e3d8;
+  font-size: 14px;
+  color: var(--text-body);
+}
+.cps-doc-item:nth-child(2n) { border-right: none; }
+.cps-doc-item:last-child, .cps-doc-item:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+.cps-doc-check {
+  width: 18px; height: 18px;
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  flex-shrink: 0;
+  background: var(--gold-pale);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  color: var(--navy);
+}
+@media (max-width: 600px) { .cps-doc-items { grid-template-columns: 1fr; } .cps-doc-item { border-right: none; } }
+
+/* Timeline */
+.cps-timeline { }
+.cps-timeline-item {
+  display: flex;
+  gap: 32px;
+  padding: 0 0 40px;
+  position: relative;
+}
+.cps-timeline-item:last-child { padding-bottom: 0; }
+.cps-timeline-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 48px;
+}
+.cps-timeline-dot {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--gold-pale);
+  border: 1px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--navy);
+  flex-shrink: 0;
+  z-index: 1;
+}
+.cps-timeline-line {
+  flex: 1;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--gold), rgba(201,168,76,0.1));
+  margin-top: 8px;
+  min-height: 32px;
+}
+.cps-timeline-item:last-child .cps-timeline-line { display: none; }
+.cps-timeline-body {
+  flex: 1;
+  padding-top: 10px;
+  padding-bottom: 24px;
+}
+.cps-timeline-body.has-tl-link { padding-bottom: 0; }
+.cps-timeline-link {
+  display: block;
+  margin-top: 10px;
+  margin-left: 12px;
+  padding-bottom: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.cps-timeline-link:hover { opacity: 0.75; }
+.cps-section-dark .cps-timeline-link { color: var(--gold-light); }
+.cps-timeline-body h4 {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--text-head);
+  margin-bottom: 8px;
+}
+.cps-timeline-body p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+.cps-timeline-date {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+/* Timeline dark/alt section theming */
+.cps-section-dark .cps-timeline-dot { background: rgba(255,255,255,0.08); border-color: rgba(201,168,76,0.5); color: var(--gold); }
+.cps-section-dark .cps-timeline-body h4 { color: #fff; }
+.cps-section-dark .cps-timeline-body p { color: rgba(255,255,255,0.65); }
+.cps-section-alt .cps-timeline-body h4 { color: var(--navy); }
+
+/* Fee Schedule */
+.cps-fee-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 32px;
+  font-size: 14px;
+}
+.cps-fee-table thead tr {
+  background: var(--navy);
+  color: var(--gold);
+}
+.cps-fee-table th {
+  padding: 14px 20px;
+  text-align: left;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-family: var(--font-body);
+}
+.cps-fee-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid #e8e3d8;
+  color: var(--text-body);
+  vertical-align: top;
+}
+.cps-fee-table tbody tr:last-child td { border-bottom: none; }
+.cps-fee-table tbody tr:hover td { background: var(--gold-pale); }
+.cps-fee-amount {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-head);
+  white-space: nowrap;
+}
+.cps-fee-note { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.cps-fee-link {
+  display: block;
+  margin-top: 6px;
+  margin-left: 12px;
+  padding-bottom: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.cps-fee-link:hover { opacity: 0.75; }
+.cps-section-dark .cps-fee-link { color: var(--gold-light); }
+
+/* Fee table dark/alt section theming */
+.cps-section-dark .cps-fee-table thead tr { background: rgba(255,255,255,0.07); }
+.cps-section-dark .cps-fee-table td { border-bottom-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75); }
+.cps-section-dark .cps-fee-table tbody tr:hover td { background: rgba(255,255,255,0.05); }
+.cps-section-dark .cps-fee-amount { color: #fff; }
+.cps-section-dark .cps-fee-note { color: rgba(255,255,255,0.5); }
+.cps-section-alt .cps-fee-table td { border-bottom-color: var(--border); }
+
+/* Jurisdiction Notice */
+.cps-jurisdiction {
+  border: 1px solid rgba(201,168,76,0.4);
+  border-left: 3px solid var(--gold);
+  background: var(--gold-pale);
+  border-radius: 2px;
+  padding: clamp(24px, 3vw, 36px);
+}
+.cps-jurisdiction-icon { font-size: 28px; margin-bottom: 12px; }
+.cps-jurisdiction-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-head);
+  margin-bottom: 12px;
+}
+.cps-jurisdiction-body {
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--text-body);
+}
+.cps-jurisdiction-body.has-jur-link { margin-bottom: 0; }
+.cps-jurisdiction-link {
+  display: block;
+  margin-top: 10px;
+  margin-left: 12px;
+  padding-bottom: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.cps-jurisdiction-link:hover { opacity: 0.75; }
+.cps-jurisdiction-body p { margin-bottom: 10px; }
+
+/* Team Block (on custom pages) */
+.cps-team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+.cps-team-card {
+  border: 1px solid #e8e3d8;
+  border-radius: 2px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.cps-team-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(15,35,64,0.1); }
+.cps-team-photo {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  background: var(--navy);
+}
+.cps-team-photo-placeholder {
+  width: 100%;
+  height: 260px;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.15);
+  font-size: 56px;
+}
+.cps-team-info { padding: 24px; }
+.cps-team-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-head);
+  margin-bottom: 4px;
+}
+.cps-team-title { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+.cps-team-bio { font-size: 13.5px; line-height: 1.7; color: var(--text-muted); }
+@media (max-width: 900px) { .cps-team-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 580px) { .cps-team-grid { grid-template-columns: 1fr; } }
+
+/* Team dark/alt section theming */
+.cps-section-dark .cps-team-card { border-color: rgba(255,255,255,0.12); }
+.cps-section-dark .cps-team-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+.cps-section-dark .cps-team-info { background: rgba(255,255,255,0.04); }
+.cps-section-dark .cps-team-name { color: #fff; }
+.cps-section-dark .cps-team-bio { color: rgba(255,255,255,0.65); }
+.cps-section-alt .cps-team-card { border-color: var(--border); }
+
+/* Section wrapper bg variants */
+.cps-first-section {
+  padding-top: 100px !important;
+}
+.cps-first-section .cps-heading,
+.cps-first-section h1.page-banner-title,
+.cps-first-section h1.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 58px);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin-top: 8px;
+}
+.cps-section-light { background: var(--warm-white); }
+.cps-section-alt { background: var(--cream); }
+.cps-section-dark { background: var(--navy); }
+.cps-section-dark .cps-heading { color: #fff !important; }
+.cps-section-dark .cps-body { color: rgba(255,255,255,0.65) !important; }
+.cps-section-dark .section-label-text { color: var(--gold-light); }
+.cps-section-dark .section-label-line { background: var(--gold-light); }
+
+/* Outline button variant for light/alt section backgrounds */
+.btn-outline-dark {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: transparent;
+  color: var(--navy);
+  font-size: 13px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 15px 28px; border-radius: 4px;
+  border: 1.5px solid var(--navy-light);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.btn-outline-dark:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.06); }
+/* Link + Button appendage sections — inherit prior section background, moderate continuation padding */
+.cps-appendage { padding: 8px 0 32px; }
+.cps-link-block { text-align: center; }
+.cps-link-anchor {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-display);
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 500;
+  color: var(--navy);
+  border-bottom: 2px solid var(--gold);
+  padding-bottom: 4px;
+  transition: color 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.cps-link-anchor:hover { color: var(--gold); border-color: var(--gold-light); }
+.cps-section-dark .cps-link-anchor { color: #fff; border-color: var(--gold); }
+.cps-section-dark .cps-link-anchor:hover { color: var(--gold-light); }
+.cps-button-actions { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+.cps-section-dark .btn-outline-dark { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.4); }
+.cps-section-dark .btn-outline-dark:hover { color: #fff; border-color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.06); }
+.cps-form-wrap {
+  max-width: 680px;
+  margin: 40px auto 0;
+}
+.cps-form-intro {
+  font-size: 16px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+.cps-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.cps-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cps-form-field label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.cps-form-field label .req-star {
+  color: var(--gold);
+  margin-left: 2px;
+}
+.cps-form-field input[type="text"],
+.cps-form-field input[type="email"],
+.cps-form-field input[type="tel"],
+.cps-form-field textarea,
+.cps-form-field select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ddd8d0;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-body);
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  appearance: none;
+}
+.cps-form-field input:focus,
+.cps-form-field textarea:focus,
+.cps-form-field select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+}
+.cps-form-field textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+.cps-form-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a7670' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+.cps-form-radio-group,
+.cps-form-checkbox-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cps-form-radio-group label,
+.cps-form-checkbox-wrap label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-body);
+  cursor: pointer;
+}
+.cps-form-radio-group input[type="radio"],
+.cps-form-checkbox-wrap input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--gold);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.cps-form-submit {
+  margin-top: 8px;
+}
+.cps-form-success {
+  display: none;
+  background: rgba(45,122,95,0.08);
+  border: 1px solid rgba(45,122,95,0.3);
+  border-radius: 8px;
+  padding: 24px 28px;
+  text-align: center;
+  margin-top: 24px;
+}
+.cps-form-success-icon { font-size: 36px; margin-bottom: 10px; }
+.cps-form-success-msg { font-size: 16px; color: #1f5c42; font-weight: 500; line-height: 1.5; }
+/* All sections: ensure select options are always readable */
+.cps-form-field select option {
+  background: #fff;
+  color: var(--text-body);
+}
+/* Dark section overrides */
+.cps-section-dark .cps-form-field input:not([type="radio"]):not([type="checkbox"]),
+.cps-section-dark .cps-form-field textarea,
+.cps-section-dark .cps-form-field select {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.15);
+  color: #fff;
+  -webkit-appearance: none;
+}
+.cps-section-dark .cps-form-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.5)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 12px 8px;
+}
+.cps-section-dark .cps-form-field select option {
+  background: var(--navy);
+  color: #fff;
+}
+.cps-section-dark .cps-form-field input:not([type="radio"]):not([type="checkbox"]):focus,
+.cps-section-dark .cps-form-field textarea:focus,
+.cps-section-dark .cps-form-field select:focus {
+  border-color: var(--gold);
+  background: rgba(255,255,255,0.09);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+}
+.cps-section-dark .cps-form-field label { color: rgba(255,255,255,0.6); }
+.cps-section-dark .cps-form-field label .req-star { color: var(--gold-light); }
+.cps-section-dark .cps-form-field input:not([type="radio"]):not([type="checkbox"])::placeholder,
+.cps-section-dark .cps-form-field textarea::placeholder { color: rgba(255,255,255,0.3); }
+.cps-section-dark .cps-form-intro { color: rgba(255,255,255,0.65); }
+.cps-section-dark .cps-form-radio-group label,
+.cps-section-dark .cps-form-checkbox-wrap label { color: rgba(255,255,255,0.8); }
+/* Side-by-side field row */
+.cps-form-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 580px) {
+  .cps-form-field-row { grid-template-columns: 1fr; gap: 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Preloader -->
+<div id="preloader">
+  <div class="preloader-inner">
+    <div class="preloader-wordmark">
+      <span id="preload-firm">Osborne Law Firm</span>
+    </div>
+    <div class="preloader-bar"></div>
+    <div class="preloader-sub" id="preloader-sub">Adoption Attorneys · Alabama</div>
+  </div>
+</div>
+
+<!-- Header -->
+<header id="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <div class="site-logo" onclick="showPage('home')">
+        <div class="logo-name" id="header-firm-name">Osborne Law Firm, LLC</div>
+        <div class="logo-tagline" id="header-tagline">Adoption Attorney</div>
+      </div>
+      <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Full-screen Nav Menu -->
+<div class="nav-clip" id="navClip">
+  <div class="nav-backdrop" id="navBackdrop" onclick="toggleMobileNav()"></div>
+  <div class="mobile-nav" id="mobile-nav">
+    <div class="drawer-links" id="drawer-links"></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     HOME PAGE
+     ============================================================ -->
+<div id="page-home">
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="hero-slides" id="heroSlides"></div>
+    <div class="hero-overlay" id="heroOverlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-headline" id="hero-headline"></h1>
+        <p class="hero-subline" id="hero-subline"></p>
+        <div class="hero-actions">
+          <button class="btn-primary" id="hero-cta-btn" onclick="showPage('contact')">
+            Free Consultation <span>→</span>
+          </button>
+          <button class="btn-outline" id="hero-secondary-btn" onclick="showPage('services')">
+            Our Services
+          </button>
+        </div>
+        <div class="hero-trust-strip" id="heroTrustStrip"></div>
+      </div>
+    </div>
+    <div class="hero-dots" id="heroDots"></div>
+    <div class="scroll-indicator">
+      <div class="scroll-indicator-line"></div>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <section id="stats-bar">
+    <div class="stats-inner" id="statsInner"></div>
+  </section>
+
+  <!-- Home Sections (section builder) -->
+  <div id="home-sections"></div>
+
+</div><!-- /page-home -->
+
+<!-- ============================================================
+     ABOUT PAGE
+     ============================================================ -->
+<div id="page-about" style="display:none;">
+  <!-- Page hero banner -->
+  <div class="page-banner">
+    <div class="container">
+      <div class="section-label" style="margin-bottom:12px;">
+        <div class="section-label-line"></div>
+        <span class="section-label-text" id="about-label">About Us</span>
+      </div>
+      <h1 class="page-banner-title" id="about-title">Meet Our Team</h1>
+    </div>
+  </div>
+  <section class="section section-after-banner">
+    <div class="container">
+      <!-- Top: photo left (1/3) + name/title/credentials right (2/3) -->
+      <div class="about-top-grid reveal">
+        <div class="about-photo-wrap">
+          <div class="about-photo-frame">
+            <img src="" alt="" id="about-photo" onerror="this.src='https://placehold.co/400x500/0f2340/c9a84c?text=Attorney+Photo'"/>
+          </div>
+          <div class="about-photo-accent"></div>
+        </div>
+        <div class="about-identity">
+          <h2 class="about-attorney-name" id="about-attorney-name"></h2>
+          <div class="about-attorney-degree" id="about-attorney-degree"></div>
+          <div class="about-credentials" id="about-credentials"></div>
+          <div style="margin-top:32px;">
+            <button class="btn-primary" onclick="showPage('contact')">Schedule a Consultation →</button>
+          </div>
+        </div>
+      </div>
+      <!-- Bottom: full-width biography -->
+      <div class="about-bio-full reveal reveal-delay-1" id="about-bios"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     SERVICES PAGE
+     ============================================================ -->
+<div id="page-contact" style="display:none;">
+  <div class="page-banner page-banner-dark">
+    <div class="container">
+      <div class="section-label" style="margin-bottom:12px;"><div class="section-label-line"></div><span class="section-label-text" id="contact-label">Get in Touch</span></div>
+      <h1 class="page-banner-title page-banner-title-light" id="contact-headline">Schedule Your Free Consultation</h1>
+    </div>
+  </div>
+  <section id="contact" class="section section-dark section-after-banner">
+    <div class="container">
+      <p class="section-subtitle reveal" style="color:rgba(255,255,255,0.6);margin-bottom:48px;" id="contact-subline"></p>
+      <div class="contact-grid reveal reveal-delay-1">
+        <div class="contact-info">
+          <h3 id="contact-info-firm"></h3>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">📞</div>
+            <div class="contact-detail-text">
+              <strong>Phone</strong>
+              <a id="contact-phone-link" href="" style="color:var(--gold)"></a>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">📠</div>
+            <div class="contact-detail-text">
+              <strong>Fax</strong>
+              <span id="contact-fax"></span>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">✉️</div>
+            <div class="contact-detail-text">
+              <strong>Email</strong>
+              <a id="contact-email-link" href="" style="color:var(--gold)"></a>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">📍</div>
+            <div class="contact-detail-text">
+              <strong>Address</strong>
+              <span id="contact-address"></span>
+            </div>
+          </div>
+          <div class="contact-hours" id="contact-hours"></div>
+        </div>
+        <div class="contact-form" id="contact-form-wrap"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     PRIVACY PAGE
+     ============================================================ -->
+<div id="page-privacy" style="display:none;">
+  <div class="page-banner">
+    <div class="container">
+      <div class="section-label" style="margin-bottom:12px;"><div class="section-label-line"></div><span class="section-label-text">Legal</span></div>
+      <h1 class="page-banner-title">Privacy Policy</h1>
+    </div>
+  </div>
+  <section id="privacy">
+    <div class="container" style="max-width:800px;padding-top:60px;padding-bottom:80px;">
+      <h2>Privacy Policy</h2>
+      <p><em>Last updated: January 1, 2025</em></p>
+      <h3>Information We Collect</h3>
+      <p>We collect information you provide directly to us, such as when you fill out our contact form, call our office, or email us. This may include your name, email address, phone number, and details about your inquiry.</p>
+      <h3>How We Use Information</h3>
+      <p>We use the information we collect to respond to your inquiries, schedule appointments, and communicate with you about your inquiry. We do not sell, trade, or otherwise transfer your personal information to outside parties.</p>
+      <h3>Confidentiality</h3>
+      <p>We take your privacy seriously and have appropriate safeguards in place to protect your information. Any information you share with us will be kept strictly confidential.</p>
+      <h3>Cookies</h3>
+      <p>Our website may use cookies to enhance your browsing experience. You may disable cookies through your browser settings, though some features of the site may not function properly as a result.</p>
+      <h3>Third-Party Services</h3>
+      <p>We may use third-party services such as Google Analytics to understand how visitors use our site. These services may collect information in accordance with their own privacy policies.</p>
+      <h3>Contact Us</h3>
+      <p>If you have questions about this privacy policy, please contact us at <span id="privacy-email"></span>.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     CUSTOM PAGES — dynamically rendered by buildCustomPages()
+     ============================================================ -->
+<div id="custom-pages-container"></div>
+
+<!-- Service Modal -->
+<div class="modal-overlay" id="serviceModal" onclick="if(event.target===this)closeServiceModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeServiceModal()">×</button>
+    <div class="modal-icon" id="modal-icon"></div>
+    <h2 class="modal-title" id="modal-title"></h2>
+    <p class="modal-body" id="modal-body"></p>
+    <div class="modal-cta" id="modal-cta">
+      <button class="btn-primary" id="modal-cta-btn" onclick="handleModalCta()">Schedule a Consultation →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer id="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-name" id="footer-firm-name"></div>
+        <div class="logo-tagline" id="footer-tagline-foot" style="margin-top:4px;"></div>
+        <div id="footer-social-icons" style="margin-top:16px;"></div>
+        <p id="footer-bio"></p>
+      </div>
+      <div>
+        <div class="footer-heading">Navigation</div>
+        <div class="footer-links" id="footer-nav-links"></div>
+      </div>
+      <div>
+        <div class="footer-heading">Contact</div>
+        <div class="footer-links" id="footer-contact-links"></div>
+        <div id="footer-cta-wrap" style="margin-top:24px;">
+          <button class="btn-primary" id="footer-cta-btn" onclick="showPage('contact')" style="font-size:12px;padding:12px 20px;">Free Consultation →</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span id="footer-copyright"></span>
+      <div style="display:flex;gap:24px;">
+        <a onclick="showPage('privacy')" style="cursor:pointer;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color=''">Privacy Policy</a>
+        <a id="footer-bottom-contact" onclick="showPage('contact')" style="cursor:pointer;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color=''">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- CONFIG -->
+<script src="config.js"></script>
+
+<script>
+/* =============================================
+   SITE KEY — matches admin.html scoping
+   ============================================= */
+(function() {
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  const folder = parts.length > 0 && parts[parts.length - 1].includes('.')
+    ? parts.slice(0, -1)
+    : parts;
+  window._SITE_KEY = folder.length > 0 ? folder.join('-') : 'default';
+})();
+
+/* =============================================
+   SITE ENGINE
+   ============================================= */
+const SITE_DEFAULTS = {
+  firmName: "Osborne Law Firm, LLC",
+  tagline: "Adoption Attorney",
+  preloaderTagline: "Adoption Attorneys · Alabama",
+  pageHeaders: {
+    about:     { label: "About Us",         title: "Meet Our Team",                    subtitle: "" },
+    services:  { label: "Practice Areas",   title: "Our Adoption Services",            subtitle: "Every adoption journey is unique. We offer comprehensive legal services across all types of adoption in Alabama." },
+    process:   { label: "How It Works",     title: "The Adoption Process",             subtitle: "From your first call to finalization day — here's what to expect when you work with us." },
+    faq:       { label: "Common Questions", title: "Frequently Asked Questions",       subtitle: "Everything you want to know about Alabama adoption law — answered plainly." },
+    testimonials:{ label: "Client Reviews", title: "What Our Clients Say",             subtitle: "Real stories from the families we've been honored to serve." },
+    blog:      { label: "Resources",        title: "Adoption Guides & Insights",       subtitle: "Plain-language resources to help you understand Alabama adoption law." },
+    contact:   { label: "Get in Touch" },
+  },
+  attorneyName: "Amy Michelle Osborne",
+  attorneyDegree: "J.D., Birmingham School of Law",
+  attorneyCredentials: ["AL State Bar","J.D., Birmingham Law","ABA Member","Super Lawyers","AAAA Member"],
+  phone: "(205) 515-9271",
+  phoneRaw: "+12055159271",
+  fax: "(205) 434-3975",
+  email: "osborneadoptions@gmail.com",
+  address: "4770 Eastern Valley Road, Suite 111",
+  city: "McCalla", state: "Alabama", stateAbbr: "AL", zip: "35111",
+  hours: [
+    { days: "Monday – Thursday", hours: "8:30 AM – 5:30 PM" },
+    { days: "Friday", hours: "8:30 AM – 4:00 PM" },
+    { days: "Saturday – Sunday", hours: "Closed" }
+  ],
+  stats: [
+    { num: "20+", label: "Years of Adoption Law" },
+    { num: "500+", label: "Families Helped" },
+    { num: "9", label: "Adoption Service Types" },
+    { num: "AL", label: "State Bar Member" },
+    { num: "★4.9", label: "Client Rating" }
+  ],
+  colors: { navy:"#0f2340", navyLight:"#1a3560", gold:"#c9a84c", goldLight:"#e8c97a", goldPale:"#faf6ec", warmWhite:"#fffdf9", cream:"#f9f6f0", chrome:"#060f1d" },
+  fontColors: { heading:"#0f2340", body:"#5c5a53", onDark:"#ffffff", onDarkMuted:"#f3f8fb" },
+  fontDisplay: "Playfair Display",
+  fontBody: "DM Sans",
+  metaDescription: "",
+  metaKeywords: "",
+  pageTitles: { home:"", about:"", services:"", process:"", faq:"", testimonials:"", blog:"", contact:"", privacy:"" },
+  googleAnalyticsId: "",
+  formEndpoint: "",
+  heroBg: { type:"color", bgColor:"#0f2340", slides:[], showDots:true, autoplay:true, slideDuration:8, motionType:"zoom-out", motionSpeed:20, overlayColor:"#0f2340", overlayOpacity:0.5, transitionSpeed:2 },
+  heroHeadline: "Building Families Through the Law, With Heart.",
+  heroSubline: "We guide adoptive parents, birth parents, and families through every step of the adoption process — clearly, compassionately, and with deep legal expertise.",
+  heroTrustBullets: ["Free Initial Consultation","20+ Years Experience","Statewide Alabama Practice"],
+  heroPrimaryLabel: "Free Consultation", heroPrimaryLinkType: "internal", heroPrimaryLinkUrl: "contact",
+  heroSecondaryLabel: "Our Services", heroSecondaryLinkType: "internal", heroSecondaryLinkUrl: "services",
+  whyChooseUs: { heading:"A Trusted Partner Through Every Step", subtext:"We know adoption is more than a legal process — it's the beginning of a family.", badgeNum:"20+", badgeLabel:"Years", bullets:[] },
+  aboutBio1:"", aboutBio2:"",
+  attorneyPhoto: "",
+  contactHeadline: "Schedule Your Free Consultation",
+  ctaLabel: "Free Consultation",
+  contactSubline: "No obligation, no pressure — just honest answers about your adoption options.",
+  contactFormHeading: "Let's Talk About Your Family",
+  contactFormIntro: "Fill out this form and we'll get back to you within one business day.",
+  contactPrivacyNote: "🔒 Your information is strictly confidential.",
+  services: [],
+  faqs: [],
+  testimonials: [],
+  blogPosts: [],
+  processSteps: [],
+  processRequirements: []
+};
+
+const CFG = Object.assign({}, SITE_DEFAULTS, typeof SITE_CONFIG !== 'undefined' ? SITE_CONFIG : {});
+// Deep merge nested objects
+['colors','fontColors','whyChooseUs','heroBg','pageTitles','pageHeaders'].forEach(k => {
+  if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG[k]) {
+    CFG[k] = Object.assign({}, SITE_DEFAULTS[k], SITE_CONFIG[k]);
+  }
+});
+// Ensure customPages is an array
+if (!Array.isArray(CFG.customPages)) CFG.customPages = [];
+
+// Preview mode: if admin saved data to localStorage, use it instead
+(function() {
+  try {
+    const preview = localStorage.getItem(window._SITE_KEY + '_previewConfig');
+    if (preview) {
+      const parsed = JSON.parse(preview);
+      // Merge top-level fields — skip empty arrays so defaults aren't wiped
+      Object.keys(parsed).forEach(k => {
+        if (Array.isArray(parsed[k]) && parsed[k].length === 0 && Array.isArray(CFG[k]) && CFG[k].length > 0) return;
+        CFG[k] = parsed[k];
+      });
+      ['colors','fontColors','whyChooseUs','heroBg','pageTitles','pageHeaders'].forEach(k => {
+        if (parsed[k]) CFG[k] = Object.assign({}, CFG[k], parsed[k]);
+      });
+      // Custom pages: fully replace if present in preview
+      if (Array.isArray(parsed.customPages)) CFG.customPages = parsed.customPages;
+      if (Array.isArray(parsed.homeSections)) CFG.homeSections = parsed.homeSections;
+    }
+  } catch(e) {}
+})();
+
+/* =============================================
+   FONT LOADER
+   ============================================= */
+function loadFonts() {
+  const fd = (CFG.fontDisplay||'Playfair Display').replace(/ /g,'+');
+  const fb = (CFG.fontBody||'DM Sans').replace(/ /g,'+');
+  const link = document.getElementById('googleFontLink');
+  if (link) {
+    link.href = `https://fonts.googleapis.com/css2?family=${fd}:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=${fb}:wght@300;400;500;600&display=swap`;
+  }
+  document.documentElement.style.setProperty('--font-display', `'${CFG.fontDisplay}', Georgia, serif`);
+  document.documentElement.style.setProperty('--font-body', `'${CFG.fontBody}', system-ui, sans-serif`);
+}
+
+/* =============================================
+   COLOR APPLICATION
+   ============================================= */
+function applyColors() {
+  const c = CFG.colors;
+  const fc = CFG.fontColors;
+  document.documentElement.style.setProperty('--navy', c.navy);
+  document.documentElement.style.setProperty('--navy-light', c.navyLight);
+  document.documentElement.style.setProperty('--gold', c.gold);
+  document.documentElement.style.setProperty('--gold-light', c.goldLight);
+  document.documentElement.style.setProperty('--gold-pale', c.goldPale);
+  document.documentElement.style.setProperty('--text-head', fc.heading);
+  document.documentElement.style.setProperty('--text-body', fc.body);
+  if (c.warmWhite) document.documentElement.style.setProperty('--warm-white', c.warmWhite);
+  if (c.cream)     document.documentElement.style.setProperty('--cream', c.cream);
+  if (c.chrome)    document.documentElement.style.setProperty('--chrome', c.chrome);
+}
+
+/* =============================================
+   HERO VIDEO CONTROLLER
+   ============================================= */
+function makeVideoEl(mp4, webm, fallback) {
+  const vid = document.createElement('video');
+  vid.className = 'hero-video';
+  vid.muted = true;
+  vid.playsInline = true;
+  vid.autoplay = true;
+  if (fallback) vid.poster = fallback;
+  if (webm) { const s = document.createElement('source'); s.src = webm; s.type = 'video/webm'; vid.appendChild(s); }
+  if (mp4)  { const s = document.createElement('source'); s.src = mp4;  s.type = 'video/mp4';  vid.appendChild(s); }
+  return vid;
+}
+
+function initHeroVideo(hb, container) {
+  // Backwards compat: build videoClips from legacy single-video fields if needed
+  let clips = Array.isArray(hb.videoClips) && hb.videoClips.length > 0
+    ? hb.videoClips
+    : [];
+
+  if (clips.length === 0) {
+    if (hb.videoMp4 || hb.videoWebm) {
+      clips = [{ mp4: hb.videoMp4||'', webm: hb.videoWebm||'', fallback: hb.videoFallback||'', transitionIn: 'crossfade' }];
+      if ((hb.videoLoop === 'crossfade') && (hb.video2Mp4 || hb.video2Webm)) {
+        clips.push({ mp4: hb.video2Mp4||'', webm: hb.video2Webm||'', fallback: hb.videoFallback2||'', transitionIn: 'crossfade' });
+      }
+    }
+  }
+
+  const sharedFallback  = hb.videoFallback || '';
+  const holdEnabled     = hb.videoHoldEnabled === true;
+  const holdMs          = (hb.videoHold || 4) * 1000;
+  const transSpeed      = parseFloat(hb.videoTransSpeed) || 1.2;
+  const transSpeedMs    = transSpeed * 1000;
+  const transCss        = `opacity ${transSpeed}s ease`;
+
+  // No clips — show shared fallback or bg color
+  if (!clips.length || !clips.some(c => c.mp4 || c.webm)) {
+    if (sharedFallback) {
+      container.style.backgroundImage = `url('${sharedFallback}')`;
+      container.style.backgroundSize = 'cover';
+      container.style.backgroundPosition = 'center center';
+    } else {
+      container.style.background = hb.bgColor || '#0f2340';
+    }
+    return;
+  }
+
+  // Build video elements — all stacked, opacity controlled
+  const vids = clips.map(c => {
+    const fb  = c.fallback || sharedFallback;
+    const vid = makeVideoEl(c.mp4, c.webm, fb);
+    vid.style.opacity    = '0';
+    vid.style.transition = transCss;
+    vid.style.objectPosition = c.objectPosition || 'center center';
+    vid.playbackRate     = parseFloat(c.playbackRate) || 1;
+    container.appendChild(vid);
+    return vid;
+  });
+
+  // Poster div for hold-on-fallback
+  const poster = document.createElement('div');
+  poster.className = 'hero-video-poster';
+  if (sharedFallback) poster.style.backgroundImage = `url('${sharedFallback}')`;
+  poster.style.opacity    = '0';
+  poster.style.transition = transCss;
+  container.appendChild(poster);
+
+  let current = 0;
+  let _durationTimer = null;
+
+  function showPoster(then) {
+    poster.style.opacity = '1';
+    setTimeout(() => {
+      poster.style.opacity = '0';
+      setTimeout(then, transSpeedMs);
+    }, holdMs);
+  }
+
+  function playClip(idx, transition) {
+    const vid  = vids[idx];
+    const clip = clips[idx];
+
+    // Clear any previous duration timer
+    if (_durationTimer) { clearTimeout(_durationTimer); _durationTimer = null; }
+
+    // Apply per-clip settings
+    const startTime    = parseFloat(clip.startTime)    || 0;
+    const playDuration = parseFloat(clip.playDuration) || 0;
+    const rate         = parseFloat(clip.playbackRate) || 1;
+
+    vid.playbackRate  = rate;
+    vid.currentTime   = startTime;
+    vid.play().catch(() => {});
+
+    const trans = transition || clip.transitionIn || 'crossfade';
+
+    if (trans === 'cut') {
+      vids.forEach((v, i) => { v.style.transition = 'none'; v.style.opacity = i === idx ? '1' : '0'; });
+      setTimeout(() => { vids.forEach(v => { v.style.transition = transCss; }); }, 50);
+    } else if (trans === 'fade-from-black') {
+      vids.forEach(v => { v.style.opacity = '0'; });
+      container.style.background = '#000';
+      setTimeout(() => { vid.style.opacity = '1'; container.style.background = ''; }, 100);
+    } else {
+      // crossfade
+      vids.forEach((v, i) => { v.style.opacity = i === idx ? '1' : '0'; });
+    }
+
+    function onClipEnd() {
+      const nextIdx  = (idx + 1) % vids.length;
+      const isLooping = nextIdx === 0;
+
+      if (isLooping && holdEnabled) {
+        vid.style.opacity = '0';
+        setTimeout(() => {
+          showPoster(() => {
+            current = 0;
+            playClip(0, clips[0].transitionIn);
+          });
+        }, transSpeedMs * 0.5);
+      } else {
+        current = nextIdx;
+        playClip(nextIdx, clips[nextIdx].transitionIn);
+      }
+    }
+
+    if (playDuration > 0) {
+      // Use timer instead of ended event
+      // Adjust for playback rate: real elapsed time = playDuration / rate
+      const realMs = (playDuration / rate) * 1000;
+      _durationTimer = setTimeout(onClipEnd, realMs);
+    } else {
+      vid.addEventListener('ended', onClipEnd, { once: true });
+    }
+  }
+
+  // Start first clip
+  playClip(0, 'crossfade');
+}
+
+/* =============================================
+   HERO BUILD
+   ============================================= */
+function buildHero() {
+  const hb = CFG.heroBg;
+  const overlay = document.getElementById('heroOverlay');
+  const slidesEl = document.getElementById('heroSlides');
+  const dotsEl = document.getElementById('heroDots');
+
+  // Overlay
+  const oc = hb.overlayColor || CFG.colors.navy;
+  const op = hb.overlayOpacity !== undefined ? hb.overlayOpacity : 0.5;
+  const r = parseInt(oc.slice(1,3),16), g = parseInt(oc.slice(3,5),16), b = parseInt(oc.slice(5,7),16);
+  overlay.style.background = `linear-gradient(to top, rgba(${r},${g},${b},${Math.min(op+0.3,1)}) 0%, rgba(${r},${g},${b},${op}) 50%, rgba(${r},${g},${b},${Math.max(op-0.2,0)}) 100%)`;
+
+  let slides = [];
+  if (hb.type === 'video') {
+    initHeroVideo(hb, slidesEl);
+  } else if (hb.type === 'slideshow' && hb.slides && hb.slides.length) {
+    slides = hb.slides;
+  } else if (hb.imagePath) {
+    slides = [{ imagePath: hb.imagePath, position: hb.imagePosition || 'center center' }];
+  }
+
+  if (slides.length === 0) {
+    slidesEl.style.background = hb.bgColor || CFG.colors.navy;
+  } else {
+    slides.forEach((s, i) => {
+      const div = document.createElement('div');
+      div.className = 'hero-slide' + (i === 0 ? ' active' : '');
+      div.style.backgroundImage = `url('${s.imagePath}')`;
+      div.style.backgroundPosition = s.position || 'center center';
+      slidesEl.appendChild(div);
+    });
+
+    if (slides.length > 1 && hb.autoplay !== false) {
+      let cur = 0;
+      const allSlides = slidesEl.querySelectorAll('.hero-slide');
+      const dur = (hb.slideDuration || 8) * 1000;
+
+      function nextSlide() {
+        allSlides[cur].classList.remove('active');
+        cur = (cur + 1) % allSlides.length;
+        allSlides[cur].classList.add('active');
+        updateDots(cur);
+      }
+      setInterval(nextSlide, dur);
+
+      if (hb.showDots !== false && slides.length > 1) {
+        slides.forEach((_, i) => {
+          const d = document.createElement('div');
+          d.className = 'hero-dot' + (i === 0 ? ' active' : '');
+          d.onclick = () => {
+            allSlides[cur].classList.remove('active');
+            cur = i;
+            allSlides[cur].classList.add('active');
+            updateDots(cur);
+          };
+          dotsEl.appendChild(d);
+        });
+      }
+
+      function updateDots(idx) {
+        dotsEl.querySelectorAll('.hero-dot').forEach((d,i) => {
+          d.classList.toggle('active', i === idx);
+        });
+      }
+    }
+  }
+
+  // Hero buttons
+  const primaryBtn   = document.getElementById('hero-cta-btn');
+  const secondaryBtn = document.getElementById('hero-secondary-btn');
+
+  function applyHeroBtn(btn, label, linkType, linkUrl) {
+    if (!btn) return;
+    if (!linkType || linkType === 'none') {
+      btn.style.display = 'none';
+      return;
+    }
+    btn.style.display = '';
+    btn.innerHTML = `${label} <span>→</span>`;
+    btn.onclick = () => openSmartLink(linkType, linkUrl);
+  }
+
+  applyHeroBtn(primaryBtn,
+    CFG.heroPrimaryLabel   || 'Free Consultation',
+    CFG.heroPrimaryLinkType   || (CFG.heroPrimaryDest   ? 'internal' : 'none'),
+    CFG.heroPrimaryLinkUrl    || CFG.heroPrimaryDest    || 'contact'
+  );
+  applyHeroBtn(secondaryBtn,
+    CFG.heroSecondaryLabel || 'Our Services',
+    CFG.heroSecondaryLinkType || (CFG.heroSecondaryDest ? 'internal' : 'none'),
+    CFG.heroSecondaryLinkUrl  || CFG.heroSecondaryDest  || 'services'
+  );
+  const headEl = document.getElementById('hero-headline');
+  if (headEl && CFG.heroHeadline) {
+    const parts = CFG.heroHeadline.split(',').map(s => s.trim());
+    headEl.innerHTML = parts.map((p,i) => `<span class="line"><span style="animation-delay:${2+i*0.12}s">${p}${i < parts.length-1 ? ',' : ''}</span></span>`).join('');
+  }
+
+  // Subline
+  const sublineEl = document.getElementById('hero-subline');
+  if (sublineEl) sublineEl.textContent = CFG.heroSubline || '';
+
+  // Trust strip — fall back to SITE_DEFAULTS if CFG has empty array
+  const strip = document.getElementById('heroTrustStrip');
+  if (strip) {
+    const bullets = (CFG.heroTrustBullets && CFG.heroTrustBullets.length)
+      ? CFG.heroTrustBullets
+      : (SITE_DEFAULTS.heroTrustBullets || []);
+    strip.innerHTML = bullets.map(b => `
+    <div class="trust-item">
+      <div class="trust-dot"></div>
+      <span class="trust-text">${b}</span>
+    </div>`).join('');
+  }
+}
+
+/* =============================================
+   STATS
+   ============================================= */
+function buildStats() {
+  const el = document.getElementById('statsInner');
+  el.innerHTML = (CFG.stats||[]).map(s => `
+    <div class="stat-cell">
+      <div class="stat-num">${s.num}</div>
+      <div class="stat-label">${s.label}</div>
+    </div>`).join('');
+}
+
+/* =============================================
+   WHY CHOOSE US
+   ============================================= */
+function toggleFaq(id) {
+  const item = document.getElementById(id);
+  if (!item) return;
+  const wasOpen = item.classList.contains('open');
+  // Close all in same container
+  const parent = item.closest('.faq-grid');
+  if (parent) parent.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+/* =============================================
+   SHARED CARD RENDERERS
+   (used by custom section types)
+   ============================================= */
+function testimonialCard(t) {
+  const stars = '★'.repeat(parseInt(t.stars)||5);
+  return `
+    <div class="testimonial-card reveal">
+      <div class="testimonial-quote">"</div>
+      <div class="testimonial-stars">${stars}</div>
+      <p class="testimonial-text">${t.text}</p>
+      <div class="testimonial-author">
+        <div class="testimonial-initials">${t.initials||''}</div>
+        <div>
+          <div class="testimonial-name">${t.name}</div>
+          <div class="testimonial-meta">${t.meta||''}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildBlogCardHtml(p, i, delayClass, noFeatured) {
+  const hasLink = p.linkType && p.linkType !== 'none' && p.linkUrl;
+  const isFeatured = p.featured && !noFeatured;
+  const delay = delayClass || `reveal-delay-${(i % 3) + 1}`;
+
+  // Click handler
+  let clickHandler = '';
+  if (hasLink) {
+    if (p.linkType === 'internal') {
+      clickHandler = `onclick="showPage('${escAttr(p.linkUrl)}')"`;
+    } else {
+      clickHandler = `onclick="openSmartLink('${escAttr(p.linkType)}','${escAttr(p.linkUrl)}')"`;
+    }
+  }
+
+  // Card top — image or emoji
+  const topImg = p.imagePath
+    ? `<div class="blog-card-top-img" style="background-image:url('${escAttr(p.imagePath)}')"></div>
+       <div class="blog-card-top-overlay"></div>`
+    : '';
+  const topContent = `
+    ${topImg}
+    <div class="blog-emoji">${p.emoji || '📋'}</div>
+    <div class="blog-tag">${p.tag || 'Article'}</div>`;
+
+  // Meta row — date left, read time right
+  const meta = (p.date || p.readTime) ? `
+    <div class="blog-card-meta">
+      ${p.date ? `<span class="blog-date">${p.date}</span>` : ''}
+      ${p.readTime ? `<span class="blog-read-time" style="margin-left:auto;">${p.readTime}</span>` : ''}
+    </div>` : '';
+
+  // CTA label
+  const defaultCta = { internal: 'View Page', external: 'Read More', file: 'Open File' };
+  const ctaText = p.ctaLabel || (p.linkType ? defaultCta[p.linkType] : '');
+  const cta = hasLink && ctaText ? `<div class="blog-cta">${ctaText} →</div>` : '';
+
+  return `<div class="blog-card${isFeatured ? ' blog-featured' : ''}${hasLink ? ' has-link' : ''} reveal ${delay}" ${clickHandler}>
+    <div class="blog-card-top">${topContent}</div>
+    <div class="blog-card-body">
+      <h3 class="blog-title">${p.title}</h3>
+      <p class="blog-excerpt">${p.excerpt}</p>
+      ${cta}
+      <div style="flex:1;"></div>
+      ${meta}
+    </div>
+  </div>`;
+}
+
+/* =============================================
+   ABOUT
+   ============================================= */
+function buildAbout() {
+  const a = (CFG.attorneys && CFG.attorneys.length > 0) ? CFG.attorneys[0] : null;
+  const name  = a ? a.name   : (CFG.attorneyName   || '');
+  const deg   = a ? a.degree : (CFG.attorneyDegree || '');
+  const photo = a ? a.photo  : (CFG.attorneyPhoto  || '');
+  const creds = a ? (a.credentials || []) : (CFG.attorneyCredentials || []);
+  const bio1  = a ? a.bio1   : (CFG.aboutBio1 || '');
+  const bio2  = a ? a.bio2   : (CFG.aboutBio2 || '');
+
+  const nameEl  = document.getElementById('about-attorney-name');
+  const degEl   = document.getElementById('about-attorney-degree');
+  const photoEl = document.getElementById('about-photo');
+  const credsEl = document.getElementById('about-credentials');
+  const biosEl  = document.getElementById('about-bios');
+
+  if (nameEl)  nameEl.textContent = name;
+  if (degEl)   degEl.textContent  = deg;
+  if (photoEl) { photoEl.src = photo; photoEl.alt = name; }
+  if (credsEl) credsEl.innerHTML  = creds.map(c => `<div class="credential-pill">${c}</div>`).join('');
+  if (biosEl)  biosEl.innerHTML   = [bio1, bio2].filter(Boolean).map(b => `<p>${b}</p>`).join('');
+}
+
+/* =============================================
+   CONTACT
+   ============================================= */
+function buildContact() {
+  const hl = document.getElementById('contact-headline');
+  if (hl) hl.textContent = CFG.contactHeadline;
+  document.getElementById('contact-subline').textContent = CFG.contactSubline;
+  document.getElementById('contact-info-firm').textContent = CFG.firmName;
+  const pl = document.getElementById('contact-phone-link');
+  pl.href = `tel:${CFG.phoneRaw}`; pl.textContent = CFG.phone;
+  document.getElementById('contact-fax').textContent = CFG.fax;
+  const el = document.getElementById('contact-email-link');
+  el.href = `mailto:${CFG.email}`; el.textContent = CFG.email;
+  document.getElementById('contact-address').textContent = `${CFG.address}, ${CFG.city}, ${CFG.stateAbbr} ${CFG.zip}`;
+  const hours = document.getElementById('contact-hours');
+  hours.innerHTML = `<div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Office Hours</div>` +
+    (CFG.hours||[]).map(h => `<div class="hours-row"><span class="hours-days">${h.days}</span><span class="hours-time">${h.hours}</span></div>`).join('');
+  document.getElementById('privacy-email').textContent = CFG.email;
+
+  // Build dynamic contact form
+  const wrap = document.getElementById('contact-form-wrap');
+  if (!wrap) return;
+  const formId = 'contact-main-form';
+  const fields = CFG.contactForm || [];
+  const endpoint = CFG.formEndpoint || '';
+  const submitLabel = CFG.contactSubmitLabel || 'Request Free Consultation';
+  const successMsg = CFG.contactSuccessMsg || "Thank you! We'll be in touch soon.";
+  const heading = CFG.contactFormHeading || '';
+  const intro = CFG.contactFormIntro || '';
+  const privacyNote = CFG.contactPrivacyNote || '';
+
+  function renderContactField(f, fi) {
+    const fieldId = `${formId}-f${fi}`;
+    const reqAttr = f.required ? 'required' : '';
+    const reqStar = f.required ? '<span class="req-star">*</span>' : '';
+    const ph = f.placeholder ? `placeholder="${escAttr(f.placeholder)}"` : '';
+    const label = f.label ? `<label for="${fieldId}">${f.label}${reqStar}</label>` : '';
+    let input = '';
+    switch (f.type) {
+      case 'email':    input = `<input type="email" id="${fieldId}" name="${escAttr(f.label)}" ${ph} ${reqAttr}/>`; break;
+      case 'phone':    input = `<input type="tel"   id="${fieldId}" name="${escAttr(f.label)}" ${ph} ${reqAttr}/>`; break;
+      case 'textarea': input = `<textarea id="${fieldId}" name="${escAttr(f.label)}" ${ph} ${reqAttr}></textarea>`; break;
+      case 'select': {
+        const opts = (f.options||[]).map(o => `<option value="${escAttr(o)}">${o}</option>`).join('');
+        input = `<select id="${fieldId}" name="${escAttr(f.label)}" ${reqAttr}><option value="">${f.placeholder || 'Select an option…'}</option>${opts}</select>`;
+        break;
+      }
+      case 'radio': {
+        const opts = (f.options||[]).map(o => `<label><input type="radio" name="${escAttr(f.label)}" value="${escAttr(o)}" ${reqAttr}/>${o}</label>`).join('');
+        input = `<div class="cps-form-radio-group">${opts}</div>`;
+        break;
+      }
+      case 'checkbox':
+        input = `<div class="cps-form-checkbox-wrap"><label><input type="checkbox" name="${escAttr(f.label)}" ${reqAttr}/>${f.label||''}</label></div>`;
+        break;
+      default:
+        input = `<input type="text" id="${fieldId}" name="${escAttr(f.label)}" ${ph} ${reqAttr}/>`;
+    }
+    return `<div class="form-group">${label}${input}</div>`;
+  }
+
+  let fieldsHtml = '';
+  let fi = 0;
+  while (fi < fields.length) {
+    const f = fields[fi];
+    if (f.halfWidth && fi + 1 < fields.length) {
+      fieldsHtml += `<div class="form-row">${renderContactField(f, fi)}${renderContactField(fields[fi+1], fi+1)}</div>`;
+      fi += 2;
+    } else {
+      fieldsHtml += renderContactField(f, fi);
+      fi++;
+    }
+  }
+
+  wrap.innerHTML = `
+    ${heading ? `<h3>${heading}</h3>` : ''}
+    ${intro   ? `<p>${intro}</p>`    : ''}
+    <form id="${formId}" onsubmit="submitCpsForm(event,'${formId}','${escAttr(endpoint)}','${escAttr(successMsg)}')">
+      ${fieldsHtml}
+      ${privacyNote ? `<p class="form-privacy">${privacyNote}</p>` : ''}
+      <button type="submit" class="btn-submit" id="contact-submit-btn">${submitLabel} →</button>
+    </form>
+    <div class="cps-form-success" id="${formId}-success" style="display:none;">
+      <div class="cps-form-success-icon">✅</div>
+      <div class="cps-form-success-msg"></div>
+    </div>`;
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+function buildFooter() {
+  document.getElementById('footer-firm-name').textContent = CFG.firmName;
+  document.getElementById('footer-tagline-foot').textContent = CFG.tagline;
+  document.getElementById('footer-bio').textContent = CFG.footerBio || (CFG.aboutBio1 ? CFG.aboutBio1.substring(0,120)+'…' : '');
+
+  // Social icons
+  const SOCIAL_SVGS = {
+    facebook:  `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>`,
+    instagram: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>`,
+    linkedin:  `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>`,
+    x:         `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
+    youtube:   `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="white" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>`,
+    tiktok:    `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.15a8.16 8.16 0 0 0 4.77 1.52V7.21a4.85 4.85 0 0 1-1-.52z"/></svg>`,
+    custom:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+  };
+  const socialEl = document.getElementById('footer-social-icons');
+  if (socialEl) {
+    const links = (CFG.socialLinks || []).filter(s => s.url);
+    socialEl.innerHTML = links.length ? `<div class="footer-social-row">${
+      links.map(s => `<a class="footer-social-icon" onclick="openSmartLink('external','${escAttr(s.url)}')" title="${escAttr(s.platform)}">${SOCIAL_SVGS[s.platform] || SOCIAL_SVGS.custom}</a>`).join('')
+    }</div>` : '';
+  }
+  document.getElementById('footer-copyright').textContent = `© ${new Date().getFullYear()} ${CFG.firmName}. All rights reserved.`;
+  document.getElementById('footer-contact-links').innerHTML = `
+    <a href="tel:${CFG.phoneRaw}">${CFG.phone}</a>
+    <a href="mailto:${CFG.email}">${CFG.email}</a>
+    <a>${CFG.address}</a>
+    <a>${CFG.city}, ${CFG.state} ${CFG.zip}</a>`;
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+/* =============================================
+   NAV BUILDER — respects page toggles
+   ============================================= */
+function buildNav() {
+  const pt = CFG.pageToggles || {};
+  const navPages = [
+    { key: 'about',        label: 'About'        },
+  ];
+  const nav = document.getElementById('drawer-links');
+  if (!nav) return;
+  const parts = [];
+  // Home always shown
+  const homeLink = document.createElement('span');
+  homeLink.className = 'nav-link';
+  homeLink.textContent = 'Home';
+  homeLink.onclick = () => { showPage('home'); toggleMobileNav(); };
+  parts.push(homeLink);
+  // Core pages
+  navPages.forEach(p => {
+    if (pt[p.toggleKey || p.key] === false) return;
+    const link = document.createElement('span');
+    link.className = 'nav-link';
+    link.textContent = p.label;
+    link.onclick = () => { showPage(p.key); toggleMobileNav(); };
+    parts.push(link);
+  });
+  // Custom pages
+  (CFG.customPages || []).forEach(cp => {
+    if (cp.enabled === false) return;
+    const link = document.createElement('span');
+    link.className = 'nav-link';
+    link.textContent = cp.navLabel || cp.header?.title || cp.slug;
+    link.dataset.slug = cp.slug;
+    link.onclick = () => { showPage(cp.slug); toggleMobileNav(); };
+    parts.push(link);
+  });
+  // Divider
+  const div = document.createElement('div');
+  div.className = 'mobile-nav-divider';
+  parts.push(div);
+  // Contact CTA
+  if (pt.contact !== false) {
+    const btn = document.createElement('button');
+    btn.className = 'btn-nav-cta';
+    btn.textContent = CFG.ctaLabel || 'Free Consultation';
+    btn.onclick = () => { showPage('contact'); toggleMobileNav(); };
+    parts.push(btn);
+  }
+  nav.innerHTML = '';
+  parts.forEach(el => nav.appendChild(el));
+  // Update active state
+  document.getElementById('mobile-nav').querySelectorAll('.nav-link').forEach(l => {
+    l.classList.toggle('active', l.textContent.toLowerCase().includes(currentPage));
+  });
+  buildFooterNav();
+}
+
+function buildFooterNav() {
+  const pt = CFG.pageToggles || {};
+  const footerPages = [
+    { key: 'home',    label: 'Home'  },
+    { key: 'about',   label: 'About' },
+  ];
+  const container = document.getElementById('footer-nav-links');
+  if (!container) return;
+  container.innerHTML = '';
+  footerPages.forEach(p => {
+    if (p.key !== 'home' && pt[p.toggleKey || p.key] === false) return;
+    const a = document.createElement('a');
+    a.textContent = p.label;
+    a.style.cursor = 'pointer';
+    a.onclick = () => showPage(p.key);
+    container.appendChild(a);
+  });
+  // Custom pages in footer
+  (CFG.customPages || []).forEach(cp => {
+    if (cp.enabled === false) return;
+    const a = document.createElement('a');
+    a.textContent = cp.navLabel || cp.header?.title || cp.slug;
+    a.style.cursor = 'pointer';
+    a.onclick = () => showPage(cp.slug);
+    container.appendChild(a);
+  });
+  // Contact CTA button
+  const ctaWrap = document.getElementById('footer-cta-wrap');
+  if (ctaWrap) ctaWrap.style.display = pt.contact === false ? 'none' : '';
+  const footerCtaBtn = document.getElementById('footer-cta-btn');
+  if (footerCtaBtn) footerCtaBtn.textContent = (CFG.ctaLabel || 'Free Consultation') + ' →';
+  // Footer bottom contact link
+  const bottomContact = document.getElementById('footer-bottom-contact');
+  if (bottomContact) bottomContact.style.display = pt.contact === false ? 'none' : '';
+}
+
+/* =============================================
+   HOMEPAGE SECTION VISIBILITY
+   ============================================= */
+function applyHomepageToggles() {
+  const ht = CFG.homeToggles || {};
+  const el = id => document.getElementById(id);
+  if (el('stats-bar'))  el('stats-bar').style.display  = ht.stats === false ? 'none' : '';
+  if (el('why'))        el('why').style.display        = ht.why   === false ? 'none' : '';
+  if (el('home-testimonials-section')) el('home-testimonials-section').style.display = ht.testimonials === false ? 'none' : '';
+}
+
+function buildPageHeaders() {
+  const h = Object.assign({
+    about:   { label: "About Us",     title: "Meet Our Team", subtitle: "" },
+    contact: { label: "Get in Touch" },
+  }, CFG.pageHeaders || {});
+
+  const set = (id, val) => { const el = document.getElementById(id); if (el && val !== undefined) el.textContent = val; };
+
+  set("about-label",   h.about?.label);
+  set("about-title",   h.about?.title);
+  set("contact-label", h.contact?.label);
+}
+
+function buildHeader() {
+  document.getElementById('header-firm-name').textContent = CFG.firmName;
+  document.getElementById('header-tagline').textContent = CFG.tagline;
+  document.getElementById('preload-firm').textContent = CFG.firmName;
+  document.getElementById('preloader-sub').textContent = CFG.preloaderTagline || '';
+  document.getElementById('metaDesc').content = CFG.metaDescription;
+  document.getElementById('metaKeys').content = CFG.metaKeywords;
+}
+function applyCTALabel() {
+  // ctaLabel is used for nav/footer CTA buttons; hero button is controlled by heroPrimaryLabel in buildHero
+}
+
+/* =============================================
+   PAGE NAVIGATION
+   ============================================= */
+const PAGES = ['home','about','contact','privacy'];
+let currentPage = 'home';
+
+let _suppressHistoryPush = false;
+
+function showPage(name) {
+  // Redirect to home if core page is disabled
+  const pt = CFG.pageToggles || {};
+  const disableable = ['about','contact'];
+  const toggleKey = name;
+  if (disableable.includes(name) && pt[toggleKey] === false) name = 'home';
+
+  // Check if it's a custom page slug
+  const customPages = CFG.customPages || [];
+  const isCustom = customPages.some(p => p.slug === name && p.enabled !== false);
+
+  // Hide all core pages
+  PAGES.forEach(p => {
+    const el = document.getElementById(`page-${p}`);
+    if (el) el.style.display = p === name ? '' : 'none';
+  });
+
+  // Hide all custom pages, show the target if custom
+  customPages.forEach(cp => {
+    const el = document.getElementById(`page-custom-${cp.slug}`);
+    if (el) el.style.display = (isCustom && cp.slug === name) ? '' : 'none';
+  });
+
+  // If it's a disabled custom page, go home
+  if (!PAGES.includes(name) && !isCustom) {
+    return showPage('home');
+  }
+
+  // Push history state so back/forward work
+  if (!_suppressHistoryPush) {
+    const hash = name === 'home' ? '' : '#' + name;
+    history.pushState({ page: name }, '', hash || window.location.pathname);
+  }
+
+  // Update nav active state
+  document.querySelectorAll('.nav-link').forEach(l => {
+    const lText = l.textContent.toLowerCase().trim();
+    const isActive = isCustom
+      ? l.dataset.slug === name
+      : lText.includes(name);
+    l.classList.toggle('active', isActive);
+  });
+
+  currentPage = name;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Header solid on non-home pages
+  const header = document.getElementById('site-header');
+  if (name !== 'home') {
+    const _chr = getComputedStyle(document.documentElement).getPropertyValue('--chrome').trim() || '#060f1d';
+    const _rgb = _chr.replace('#','').match(/.{2}/g).map(h=>parseInt(h,16)).join(',');
+    header.style.background = `rgba(${_rgb}, 0.97)`;
+    header.style.backdropFilter = 'blur(12px)';
+    header.classList.add('solid');
+  } else {
+    header.style.background = 'rgba(9, 20, 38, 0)';
+    header.style.backdropFilter = '';
+    header.classList.remove('solid');
+  }
+
+  // Page title — check custom pages first
+  const customPage = customPages.find(p => p.slug === name);
+  if (customPage) {
+    document.title = customPage.navLabel || customPage.header?.title || CFG.firmName;
+  } else {
+    const titles = CFG.pageTitles;
+    document.title = titles[name] || CFG.firmName;
+  }
+
+  setTimeout(() => { initReveal(); initProcessObserver(); }, 100);
+}
+
+// Back / forward button support
+window.addEventListener('popstate', e => {
+  const page = (e.state && e.state.page) ? e.state.page : 'home';
+  _suppressHistoryPush = true;
+  showPage(page);
+  _suppressHistoryPush = false;
+});
+
+/* =============================================
+   MOBILE NAV
+   ============================================= */
+function toggleMobileNav() {
+  const nav = document.getElementById('mobile-nav');
+  const btn = document.getElementById('hamburger');
+  const backdrop = document.getElementById('navBackdrop');
+  const clip = document.getElementById('navClip');
+  const isOpening = !nav.classList.contains('open');
+  nav.classList.toggle('open');
+  btn.classList.toggle('open');
+  backdrop.classList.toggle('visible');
+  clip.classList.toggle('active');
+  document.body.style.overflow = isOpening ? 'hidden' : '';
+}
+/* =============================================
+   SCROLL HEADER — smooth fade-in bg on home only
+   ============================================= */
+window.addEventListener('scroll', () => {
+  if (currentPage !== 'home') return; // non-home pages stay solid (set by showPage)
+  const header = document.getElementById('site-header');
+  const scrollY = window.scrollY;
+  // Fade in smoothly over first 180px of scroll
+  const opacity = Math.min(scrollY / 180, 1);
+  const chr = getComputedStyle(document.documentElement).getPropertyValue('--chrome').trim() || '#060f1d';
+  const rgb = chr.replace('#','').match(/.{2}/g).map(h=>parseInt(h,16)).join(',');
+  header.style.background = `rgba(${rgb}, ${(opacity * 0.97).toFixed(3)})`;
+  header.style.backdropFilter = opacity > 0.05 ? `blur(${Math.round(opacity * 12)}px)` : '';
+  header.classList.toggle('scrolled', scrollY > 40);
+}, { passive: true });
+
+/* =============================================
+   SCROLL REVEAL
+   ============================================= */
+function initProcessObserver() {
+  // Activate the step whose circle is nearest the vertical centre of the viewport
+  const updateActiveStep = () => {
+    const steps = document.querySelectorAll('.process-step');
+    if (!steps.length) return;
+    const mid = window.innerHeight / 2;
+    let closest = null, closestDist = Infinity;
+    steps.forEach(step => {
+      const rect = step.getBoundingClientRect();
+      const stepMid = rect.top + rect.height / 2;
+      const dist = Math.abs(stepMid - mid);
+      if (dist < closestDist) { closestDist = dist; closest = step; }
+    });
+    if (closest) {
+      steps.forEach(s => s.classList.remove('step-active'));
+      closest.classList.add('step-active');
+    }
+  };
+
+  // Use IntersectionObserver per step as a trigger, then refine with scroll
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) updateActiveStep(); });
+  }, { threshold: 0.4 });
+
+  window.addEventListener('scroll', updateActiveStep, { passive: true });
+  document.querySelectorAll('.process-step').forEach(s => obs.observe(s));
+}
+
+function initReveal() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => obs.observe(el));
+}
+
+/* =============================================
+   CUSTOM PAGE BUILDER
+   ============================================= */
+function buildHomeSections() {
+  const container = document.getElementById('home-sections');
+  if (!container) return;
+  container.innerHTML = '';
+  const sections = CFG.homeSections || [];
+  sections.forEach((sec, idx) => {
+    const secEl = renderCustomSection(sec, idx, false, sections);
+    if (secEl) container.appendChild(secEl);
+  });
+}
+
+function buildCustomPages() {
+  const container = document.getElementById('custom-pages-container');
+  if (!container) return;
+  container.innerHTML = '';
+  const pages = CFG.customPages || [];
+  pages.forEach(page => {
+    const pageEl = document.createElement('div');
+    pageEl.id = `page-custom-${page.slug}`;
+    pageEl.style.display = 'none';
+
+    // Sections — first section gets header padding to clear fixed nav
+    const sections = page.sections || [];
+    sections.forEach((sec, idx) => {
+      const secEl = renderCustomSection(sec, idx, idx === 0, sections);
+      if (secEl) pageEl.appendChild(secEl);
+    });
+
+    container.appendChild(pageEl);
+  });
+}
+
+// For link/button sections, inherit background from the nearest preceding non-appendage section.
+function getInheritedBg(sections, idx) {
+  for (let i = idx - 1; i >= 0; i--) {
+    const t = sections[i].type;
+    if (t !== 'link' && t !== 'button') {
+      return sections[i].background || 'light';
+    }
+  }
+  return 'light';
+}
+
+const CPS_NO_ZONE_TYPES = new Set(['link','button','cta','stats','two-col','feature-cards']);
+
+function applyTwoZoneLayout(wrapper, sec, isFirst) {
+  if (CPS_NO_ZONE_TYPES.has(sec.type)) return;
+  if (!sec.heading) return;
+  if (isFirst) return;
+  if (!(sec.subtitle || sec.body)) return;
+
+  const bg = sec.background || 'light';
+  if (bg === 'dark') return;
+
+  const dividerColor = bg === 'alt' ? 'rgba(201,168,76,0.25)' : '#e4e0d8';
+
+  const container = wrapper.querySelector('.container');
+  if (!container) return;
+
+  const headerItems = [];
+  const contentItems = [];
+  Array.from(container.childNodes).forEach(node => {
+    if (node.nodeType === 3 && !node.textContent.trim()) return;
+    const isLabel   = node.nodeType === 1 && node.classList && node.classList.contains('section-label');
+    const isHeading = node.nodeType === 1 && (node.tagName === 'H1' || node.tagName === 'H2');
+    if (isLabel || isHeading) {
+      headerItems.push(node.cloneNode(true));
+    } else {
+      contentItems.push(node.cloneNode(true));
+    }
+  });
+
+  if (!headerItems.length || !contentItems.length) return;
+
+  const headerZone = document.createElement('div');
+  headerZone.className = 'cps-header-zone';
+  headerZone.style.paddingBottom = '32px';
+  headerZone.style.borderBottom = '1px solid ' + dividerColor;
+  const hc = document.createElement('div');
+  hc.className = 'container';
+  headerItems.forEach(n => hc.appendChild(n));
+  headerZone.appendChild(hc);
+
+  const contentZone = document.createElement('div');
+  contentZone.className = 'cps-content-zone';
+  contentZone.style.paddingTop = '40px';
+  const cc = document.createElement('div');
+  cc.className = 'container';
+  contentItems.forEach(n => cc.appendChild(n));
+  contentZone.appendChild(cc);
+
+  // No background change — wrapper keeps its section class bg
+  // Just remove the container and replace with two zones
+  container.replaceWith(headerZone, contentZone);
+}
+
+function renderCustomSection(sec, idx, isFirst, allSections) {
+  if (!sec || !sec.type) return null;
+
+  const isDark = sec.background === 'dark';
+  const bgClass = isDark ? 'cps-section-dark section-dark'
+                : sec.background === 'alt'  ? 'cps-section-alt section-alt'
+                : 'cps-section-light';
+
+  const wrapper = document.createElement('section');
+  wrapper.className = `section ${bgClass}`;
+
+  // First section: replaces the page banner — clear fixed header, use banner typography
+  if (isFirst) {
+    wrapper.classList.add('cps-first-section');
+  }
+
+  const labelHTML = sec.label ? `
+    <div class="section-label reveal" style="margin-bottom:${isFirst ? '16px' : '20px'};">
+      <div class="section-label-line"></div>
+      <span class="section-label-text">${sec.label}</span>
+    </div>` : '';
+
+  // For first section, headings use page-banner-title scale and the h1 tag
+  const headTag = isFirst ? 'h1' : 'h2';
+  const headClass = isFirst
+    ? `page-banner-title${isDark ? ' page-banner-title-light' : ''}`
+    : 'section-title';
+  const subtitleStyle = isFirst
+    ? `font-size:clamp(15px,1.6vw,18px);color:${isDark ? 'rgba(255,255,255,0.65)' : 'var(--text-muted)'};line-height:1.7;max-width:600px;margin-top:14px;`
+    : '';
+
+  switch (sec.type) {
+
+    // ── TEXT BLOCK ──────────────────────────────────────────────
+    case 'text': {
+      wrapper.innerHTML = `<div class="container cps-text-block">
+        ${labelHTML}
+        ${sec.heading ? `<${headTag} class="${headClass} cps-heading reveal">${sec.heading}</${headTag}>` : ''}
+        <div class="cps-body reveal reveal-delay-1">${formatBody(sec.body)}</div>
+      </div>`;
+      break;
+    }
+
+    // ── TWO COLUMN ──────────────────────────────────────────────
+    case 'two-col': {
+      const imgSide = sec.imagePosition === 'left' ? 'image-left' : 'image-right';
+      const imgHTML = sec.imagePath
+        ? `<div class="cps-two-col-img"><img src="${sec.imagePath}" alt="${sec.heading||''}" loading="lazy"/></div>`
+        : `<div class="cps-two-col-img"><div class="cps-two-col-img-placeholder">🏛️</div></div>`;
+      const textHTML = `<div class="cps-two-col-text">
+        ${labelHTML}
+        ${sec.heading ? `<${headTag} class="${headClass} cps-heading">${sec.heading}</${headTag}>` : ''}
+        <div class="cps-body">${formatBody(sec.body)}</div>
+        ${(sec.cta_linkLabel || sec.ctaLabel) ? `<div style="margin-top:28px;"><button class="btn-primary" ${
+          sec.cta_linkType === 'internal' ? `onclick="showPage('${escAttr(sec.cta_linkUrl || 'contact')}')"` :
+          (sec.cta_linkType === 'external' || sec.cta_linkType === 'file') ? `onclick="openSmartLink('${escAttr(sec.cta_linkType)}','${escAttr(sec.cta_linkUrl)}')"` :
+          `onclick="showPage('contact')"`
+        }>${sec.cta_linkLabel || sec.ctaLabel} →</button></div>` : ''}
+      </div>`;
+      wrapper.innerHTML = `<div class="container">
+        <div class="cps-two-col ${imgSide} reveal">
+          ${sec.imagePosition === 'left' ? imgHTML + textHTML : textHTML + imgHTML}
+        </div>
+      </div>`;
+      break;
+    }
+
+    // ── STATS BAR ────────────────────────────────────────────────
+    case 'stats': {
+      wrapper.classList.add('cps-stats-bar');
+      wrapper.style.cssText = '';
+      const items = (sec.items || []).map(s => `
+        <div class="stat-cell">
+          <div class="stat-num">${s.num}</div>
+          <div class="stat-label">${s.label}</div>
+        </div>`).join('');
+      wrapper.innerHTML = `<div class="stats-inner">${items}</div>`;
+      break;
+    }
+
+    // ── FEATURE CARDS ─────────────────────────────────────────────
+    case 'feature-cards': {
+      const fcCards = (sec.items || []).map((card, i) => {
+        const hasLink = card.linkType && card.linkType !== 'none' && card.linkUrl && card.linkLabel;
+        const linkOnclick = hasLink
+          ? (card.linkType === 'internal'
+              ? 'showPage(\'' + escAttr(card.linkUrl) + '\')'
+              : 'openSmartLink(\'' + escAttr(card.linkType) + '\',\'' + escAttr(card.linkUrl) + '\')')
+          : '';
+        const linkHtml = hasLink
+          ? '<span class="cps-fc-link" onclick="' + linkOnclick + '">' + (card.linkLabel || '') + ' \u2192</span>'
+          : '';
+        const cardNum = card.num || String(i + 1).padStart(2, '0');
+        return `
+        <div class="cps-fc-card reveal reveal-delay-${(i % 4) + 1}">
+          <div class="cps-fc-num">${cardNum}</div>
+          <h3>${card.title || ''}</h3>
+          <p>${card.body || ''}</p>
+          ${linkHtml}
+        </div>`;
+      }).join('');
+      const hasBadge = sec.badgeNum && sec.badgeNum.trim();
+      const badgeHtml = hasBadge ? `
+        <div class="cps-fc-badge reveal reveal-delay-3">
+          <div class="cps-fc-badge-num">${sec.badgeNum}</div>
+          <div class="cps-fc-badge-label">${sec.badgeLabel || ''}</div>
+        </div>` : '';
+      const headerHtml = (sec.heading || sec.body || hasBadge) ? `
+        <div class="cps-fc-header">
+          <div class="cps-fc-header-text">
+            ${labelHTML}
+            ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
+            ${sec.body ? `<p class="section-subtitle reveal reveal-delay-1" style="${subtitleStyle}">${sec.body}</p>` : ''}
+          </div>
+          ${badgeHtml}
+        </div>` : labelHTML;
+      wrapper.innerHTML = `<div class="container">
+        ${headerHtml}
+        <div class="cps-fc-grid">${fcCards}</div>
+      </div>`;
+      break;
+    }
+
+    // ── BULLET / CHECKLIST ───────────────────────────────────────
+    case 'bullets': {
+      const items = (sec.items || []).map(item => {
+        const hasLink = item.linkType && item.linkType !== 'none' && item.linkUrl;
+        const clickAttr = hasLink
+          ? (item.linkType === 'internal'
+              ? `onclick="showPage('${escAttr(item.linkUrl)}')" style="cursor:pointer;"`
+              : `onclick="openSmartLink('${escAttr(item.linkType)}','${escAttr(item.linkUrl)}')" style="cursor:pointer;"`)
+          : '';
+        const arrow = hasLink ? `<span class="cps-bullet-arrow">→</span>` : '';
+        return `
+        <div class="cps-bullet-item reveal${hasLink ? ' cps-bullet-linked' : ''}" ${clickAttr}>
+          <div class="cps-bullet-icon">${item.icon || '✓'}</div>
+          <div class="cps-bullet-text">
+            <h4>${item.title}${arrow}</h4>
+            ${item.desc ? `<p>${item.desc}</p>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+      wrapper.innerHTML = `<div class="container">
+        ${labelHTML}
+        ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
+        ${sec.subtitle ? `<p class="section-subtitle reveal reveal-delay-1" style="${subtitleStyle}">${sec.subtitle}</p>` : ''}
+        <div class="cps-bullets-list">${items}</div>
+      </div>`;
+      break;
+    }
+
+    // ── SERVICES GRID ────────────────────────────────────────────
+    case 'services': {
+      const items = (sec.items || []).map((s, i) => `
+        <div class="service-card reveal reveal-delay-${(i%3)+1}" ${s.detail ? `onclick="openCpsModal('${escAttr(s.title)}','${escAttr(s.icon||'⚖️')}','${escAttr(s.detail || s.desc)}','${escAttr(s.btnLabel||'')}','${escAttr(s.btnLinkType||'internal')}','${escAttr(s.btnLinkUrl||'contact')}')"` : ''}>
+          <div class="service-icon">${s.icon || '⚖️'}</div>
+          <h3 class="service-title">${s.title}</h3>
+          <p class="service-desc">${s.desc}</p>
+          ${s.detail ? `<div class="service-more">Learn More <span>→</span></div>` : ''}
+        </div>`).join('');
+      wrapper.innerHTML = `<div class="container">
+        ${labelHTML}
+        ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
+        ${sec.subtitle ? `<p class="section-subtitle reveal reveal-delay-1" style="${subtitleStyle}">${sec.subtitle}</p>` : ''}
+        <div class="services-grid" style="margin-top:40px;">${items}</div>
+      </div>`;
+      break;
+    }
+
+    // ── PROCESS STEPS ────────────────────────────────────────────
+    case 'steps': {
+      const items = (sec.items || []).map((s, i) => {
+        const hasLink = s.linkType && s.linkType !== 'none' && s.linkUrl && s.linkLabel;
+        const linkHtml = hasLink ? `<div class="step-link" onclick="${
+          s.linkType === 'internal' ? `showPage('${escAttr(s.linkUrl)}')` : `openSmartLink('${escAttr(s.linkType)}','${escAttr(s.linkUrl)}')`
+        }">${escAttr(s.linkLabel)} →</div>` : '';
+        return `
+        <div class="process-step${i===0?' step-active':''}" data-step="${i+1}">
+          <div class="step-num-wrap"><span class="step-num">${i+1}</span></div>
+          <div class="step-body${hasLink?' has-step-link':''}">
+            <h3 class="step-title">${s.title}</h3>
+            <p class="step-desc">${s.body || s.desc || ''}</p>
+            ${linkHtml}
+          </div>
+        </div>`;
+      }).join('');
+      wrapper.classList.add('cps-section-steps');
+      wrapper.innerHTML = `<div class="container">
+        ${labelHTML}
+        ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
+        ${sec.subtitle ? `<p class="section-subtitle reveal reveal-delay-1" style="${subtitleStyle}">${sec.subtitle}</p>` : ''}
+        <div class="process-timeline" style="margin-top:48px;">${items}</div>
+      </div>`;
+      break;
+    }
+
+    // ── FAQ ACCORDION ────────────────────────────────────────────
+    case 'faq': {
+      const items = (sec.items || []).map((f, i) => {
+        const hasLink = f.linkType && f.linkType !== 'none' && f.linkUrl && f.linkLabel;
+        const linkHtml = hasLink ? `<div class="faq-item-link" onclick="${
+          f.linkType === 'internal' ? `showPage('${escAttr(f.linkUrl)}')` : `openSmartLink('${escAttr(f.linkType)}','${escAttr(f.linkUrl)}')`
+        }">${escAttr(f.linkLabel)} →</div>` : '';
+        return `
+        <div class="faq-item" id="cpfaq-${idx}-${i}">
+          <div class="faq-question" onclick="toggleFaq('cpfaq-${idx}-${i}')">
+            <span class="faq-question-text">${f.q}</span>
+            <div class="faq-toggle"><span class="faq-toggle-icon">+</span></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-inner${hasLink?' has-faq-link':''}">${f.a}</div>${linkHtml}</div>
+        </div>`;
+      }).join('');
+      wrapper.innerHTML = `<div class="container">
+        ${labelHTML}
+        ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
+        ${sec.subtitle ? `<p class="section-subtitle reveal reveal-delay-1" style="${subtitleStyle}">${sec.subtitle}</p>` : ''}
+        <div class="faq-grid" style="margin-top:40px;">${items}</div>
+      </div>`;
+      break;
+    }
+
+    // ── TESTIMONIALS ─────────────────────────────────────────────
+    case 'testimonials': {
+      const showReviews = sec.showReviews !== false;
+      // Mode 1: pull from CFG.testimonials; Mode 2: use sec.items
+      const source = showReviews
+        ? (CFG.testimonials || []).slice(0, parseInt(sec.count) || 3)
+        : (sec.items || []);
+      const items = source.map(testimonialCard).join('');
+      const showBtn = showReviews && sec.showReadAll !== false;
+      const btnLabel = sec.readAllLabel || 'Read All Reviews';
+      wrapper.innerHTML = `<div class="container">
+        ${labelHTML}
+        ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
+        ${sec.subtitle ? `<p class="section-subtitle reveal reveal-delay-1" style="${subtitleStyle}">${sec.subtitle}</p>` : ''}
+        <div class="testimonials-track" style="margin-top:40px;">${items}</div>
+        ${showBtn ? `<div style="text-align:center;margin-top:40px;"><button class="btn-primary" onclick="showPage('testimonials')" style="margin:0 auto;">${btnLabel} →</button></div>` : ''}
+      </div>`;
+      break;
+    }
+
+    // ── RESOURCES / BLOG ─────────────────────────────────────────
+    case 'resources': {
+      const allPosts = sec.items || [];
+      const featured = allPosts.filter(p => p.featured);
+      const rest = allPosts.filter(p => !p.featured);
+      const ordered = [...featured, ...rest];
+      const items = ordered.map((p, i) => buildBlogCardHtml(p, i, null, true)).join('');
+      wrapper.innerHTML = `<div class="container">
+        ${labelHTML}
+        ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
+        ${sec.subtitle ? `<p class="section-subtitle reveal reveal-delay-1" style="${subtitleStyle}">${sec.subtitle}</p>` : ''}
+        <div class="blog-grid" style="margin-top:40px;">${items}</div>
+      </div>`;
+      break;
+    }
+
+    // ── CTA BANNER ───────────────────────────────────────────────
+    case 'cta': {
+      wrapper.classList.add('cps-cta-wrapper');
+      wrapper.innerHTML = `<div class="cps-cta-banner">
+        <div class="container">
+          ${sec.heading ? `<${headTag} class="${headClass} cps-heading reveal">${sec.heading}</${headTag}>` : ''}
+          ${sec.body ? `<div class="cps-body reveal reveal-delay-1">${sec.body}</div>` : ''}
+          <div class="cps-actions reveal reveal-delay-2">
+            <button class="btn-primary" onclick="showPage('contact')">${sec.ctaLabel || CFG.ctaLabel || 'Free Consultation'} →</button>
+            ${sec.secondaryLabel ? `<button class="btn-outline" onclick="showPage('${sec.secondaryTarget||'services'}')">${sec.secondaryLabel}</button>` : ''}
+          </div>
+        </div>
+      </div>`;
+      break;
+    }
+
+    // ── DOCUMENT CHECKLIST ───────────────────────────────────────
+    case 'checklist': {
+      const cats = (sec.categories || []).map(cat => {
+        const docItems = (cat.items || []).map(item =>
+          `<div class="cps-doc-item"><div class="cps-doc-check">✓</div>${item}</div>`).join('');
+        return `<div class="cps-doc-category">
+          <div class="cps-doc-category-title">${cat.title}</div>
+          <div class="cps-doc-items">${docItems}</div>
+        </div>`;
+      }).join('');
+      wrapper.innerHTML = `<div class="container">
+        ${labelHTML}
+        ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
+        ${sec.subtitle ? `<p class="section-subtitle reveal reveal-delay-1" style="${subtitleStyle}">${sec.subtitle}</p>` : ''}
+        <div class="cps-doc-checklist reveal reveal-delay-2" style="margin-top:40px;">${cats}</div>
+      </div>`;
+      break;
+    }
+
+    // ── TIMELINE (case/estate) ────────────────────────────────────
+    case 'timeline': {
+      const items = (sec.items || []).map((item, i) => {
+        const hasLink = item.linkType && item.linkType !== 'none' && item.linkUrl && item.linkLabel;
+        const linkHtml = hasLink ? `<div class="cps-timeline-link" onclick="${
+          item.linkType === 'internal' ? `showPage('${escAttr(item.linkUrl)}')` : `openSmartLink('${escAttr(item.linkType)}','${escAttr(item.linkUrl)}')`
+        }">${escAttr(item.linkLabel)} →</div>` : '';
+        return `
+        <div class="cps-timeline-item reveal">
+          <div class="cps-timeline-left">
+            <div class="cps-timeline-dot">${i+1}</div>
+            <div class="cps-timeline-line"></div>
+          </div>
+          <div class="cps-timeline-body${hasLink?' has-tl-link':''}">
+            ${item.date ? `<div class="cps-timeline-date">${item.date}</div>` : ''}
+            <h4>${item.title}</h4>
+            <p>${item.body || ''}</p>
+            ${linkHtml}
+          </div>
+        </div>`;
+      }).join('');
+      wrapper.innerHTML = `<div class="container">
+        ${labelHTML}
+        ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
+        ${sec.subtitle ? `<p class="section-subtitle reveal reveal-delay-1" style="${subtitleStyle}">${sec.subtitle}</p>` : ''}
+        <div class="cps-timeline" style="margin-top:48px;">${items}</div>
+      </div>`;
+      break;
+    }
+
+    // ── FEE SCHEDULE ─────────────────────────────────────────────
+    case 'fees': {
+      const rows = (sec.items || []).map(row => {
+        const hasLink = row.linkType && row.linkType !== 'none' && row.linkUrl && row.linkLabel;
+        const linkHtml = hasLink ? `<div class="cps-fee-link" onclick="${
+          row.linkType === 'internal' ? `showPage('${escAttr(row.linkUrl)}')` : `openSmartLink('${escAttr(row.linkType)}','${escAttr(row.linkUrl)}')`
+        }">${escAttr(row.linkLabel)} →</div>` : '';
+        return `
+        <tr>
+          <td><strong>${row.service}</strong>${row.note ? `<div class="cps-fee-note">${row.note}</div>` : ''}${linkHtml}</td>
+          <td><div class="cps-fee-amount">${row.amount}</div></td>
+          <td style="color:var(--text-muted);font-size:13px;">${row.detail || ''}</td>
+        </tr>`;
+      }).join('');
+      wrapper.innerHTML = `<div class="container">
+        ${labelHTML}
+        ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
+        ${sec.subtitle ? `<p class="section-subtitle reveal reveal-delay-1" style="${subtitleStyle}">${sec.subtitle}</p>` : ''}
+        <div class="reveal reveal-delay-2" style="overflow-x:auto;">
+          <table class="cps-fee-table">
+            <thead><tr><th>Service</th><th>Fee</th><th>Notes</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+        ${sec.disclaimer ? `<p style="font-size:12px;color:var(--text-muted);margin-top:16px;font-style:italic;">${sec.disclaimer}</p>` : ''}
+      </div>`;
+      break;
+    }
+
+    // ── JURISDICTION NOTICE ──────────────────────────────────────
+    case 'jurisdiction': {
+      const hasLink = sec.linkType && sec.linkType !== 'none' && sec.linkUrl && sec.linkLabel;
+      const linkHtml = hasLink ? `<div class="cps-jurisdiction-link" onclick="${
+        sec.linkType === 'internal' ? `showPage('${escAttr(sec.linkUrl)}')` : `openSmartLink('${escAttr(sec.linkType)}','${escAttr(sec.linkUrl)}')`
+      }">${escAttr(sec.linkLabel)} →</div>` : '';
+      wrapper.innerHTML = `<div class="container">
+        ${labelHTML}
+        ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
+        <div class="cps-jurisdiction reveal reveal-delay-1" style="margin-top:${sec.heading ? '32px' : '0'};">
+          <div class="cps-jurisdiction-icon">${sec.icon || '⚖️'}</div>
+          <div class="cps-jurisdiction-title">${sec.title || ''}</div>
+          <div class="cps-jurisdiction-body${hasLink?' has-jur-link':''}">${formatBody(sec.body)}</div>
+          ${linkHtml}
+        </div>
+      </div>`;
+      break;
+    }
+
+    // ── TEAM BLOCK ───────────────────────────────────────────────
+    case 'team': {
+      // Use configured attorneys or custom items
+      const members = sec.useAttorneys !== false
+        ? (CFG.attorneys || [{ name: CFG.attorneyName, degree: CFG.attorneyDegree, photo: CFG.attorneyPhoto, bio: CFG.aboutBio1 }])
+        : (sec.items || []);
+      const cards = members.map(m => {
+        const photoHTML = m.photo
+          ? `<img class="cps-team-photo" src="${m.photo}" alt="${m.name||''}" loading="lazy"/>`
+          : `<div class="cps-team-photo-placeholder">👤</div>`;
+        return `<div class="cps-team-card reveal">
+          ${photoHTML}
+          <div class="cps-team-info">
+            <div class="cps-team-name">${m.name||''}</div>
+            ${m.degree ? `<div class="cps-team-title">${m.degree}</div>` : ''}
+            ${m.bio ? `<p class="cps-team-bio">${m.bio.substring(0,140)}…</p>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+      wrapper.innerHTML = `<div class="container">
+        ${labelHTML}
+        ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
+        <div class="cps-team-grid">${cards}</div>
+      </div>`;
+      break;
+    }
+
+    // ── CUSTOM FORM ──────────────────────────────────────────────
+    case 'form': {
+      const formId = `cps-form-${idx}`;
+
+      function renderFormInput(f, fi) {
+        const fieldId = `${formId}-f${fi}`;
+        const reqAttr = f.required !== false ? 'required' : '';
+        const reqStar = f.required !== false ? '<span class="req-star">*</span>' : '';
+        const label = f.label ? `<label for="${fieldId}">${f.label}${reqStar}</label>` : '';
+        const ph = f.placeholder ? `placeholder="${escAttr(f.placeholder)}"` : '';
+        let input = '';
+        switch (f.type) {
+          case 'email':
+            input = `<input type="email" id="${fieldId}" name="${escAttr(f.label)}" ${ph} ${reqAttr}/>`;
+            break;
+          case 'phone':
+            input = `<input type="tel" id="${fieldId}" name="${escAttr(f.label)}" ${ph} ${reqAttr}/>`;
+            break;
+          case 'textarea':
+            input = `<textarea id="${fieldId}" name="${escAttr(f.label)}" ${ph} ${reqAttr}></textarea>`;
+            break;
+          case 'select': {
+            const opts = (f.options || []).map(o => `<option value="${escAttr(o)}">${o}</option>`).join('');
+            input = `<select id="${fieldId}" name="${escAttr(f.label)}" ${reqAttr}><option value="">Select an option…</option>${opts}</select>`;
+            break;
+          }
+          case 'radio': {
+            const opts = (f.options || []).map(o => `
+              <label><input type="radio" name="${escAttr(f.label)}" value="${escAttr(o)}" ${reqAttr}/>${o}</label>`).join('');
+            input = `<div class="cps-form-radio-group">${opts}</div>`;
+            break;
+          }
+          case 'checkbox':
+            input = `<div class="cps-form-checkbox-wrap">
+              <label><input type="checkbox" name="${escAttr(f.label)}" ${reqAttr}/>${f.label || ''}</label>
+            </div>`;
+            break;
+          default:
+            input = `<input type="text" id="${fieldId}" name="${escAttr(f.label)}" ${ph} ${reqAttr}/>`;
+        }
+        return `<div class="cps-form-field">${label}${input}</div>`;
+      }
+
+      // Build fields — halfWidth fields pair with the next field into a two-column row
+      const fieldList = sec.fields || [];
+      let fieldsHtml = '';
+      let fi = 0;
+      while (fi < fieldList.length) {
+        const f = fieldList[fi];
+        if (f.halfWidth && fi + 1 < fieldList.length) {
+          fieldsHtml += `<div class="cps-form-field-row">
+            ${renderFormInput(f, fi)}
+            ${renderFormInput(fieldList[fi + 1], fi + 1)}
+          </div>`;
+          fi += 2;
+        } else {
+          fieldsHtml += renderFormInput(f, fi);
+          fi++;
+        }
+      }
+
+      const submitLabel = sec.submitLabel || 'Send Message';
+      wrapper.innerHTML = `<div class="container">
+        ${labelHTML}
+        ${sec.heading ? `<${headTag} class="${headClass} cps-heading reveal">${sec.heading}</${headTag}>` : ''}
+        <div class="cps-form-wrap reveal reveal-delay-1">
+          ${sec.intro ? `<div class="cps-form-intro">${sec.intro}</div>` : ''}
+          <form class="cps-form" id="${formId}" onsubmit="submitCpsForm(event,'${formId}','${escAttr(sec.endpoint||'')}','${escAttr(sec.successMsg||'Thank you! We\'ll be in touch soon.')}')">
+            ${fieldsHtml}
+            <div class="cps-form-submit">
+              <button type="submit" class="btn-primary">${submitLabel} →</button>
+            </div>
+          </form>
+          <div class="cps-form-success" id="${formId}-success">
+            <div class="cps-form-success-icon">✅</div>
+            <div class="cps-form-success-msg"></div>
+          </div>
+        </div>
+      </div>`;
+      break;
+    }
+
+    // ── LINK ─────────────────────────────────────────────────────
+    case 'link': {
+      const inheritedBg = getInheritedBg(allSections || [], idx);
+      const inheritedClass = inheritedBg === 'dark' ? 'cps-section-dark section-dark'
+                           : inheritedBg === 'alt'  ? 'cps-section-alt section-alt'
+                           : 'cps-section-light';
+      wrapper.className = `cps-appendage ${inheritedClass}`;
+
+      const hasLink = sec.linkType && sec.linkType !== 'none' && sec.linkUrl;
+      let clickHandler = '';
+      if (hasLink) {
+        if (sec.linkType === 'internal') {
+          clickHandler = `onclick="showPage('${escAttr(sec.linkUrl)}')"`;
+        } else {
+          clickHandler = `onclick="openSmartLink('${escAttr(sec.linkType)}','${escAttr(sec.linkUrl)}')"`;
+        }
+      }
+      const linkText = sec.linkLabel || sec.linkUrl || 'Learn More';
+      wrapper.innerHTML = `<div class="container">
+        <div class="cps-link-block reveal">
+          ${hasLink
+            ? `<span class="cps-link-anchor" ${clickHandler}>${linkText} →</span>`
+            : `<span class="cps-link-anchor" style="opacity:0.4;cursor:default;">${linkText} →</span>`}
+        </div>
+      </div>`;
+      break;
+    }
+
+    // ── BUTTON ───────────────────────────────────────────────────
+    case 'button': {
+      const inheritedBg = getInheritedBg(allSections || [], idx);
+      const inheritedClass = inheritedBg === 'dark' ? 'cps-section-dark section-dark'
+                           : inheritedBg === 'alt'  ? 'cps-section-alt section-alt'
+                           : 'cps-section-light';
+      wrapper.className = `cps-appendage ${inheritedClass}`;
+
+      function makeBtnClick(linkType, linkUrl) {
+        if (!linkType || linkType === 'none' || !linkUrl) return '';
+        if (linkType === 'internal') return `onclick="showPage('${escAttr(linkUrl)}')"`;
+        return `onclick="openSmartLink('${escAttr(linkType)}','${escAttr(linkUrl)}')"`;
+      }
+      const hasPrimary = sec.primary_linkType && sec.primary_linkType !== 'none' && sec.primary_linkUrl;
+      const hasSecondary = sec.secondary_linkType && sec.secondary_linkType !== 'none' && sec.secondary_linkUrl;
+      const primaryBtn = (hasPrimary || sec.primary_linkLabel)
+        ? `<button class="btn-primary" ${makeBtnClick(sec.primary_linkType, sec.primary_linkUrl)}>${sec.primary_linkLabel || 'Learn More'} →</button>`
+        : '';
+      const secondaryBtn = (hasSecondary || sec.secondary_linkLabel)
+        ? `<button class="btn-outline-dark" ${makeBtnClick(sec.secondary_linkType, sec.secondary_linkUrl)}>${sec.secondary_linkLabel || 'Learn More'}</button>`
+        : '';
+      wrapper.innerHTML = `<div class="container">
+        <div class="cps-button-actions reveal">
+          ${primaryBtn}${secondaryBtn}
+        </div>
+      </div>`;
+      break;
+    }
+
+    default:
+      return null;
+  }
+
+  // Apply two-zone header/content split for sections with headings
+  applyTwoZoneLayout(wrapper, sec, isFirst);
+
+  return wrapper;
+}
+
+// Two-zone layout: splits sections with a heading into a tinted header zone
+// and a lighter content zone, separated by a thin divider line.
+// Helpers
+function formatBody(text) {
+  if (!text) return '';
+  // Convert newlines to paragraphs if not already HTML
+  if (!text.includes('<')) {
+    return text.split(/\n\n+/).filter(Boolean).map(p => `<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
+  }
+  return text;
+}
+function escAttr(str) {
+  return (str||'').replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+}
+
+// Resolves and opens a smart link — handles external URL prefix and file paths
+function openSmartLink(linkType, linkUrl) {
+  if (!linkUrl) return;
+  if (linkType === 'internal') { showPage(linkUrl); return; }
+  let url = linkUrl.trim();
+  if (linkType === 'external' && url && !/^https?:\/\//i.test(url)) url = 'https://' + url;
+  const a = document.createElement('a');
+  a.href = url;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+
+// Generic modal for custom page service cards
+let _modalBtnLinkType = 'internal';
+let _modalBtnLinkUrl = 'contact';
+
+function closeServiceModal() {
+  const m = document.getElementById('serviceModal');
+  if (m) m.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function openCpsModal(title, icon, body, btnLabel, btnLinkType, btnLinkUrl) {
+  document.getElementById('modal-icon').textContent = icon;
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').textContent = body;
+  const btn = document.getElementById('modal-cta-btn');
+  const cta = document.getElementById('modal-cta');
+  if (btn) {
+    const label = btnLabel || 'Schedule a Consultation';
+    btn.textContent = label + ' →';
+    _modalBtnLinkType = btnLinkType || 'internal';
+    _modalBtnLinkUrl = btnLinkUrl || 'contact';
+    cta.style.display = (btnLinkType === 'none' && !btnLabel) ? 'none' : '';
+  }
+  document.getElementById('serviceModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function handleModalCta() {
+  closeServiceModal();
+  openSmartLink(_modalBtnLinkType, _modalBtnLinkUrl);
+}
+
+// Custom form submission handler
+async function submitCpsForm(e, formId, endpoint, successMsg) {
+  e.preventDefault();
+  const form = document.getElementById(formId);
+  const successEl = document.getElementById(formId + '-success');
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  if (!form || !successEl) return;
+
+  // Show loading state
+  const origText = submitBtn.textContent;
+  submitBtn.textContent = 'Sending…';
+  submitBtn.disabled = true;
+
+  try {
+    if (endpoint && endpoint.trim()) {
+      const data = new FormData(form);
+      const res = await fetch(endpoint.trim(), {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (!res.ok) throw new Error('Server responded with ' + res.status);
+    }
+    // Show success
+    form.style.display = 'none';
+    successEl.style.display = 'block';
+    successEl.querySelector('.cps-form-success-msg').textContent = successMsg || 'Thank you! We\'ll be in touch soon.';
+  } catch (err) {
+    submitBtn.textContent = origText;
+    submitBtn.disabled = false;
+    alert('There was a problem submitting the form. Please try again or contact us directly.');
+  }
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const _run = (fn, name) => { try { fn(); } catch(e) { console.error('Error in ' + name + ':', e); } };
+
+  _run(applyColors,       'applyColors');
+  _run(loadFonts,         'loadFonts');
+  _run(buildHeader,       'buildHeader');
+  _run(buildNav,          'buildNav');
+  try { document.title = CFG.pageTitles.home || CFG.firmName; } catch(e) {}
+  _run(buildPageHeaders,  'buildPageHeaders');
+  _run(buildHero,         'buildHero');
+
+  // Start header fully transparent — scroll handler fades it in on home page
+  try {
+    const header = document.getElementById('site-header');
+    header.style.background = 'rgba(9, 20, 38, 0)';
+    header.style.backdropFilter = '';
+  } catch(e) {}
+
+  _run(buildStats,        'buildStats');
+  _run(buildHomeSections, 'buildHomeSections');
+  _run(buildAbout,        'buildAbout');
+  _run(buildContact,      'buildContact');
+  _run(buildFooter,       'buildFooter');
+  _run(applyCTALabel,     'applyCTALabel');
+  _run(buildCustomPages,  'buildCustomPages');
+  _run(initReveal,           'initReveal');
+  _run(initProcessObserver,  'initProcessObserver');
+
+  // Seed initial history state and navigate to hash if present
+  try {
+    const initialPage = window.location.hash.replace('#', '') || 'home';
+    _suppressHistoryPush = true;
+    showPage(initialPage);
+    _suppressHistoryPush = false;
+    history.replaceState({ page: initialPage }, '', window.location.hash || window.location.pathname);
+  } catch(e) { console.error('Error in showPage init:', e); }
+
+  // Preloader — guaranteed to dismiss
+  const _dismissPreloader = () => {
+    const pl = document.getElementById('preloader');
+    if (pl) pl.classList.add('hidden');
+  };
+  setTimeout(_dismissPreloader, 2200);
+  // Fallback: force dismiss after 5s no matter what
+  setTimeout(_dismissPreloader, 5000);
+});
+
+// GA
+if (CFG.googleAnalyticsId) {
+  const s = document.createElement('script');
+  s.src = `https://www.googletagmanager.com/gtag/js?id=${CFG.googleAnalyticsId}`;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date()); gtag('config', CFG.googleAnalyticsId);
+}
+</script>
+</body>
+</html>
