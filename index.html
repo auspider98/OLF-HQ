@@ -294,17 +294,25 @@ nav.main-nav { display: none !important; }
   height: 100vh; min-height: 600px;
   overflow: hidden;
 }
+#hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 88px;
+  z-index: 3;
+  pointer-events: none;
+}
 #hero > .container {
   position: absolute;
+  top: 88px;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
   width: 100%;
   max-width: var(--container);
-  padding: 88px var(--gutter) clamp(40px, 6vh, 70px);
+  padding: clamp(16px, 2vh, 32px) var(--gutter) clamp(40px, 6vh, 70px);
   box-sizing: border-box;
-  max-height: 100%;
   overflow: visible;
   display: flex;
   flex-direction: column;
@@ -362,16 +370,16 @@ nav.main-nav { display: none !important; }
 
 .hero-headline {
   font-family: var(--font-display);
-  font-size: clamp(38px, 6vw, 76px);
+  font-size: clamp(32px, 5vw, 64px);
   font-weight: 500;
   color: #fff;
-  line-height: 1.1;
+  line-height: 1.2;
   letter-spacing: -0.01em;
   max-width: 780px;
   margin-bottom: clamp(16px, 2.5vh, 28px);
 }
 .hero-headline .line {
-  display: block; overflow: hidden;
+  display: block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em;
 }
 .hero-headline .line span {
   display: block;
@@ -1582,6 +1590,12 @@ footer {
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
   .faq-grid { grid-template-columns: 1fr; gap: 0; }
   .stats-inner { grid-template-columns: repeat(3, 1fr); }
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  .hero-headline { font-size: clamp(22px, 5vh, 36px); margin-bottom: 8px; }
+  .hero-subline  { font-size: clamp(13px, 1.8vh, 16px); margin-bottom: 12px; }
+  .hero-trust-strip { display: none; }
+  #hero > .container { padding-bottom: clamp(20px, 3vh, 36px); }
 }
 @media (max-width: 768px) {
   .hero-trust-strip { flex-direction: column; gap: 12px; }
@@ -3813,19 +3827,26 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
     // ── TESTIMONIALS ─────────────────────────────────────────────
     case 'testimonials': {
       const showReviews = sec.showReviews !== false;
-      // Mode 1: pull from CFG.testimonials; Mode 2: use sec.items
       const source = showReviews
         ? (CFG.testimonials || []).slice(0, parseInt(sec.count) || 3)
         : (sec.items || []);
       const items = source.map(testimonialCard).join('');
       const showBtn = showReviews && sec.showReadAll !== false;
       const btnLabel = sec.readAllLabel || 'Read All Reviews';
+      let testiSourceSlug = 'home';
+      const _hsHasPrimary = (CFG.homeSections || []).some(s => s.type === 'testimonials' && s.primarySource === true);
+      if (!_hsHasPrimary) {
+        const _srcPage = (CFG.customPages || []).find(pg =>
+          pg.enabled !== false && (pg.sections || []).some(s => s.type === 'testimonials' && s.primarySource === true)
+        );
+        if (_srcPage) testiSourceSlug = _srcPage.slug || 'home';
+      }
       wrapper.innerHTML = `<div class="container">
         ${labelHTML}
         ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
         ${sec.subtitle ? `<p class="section-subtitle reveal reveal-delay-1" style="${subtitleStyle}">${sec.subtitle}</p>` : ''}
         <div class="testimonials-track" style="margin-top:40px;">${items}</div>
-        ${showBtn ? `<div style="text-align:center;margin-top:40px;"><button class="btn-primary" onclick="showPage('testimonials')" style="margin:0 auto;">${btnLabel} →</button></div>` : ''}
+        ${showBtn ? `<div style="text-align:center;margin-top:40px;"><button class="btn-primary" onclick="showPage('${testiSourceSlug}')" style="margin:0 auto;">${btnLabel} →</button></div>` : ''}
       </div>`;
       break;
     }
