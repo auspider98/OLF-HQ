@@ -894,23 +894,30 @@ h2.section-title {
 .about-top-grid {
   display: grid;
   grid-template-columns: 1fr 2fr;
+  grid-template-areas:
+    "left  right"
+    "socbtn right";
   gap: clamp(40px, 6vw, 80px);
   align-items: start;
   margin-bottom: 0;
 }
 .about-left-col {
+  grid-area: left;
   display: flex;
   flex-direction: column;
   gap: 0;
 }
 .about-right-col {
+  grid-area: right;
   padding-top: 8px;
+}
+.about-social-btn-col {
+  grid-area: socbtn;
 }
 .about-member-socials {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  margin-top: 20px;
 }
 .about-social-icon {
   width: 36px; height: 36px;
@@ -1578,9 +1585,16 @@ footer {
 }
 @media (max-width: 768px) {
   .hero-trust-strip { flex-direction: column; gap: 12px; }
-  .about-top-grid { grid-template-columns: 1fr; }
+  .about-top-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "left"
+      "right"
+      "socbtn";
+  }
   .about-left-col { max-width: 380px; }
   .about-right-col { padding-top: 0; }
+  .about-social-btn-col { padding-top: 0; }
   .why-grid { grid-template-columns: 1fr; }
   .why-card { border-right: none; }
   .cps-fc-grid { grid-template-columns: 1fr; }
@@ -3051,13 +3065,15 @@ function buildAbout() {
             <div class="about-photo-accent"></div>
           </div>
           ${creds ? `<div class="about-credentials" style="margin-top:24px;">${creds}</div>` : ''}
-          ${socials ? `<div class="about-member-socials">${socials}</div>` : ''}
-          ${btnHtml}
         </div>
         <div class="about-right-col">
           <h2 class="about-attorney-name">${a.name||''}</h2>
           <div class="about-attorney-degree">${a.degree||''}</div>
           <div class="about-bio-full">${bios}</div>
+        </div>
+        <div class="about-social-btn-col">
+          ${socials ? `<div class="about-member-socials">${socials}</div>` : ''}
+          ${btnHtml}
         </div>
       </div>
     </div>`;

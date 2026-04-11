@@ -865,6 +865,70 @@ const SITE_CONFIG = {
       ]
     },
     {
+      "slug": "mail-bag",
+      "navLabel": "Mail Bag",
+      "emoji": "📄",
+      "enabled": true,
+      "sections": [
+        {
+          "type": "testimonials",
+          "label": "Mail Bag",
+          "background": "dark",
+          "heading": "Whining by the Outsiders",
+          "subtitle": "Real stories from the unworthy that we find amusing.",
+          "showReviews": false,
+          "count": 3,
+          "showReadAll": true,
+          "readAllLabel": "Read All Reviews",
+          "primarySource": true,
+          "items": [
+            {
+              "name": "Frank Goodson",
+              "initials": "FT",
+              "stars": "1",
+              "text": "I submitted a request for membership and now I'm subscribed to Women's World magazine and keep getting text messages from a doctors office asking me to confirm my appointment for a colonoscopy?!",
+              "meta": "WTH • Richmond, VA"
+            },
+            {
+              "name": "Tracy Billings",
+              "initials": "TB",
+              "stars": "1",
+              "text": "Why did this page show up in my search for body piercings?",
+              "meta": "Search Error • Grand Rapids, MI"
+            },
+            {
+              "name": "Jim Friedman",
+              "initials": "JF",
+              "stars": "1",
+              "text": "My employee keeps bossing me around and bosting about his OFL trophies and BRC records. I'd fire him for insubordination, but he's an incredible employee and the coolest guy I know. Because of your organization I feel so small.",
+              "meta": "Unworthy • Southeastern US"
+            },
+            {
+              "name": "Dewayne Johnson",
+              "initials": "DJ",
+              "stars": "5",
+              "text": "I don't even play fantasy sports, but reading the BRC trash talk makes me realize how utterly mediocre my own life is. Seeing 'Spider' dismantle a man’s entire legacy over a 14-seed upset is the most high-stakes drama on the internet. I’m currently waiting for my 'Chosen' invitation. I know it’s never coming, and that’s why this league is elite.",
+              "meta": "Invitation • Hollywood, CA"
+            },
+            {
+              "name": "Stacy R.",
+              "initials": "SR",
+              "stars": "1",
+              "text": "I thought I’d be nice and try to support the league's 'hosting fees.' When I clicked the donate button, it didn't take my credit card. Instead, it opened my front-facing camera, took a photo of my confused face, and posted it to a section called 'The Face of the Unfunded.' I’ve been trying to get the photo taken down for weeks, but the support bot just sends me links to high-interest payday loans.",
+              "meta": "Broke • Las Vegas, NV"
+            },
+            {
+              "name": "Kevin L.",
+              "initials": "KL",
+              "stars": "1",
+              "text": "I sat there for thirty seconds waiting for the 'Hall of Records' to open, and the progress bar just said: 'Scanning for signs of worthiness... None found. Continue loading to further maximize your disappointment.' I’ve never been bullied by a website’s CSS before.",
+              "meta": "Bullied • Topeka, KS"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "slug": "faqs",
       "navLabel": "FAQs",
       "emoji": "📄",
@@ -946,70 +1010,6 @@ const SITE_CONFIG = {
               "linkLabel": "",
               "linkType": "none",
               "linkUrl": "home"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "slug": "unworthy",
-      "navLabel": "Unworthy",
-      "emoji": "📄",
-      "enabled": true,
-      "sections": [
-        {
-          "type": "testimonials",
-          "label": "Hate Mail",
-          "background": "dark",
-          "heading": "Whining by the Outsiders",
-          "subtitle": "Real stories from the unworthy that we find amusing.",
-          "showReviews": false,
-          "count": 3,
-          "showReadAll": true,
-          "readAllLabel": "Read All Reviews",
-          "primarySource": true,
-          "items": [
-            {
-              "name": "Frank Goodson",
-              "initials": "FT",
-              "stars": "1",
-              "text": "I submitted a request for membership and now I'm subscribed to Women's World magazine and keep getting text messages from a doctors office asking me to confirm my appointment for a colonoscopy?!",
-              "meta": "WTH • Richmond, VA"
-            },
-            {
-              "name": "Tracy Billings",
-              "initials": "TB",
-              "stars": "1",
-              "text": "Why did this page show up in my search for body piercings?",
-              "meta": "Search Error • Grand Rapids, MI"
-            },
-            {
-              "name": "Jim Friedman",
-              "initials": "JF",
-              "stars": "1",
-              "text": "My employee keeps bossing me around and bosting about his OFL trophies and BRC records. I'd fire him for insubordination, but he's an incredible employee and the coolest guy I know. Because of your organization I feel so small.",
-              "meta": "Unworthy • Southeastern US"
-            },
-            {
-              "name": "Dewayne Johnson",
-              "initials": "DJ",
-              "stars": "5",
-              "text": "I don't even play fantasy sports, but reading the BRC trash talk makes me realize how utterly mediocre my own life is. Seeing 'Spider' dismantle a man’s entire legacy over a 14-seed upset is the most high-stakes drama on the internet. I’m currently waiting for my 'Chosen' invitation. I know it’s never coming, and that’s why this league is elite.",
-              "meta": "Invitation • Hollywood, CA"
-            },
-            {
-              "name": "Stacy R.",
-              "initials": "SR",
-              "stars": "1",
-              "text": "I thought I’d be nice and try to support the league's 'hosting fees.' When I clicked the donate button, it didn't take my credit card. Instead, it opened my front-facing camera, took a photo of my confused face, and posted it to a section called 'The Face of the Unfunded.' I’ve been trying to get the photo taken down for weeks, but the support bot just sends me links to high-interest payday loans.",
-              "meta": "Broke • Las Vegas, NV"
-            },
-            {
-              "name": "Kevin L.",
-              "initials": "KL",
-              "stars": "1",
-              "text": "I sat there for thirty seconds waiting for the 'Hall of Records' to open, and the progress bar just said: 'Scanning for signs of worthiness... None found. Continue loading to further maximize your disappointment.' I’ve never been bullied by a website’s CSS before.",
-              "meta": "Bullied • Topeka, KS"
             }
           ]
         }
@@ -1438,7 +1438,7 @@ const SITE_CONFIG = {
   "aboutBio3": "She is a member of the Alabama Bar Association, the American Academy of Adoption Attorneys (AAAA), and has been recognized as a Super Lawyer in Alabama Family Law for eight consecutive years. She is admitted to practice in all Alabama courts and regularly handles cases in Jefferson, Shelby, St. Clair, and Cullman counties.",
   "aboutBio4": "When she's not advocating for families in court, Amy volunteers with the Alabama Foster Care Association and speaks at community workshops on adoption awareness.",
   "footerBio": "Where Legends Are Made & Legacies Are Settled",
-  "_savedAt": 1775887084008,
+  "_savedAt": 1775909991486,
   "contactSubmitLabel": "Request Free Abuse",
   "contactSuccessMsg": "Ugh...you're so unworthy.",
   "heroPrimaryDest": "contact",
