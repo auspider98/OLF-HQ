@@ -703,7 +703,8 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
       <div class="status-dot"></div>
       <span id="lastSaved">Not saved yet</span>
     </div>
-    <button class="btn btn-ghost btn-sm" onclick="saveAndPreview()">💾 Save &amp; Preview</button>
+    <a href="index.html" target="_blank" class="btn btn-ghost btn-sm"
+      onmousedown="saveData()" ontouchstart="saveData()">💾 Save &amp; Preview</a>
     <button class="btn btn-outline btn-sm" onclick="exportConfig()">⬇ Export config.js</button>
     <button class="btn btn-gold btn-sm" onclick="document.getElementById('importFileInput').click()">⬆ Import config.js</button>
   </div>
@@ -5492,16 +5493,17 @@ function refreshCodePreview() {
   document.getElementById('codePreview').textContent = generateConfigJs();
 }
 
-function saveAndPreview() {
+function saveData() {
   collectData();
   DATA._savedAt = Date.now();
-  // Save full DATA to localStorage so index.html can read it for preview
   localStorage.setItem(LS_DATA(), JSON.stringify(DATA));
   localStorage.setItem(LS_PREVIEW(), JSON.stringify(DATA));
-  // Append timestamp to bust cache and force a fresh load even if tab is reused
-  window.open('index.html?preview=' + DATA._savedAt, '_blank');
-  toast('💾 Saved! Preview opening in new tab.', 'success');
+  toast('💾 Saved! Preview opening...', 'success');
   document.getElementById('lastSaved').textContent = 'Saved ' + new Date().toLocaleTimeString();
+}
+
+function saveAndPreview() {
+  saveData();
 }
 
 /* =============================================
