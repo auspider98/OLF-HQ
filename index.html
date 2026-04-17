@@ -504,15 +504,19 @@ nav.main-nav { display: none !important; }
   overflow: hidden;
 }
 .stats-inner {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  border-left: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0;
 }
 .stat-cell {
+  flex: 0 0 auto;
+  width: 20%;
+  min-width: 160px;
   padding: 36px 24px;
-  border-right: 1px solid rgba(255,255,255,0.08);
   text-align: center;
   transition: background 0.3s;
+  box-sizing: border-box;
 }
 .stat-cell:hover { background: rgba(255,255,255,0.04); }
 .stat-num {
@@ -709,6 +713,8 @@ h2.section-title {
 .cps-fc-card:hover { background: var(--gold-pale); }
 .cps-fc-card:hover::after { width: 100%; }
 .cps-fc-card:nth-child(2n) { border-right: none; }
+.cps-fc-grid--full { grid-template-columns: 1fr; }
+.cps-fc-grid--full .cps-fc-card { border-right: none; }
 .cps-fc-num {
   font-family: var(--font-display);
   font-size: 52px;
@@ -765,12 +771,20 @@ h2.section-title {
    ============================================= */
 #services { background: var(--cream); }
 .services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 2px;
   margin-top: 56px;
   background: #ddd8cc;
 }
+/* Default: 3 columns */
+.services-grid .service-card {
+  flex: 1 1 calc(33.333% - 2px);
+  min-width: 0;
+}
+.services-grid[data-cols="1"] .service-card { flex: 1 1 100%; }
+.services-grid[data-cols="2"] .service-card { flex: 1 1 calc(50% - 2px); }
+.services-grid[data-cols="3"] .service-card { flex: 1 1 calc(33.333% - 2px); }
 .service-card {
   background: var(--warm-white);
   padding: clamp(28px, 4vw, 44px);
@@ -792,6 +806,8 @@ h2.section-title {
   font-size: 28px;
   margin-bottom: 18px;
   transition: transform 0.3s;
+  transform-origin: left center;
+  display: inline-block;
 }
 .service-card:hover .service-icon { transform: scale(1.1); }
 .service-title {
@@ -1088,7 +1104,7 @@ h2.section-title {
 
 /* Process steps light/alt section theming */
 .cps-section-light .process-step,
-.cps-section-alt .process-step { border-bottom-color: var(--border); }
+.cps-section-alt .process-step { border-bottom-color: rgba(0,0,0,0.06); }
 .cps-section-light .step-num-wrap,
 .cps-section-alt .step-num-wrap { background: var(--warm-white); border-color: rgba(201,168,76,0.45); }
 .cps-section-alt .step-num-wrap { background: var(--cream); }
@@ -1574,12 +1590,12 @@ footer {
    RESPONSIVE
    ============================================= */
 @media (max-width: 1024px) {
-  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .services-grid[data-cols="3"] .service-card { flex: 1 1 calc(50% - 2px); }
   .about-top-grid { grid-template-columns: 1fr 1.5fr; gap: 40px; }
   .contact-grid { grid-template-columns: 1fr; gap: 48px; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
   .faq-grid { grid-template-columns: 1fr; gap: 0; }
-  .stats-inner { grid-template-columns: repeat(3, 1fr); }
+  .stat-cell { width: 33.333%; min-width: 140px; }
 }
 @media (orientation: landscape) and (max-height: 480px) {
   #hero > .container {
@@ -1612,18 +1628,17 @@ footer {
   .cps-fc-card { border-right: none; }
   .cps-fc-header { flex-direction: column; }
   .cps-fc-badge { display: none; }
-  .services-grid { grid-template-columns: 1fr; }
+  .services-grid .service-card { flex: 1 1 100%; }
   .testimonials-track { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
-  .stats-inner { grid-template-columns: repeat(2, 1fr); }
+  .stat-cell { width: 50%; min-width: 120px; }
   .footer-grid { grid-template-columns: 1fr; }
   .why-badge-wrap { flex-direction: column; }
   .process-timeline::before { left: 27px; }
 }
 @media (max-width: 480px) {
-  .stats-inner { grid-template-columns: 1fr 1fr; }
-  .stat-cell:last-child { grid-column: span 2; }
+  .stat-cell { width: 50%; min-width: 0; }
   .hero-actions { flex-direction: column; align-items: flex-start; }
 }
 
@@ -1713,10 +1728,6 @@ footer {
 .cps-stats-bar .stats-inner { }
 
 /* Stats bar light/alt section theming */
-.cps-section-light .stats-inner,
-.cps-section-alt .stats-inner { border-left-color: var(--border); }
-.cps-section-light .stat-cell,
-.cps-section-alt .stat-cell { border-right-color: var(--border); }
 .cps-section-light .stat-cell:hover,
 .cps-section-alt .stat-cell:hover { background: var(--gold-pale); }
 .cps-section-light .stat-label,
@@ -1740,6 +1751,8 @@ footer {
   transition: background 0.25s;
 }
 .cps-bullet-item:nth-child(2n) { border-right: none; }
+.cps-bullets-list--full { grid-template-columns: 1fr; }
+.cps-bullets-list--full .cps-bullet-item { border-right: none; }
 .cps-bullet-item:hover { background: var(--gold-pale); }
 .cps-bullet-linked:hover { background: var(--gold-pale); }
 .cps-bullet-linked .cps-bullet-text h4 { color: var(--navy); }
@@ -1843,7 +1856,14 @@ footer {
   color: var(--text-body);
 }
 .cps-doc-item:nth-child(2n) { border-right: none; }
-.cps-doc-item:last-child, .cps-doc-item:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+/* Remove bottom border from last row in 2-col layout */
+.cps-doc-items .cps-doc-item:last-child { border-bottom: none; }
+.cps-doc-items .cps-doc-item:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+/* Full-width (single column) overrides */
+.cps-doc-items--full { grid-template-columns: 1fr; }
+.cps-doc-items--full .cps-doc-item { border-right: none; }
+.cps-doc-items--full .cps-doc-item:nth-last-child(2):nth-child(n) { border-bottom: 1px solid #e8e3d8; }
+.cps-doc-items--full .cps-doc-item:last-child { border-bottom: none; }
 .cps-doc-check {
   width: 18px; height: 18px;
   border: 1px solid var(--gold);
@@ -1854,7 +1874,11 @@ footer {
   font-size: 10px;
   color: var(--navy);
 }
-@media (max-width: 600px) { .cps-doc-items { grid-template-columns: 1fr; } .cps-doc-item { border-right: none; } }
+@media (max-width: 600px) {
+  .cps-doc-items { grid-template-columns: 1fr; }
+  .cps-doc-item { border-right: none; }
+  .cps-doc-items .cps-doc-item:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid #e8e3d8; }
+}
 
 /* Timeline */
 .cps-timeline { }
@@ -1939,7 +1963,7 @@ footer {
 .cps-section-dark .cps-timeline-body p { color: rgba(255,255,255,0.65); }
 .cps-section-alt .cps-timeline-body h4 { color: var(--navy); }
 
-/* Fee Schedule */
+/* Data Table */
 .cps-fee-table {
   width: 100%;
   border-collapse: collapse;
@@ -2336,10 +2360,10 @@ footer {
 <div id="preloader">
   <div class="preloader-inner">
     <div class="preloader-wordmark">
-      <span id="preload-firm">Osborne Law Firm</span>
+      <span id="preload-firm"></span>
     </div>
     <div class="preloader-bar"></div>
-    <div class="preloader-sub" id="preloader-sub">Adoption Attorneys · Alabama</div>
+    <div class="preloader-sub" id="preloader-sub"></div>
   </div>
 </div>
 
@@ -2348,8 +2372,8 @@ footer {
   <div class="container">
     <div class="header-inner">
       <div class="site-logo" onclick="showPage('home')">
-        <div class="logo-name" id="header-firm-name">Osborne Law Firm, LLC</div>
-        <div class="logo-tagline" id="header-tagline">Adoption Attorney</div>
+        <div class="logo-name" id="header-firm-name"></div>
+        <div class="logo-tagline" id="header-tagline"></div>
       </div>
       <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -2576,39 +2600,29 @@ footer {
    SITE ENGINE
    ============================================= */
 const SITE_DEFAULTS = {
-  firmName: "Osborne Law Firm, LLC",
-  tagline: "Adoption Attorney",
-  preloaderTagline: "Adoption Attorneys · Alabama",
+  firmName: "",
+  tagline: "",
+  preloaderTagline: "",
   pageHeaders: {
-    about:     { label: "About Us",         title: "Meet Our Team",                    subtitle: "" },
-    services:  { label: "Practice Areas",   title: "Our Adoption Services",            subtitle: "Every adoption journey is unique. We offer comprehensive legal services across all types of adoption in Alabama." },
-    process:   { label: "How It Works",     title: "The Adoption Process",             subtitle: "From your first call to finalization day — here's what to expect when you work with us." },
-    faq:       { label: "Common Questions", title: "Frequently Asked Questions",       subtitle: "Everything you want to know about Alabama adoption law — answered plainly." },
-    testimonials:{ label: "Client Reviews", title: "What Our Clients Say",             subtitle: "Real stories from the families we've been honored to serve." },
-    blog:      { label: "Resources",        title: "Adoption Guides & Insights",       subtitle: "Plain-language resources to help you understand Alabama adoption law." },
-    contact:   { label: "Get in Touch" },
+    about:        { label: "About Us",        title: "About Us",                subtitle: "" },
+    services:     { label: "Services",        title: "Our Services",            subtitle: "" },
+    process:      { label: "How It Works",    title: "How It Works",            subtitle: "" },
+    faq:          { label: "FAQ",             title: "Frequently Asked Questions", subtitle: "" },
+    testimonials: { label: "Testimonials",    title: "What Our Clients Say",    subtitle: "" },
+    blog:         { label: "Resources",       title: "Resources",               subtitle: "" },
+    contact:      { label: "Get in Touch" },
   },
-  attorneyName: "Amy Michelle Osborne",
-  attorneyDegree: "J.D., Birmingham School of Law",
-  attorneyCredentials: ["AL State Bar","J.D., Birmingham Law","ABA Member","Super Lawyers","AAAA Member"],
-  phone: "(205) 515-9271",
-  phoneRaw: "+12055159271",
-  fax: "(205) 434-3975",
-  email: "osborneadoptions@gmail.com",
-  address: "4770 Eastern Valley Road, Suite 111",
-  city: "McCalla", state: "Alabama", stateAbbr: "AL", zip: "35111",
-  hours: [
-    { days: "Monday – Thursday", hours: "8:30 AM – 5:30 PM" },
-    { days: "Friday", hours: "8:30 AM – 4:00 PM" },
-    { days: "Saturday – Sunday", hours: "Closed" }
-  ],
-  stats: [
-    { num: "20+", label: "Years of Adoption Law" },
-    { num: "500+", label: "Families Helped" },
-    { num: "9", label: "Adoption Service Types" },
-    { num: "AL", label: "State Bar Member" },
-    { num: "★4.9", label: "Client Rating" }
-  ],
+  attorneyName: "",
+  attorneyDegree: "",
+  attorneyCredentials: [],
+  phone: "",
+  phoneRaw: "",
+  fax: "",
+  email: "",
+  address: "",
+  city: "", state: "", stateAbbr: "", zip: "",
+  hours: [],
+  stats: [],
   colors: { navy:"#0f2340", navyLight:"#1a3560", gold:"#c9a84c", goldLight:"#e8c97a", goldPale:"#faf6ec", warmWhite:"#fffdf9", cream:"#f9f6f0", chrome:"#060f1d" },
   fontColors: { heading:"#0f2340", body:"#5c5a53", onDark:"#ffffff", onDarkMuted:"#f3f8fb" },
   fontDisplay: "Playfair Display",
@@ -2619,20 +2633,20 @@ const SITE_DEFAULTS = {
   googleAnalyticsId: "",
   formEndpoint: "",
   heroBg: { type:"color", bgColor:"#0f2340", slides:[], showDots:true, autoplay:true, slideDuration:8, motionType:"zoom-out", motionSpeed:20, overlayColor:"#0f2340", overlayOpacity:0.5, transitionSpeed:2 },
-  heroHeadline: "Building Families Through the Law, With Heart.",
-  heroSubline: "We guide adoptive parents, birth parents, and families through every step of the adoption process — clearly, compassionately, and with deep legal expertise.",
-  heroTrustBullets: ["Free Initial Consultation","20+ Years Experience","Statewide Alabama Practice"],
-  heroPrimaryLabel: "Free Consultation", heroPrimaryLinkType: "internal", heroPrimaryLinkUrl: "contact",
-  heroSecondaryLabel: "Our Services", heroSecondaryLinkType: "internal", heroSecondaryLinkUrl: "services",
-  whyChooseUs: { heading:"A Trusted Partner Through Every Step", subtext:"We know adoption is more than a legal process — it's the beginning of a family.", badgeNum:"20+", badgeLabel:"Years", bullets:[] },
+  heroHeadline: "",
+  heroSubline: "",
+  heroTrustBullets: [],
+  heroPrimaryLabel: "", heroPrimaryLinkType: "internal", heroPrimaryLinkUrl: "contact",
+  heroSecondaryLabel: "", heroSecondaryLinkType: "internal", heroSecondaryLinkUrl: "services",
+  whyChooseUs: { heading:"", subtext:"", badgeNum:"", badgeLabel:"", bullets:[] },
   aboutNavLabel:"About Us", aboutBio1:"", aboutBio2:"",
   attorneyPhoto: "",
-  contactHeadline: "Schedule Your Free Consultation",
-  ctaLabel: "Free Consultation",
-  contactSubline: "No obligation, no pressure — just honest answers about your adoption options.",
-  contactFormHeading: "Let's Talk About Your Family",
-  contactFormIntro: "Fill out this form and we'll get back to you within one business day.",
-  contactPrivacyNote: "🔒 Your information is strictly confidential.",
+  contactHeadline: "",
+  ctaLabel: "",
+  contactSubline: "",
+  contactFormHeading: "",
+  contactFormIntro: "",
+  contactPrivacyNote: "",
   services: [],
   faqs: [],
   testimonials: [],
@@ -2774,7 +2788,7 @@ function initHeroVideo(hb, container) {
       container.style.backgroundSize = 'cover';
       container.style.backgroundPosition = 'center center';
     } else {
-      container.style.background = hb.bgColor || '#0f2340';
+      container.style.background = hb.bgColor || getComputedStyle(document.documentElement).getPropertyValue('--navy').trim();
     }
     return;
   }
@@ -2833,7 +2847,7 @@ function initHeroVideo(hb, container) {
       setTimeout(() => { vids.forEach(v => { v.style.transition = transCss; }); }, 50);
     } else if (trans === 'fade-from-black') {
       vids.forEach(v => { v.style.opacity = '0'; });
-      container.style.background = '#000';
+      container.style.background = getComputedStyle(document.documentElement).getPropertyValue('--chrome').trim() || '#000';
       setTimeout(() => { vid.style.opacity = '1'; container.style.background = ''; }, 100);
     } else {
       // crossfade
@@ -2996,7 +3010,9 @@ function buildHero() {
    ============================================= */
 function buildStats() {
   const el = document.getElementById('statsInner');
-  el.innerHTML = (CFG.stats||[]).map(s => `
+  const stats = CFG.stats || [];
+  el.dataset.count = stats.length;
+  el.innerHTML = stats.map(s => `
     <div class="stat-cell">
       <div class="stat-num">${s.num}</div>
       <div class="stat-label">${s.label}</div>
@@ -3129,7 +3145,7 @@ function buildAbout() {
         <div class="about-left-col">
           <div class="about-photo-wrap">
             <div class="about-photo-frame">
-              <img src="${escAttr(a.photo||'')}" alt="${escAttr(a.name||'')}" onerror="this.src='https://placehold.co/400x500/0f2340/c9a84c?text=Photo'"/>
+              <img src="${escAttr(a.photo||'')}" alt="${escAttr(a.name||'')}" onerror="this.src='https://placehold.co/400x500/' + (CFG.colors.navy||'0f2340').replace('#','') + '/' + (CFG.colors.gold||'c9a84c').replace('#','') + '?text=Photo'"/>
             </div>
             <div class="about-photo-accent"></div>
           </div>
@@ -3392,7 +3408,7 @@ function applyHomepageToggles() {
 
 function buildPageHeaders() {
   const h = Object.assign({
-    about:   { label: "About Us",     title: "Meet Our Team", subtitle: "" },
+    about:   { label: "About Us",     title: "About Us", subtitle: "" },
     contact: { label: "Get in Touch" },
   }, CFG.pageHeaders || {});
 
@@ -3629,7 +3645,13 @@ function applyTwoZoneLayout(wrapper, sec, isFirst) {
   const bg = sec.background || 'light';
   if (bg === 'dark') return;
 
-  const dividerColor = bg === 'alt' ? 'rgba(201,168,76,0.25)' : '#e4e0d8';
+  const _divCs = getComputedStyle(document.documentElement);
+  const _goldRaw = _divCs.getPropertyValue('--gold').trim() || '#c9a84c';
+  const _goldHex = _goldRaw.replace('#','');
+  const _gr = parseInt(_goldHex.substring(0,2),16), _gg = parseInt(_goldHex.substring(2,4),16), _gb = parseInt(_goldHex.substring(4,6),16);
+  const dividerColor = bg === 'alt'
+    ? `rgba(${_gr},${_gg},${_gb},0.25)`
+    : (_divCs.getPropertyValue('--divider-color').trim() || '#e4e0d8');
 
   const container = wrapper.querySelector('.container');
   if (!container) return;
@@ -3742,12 +3764,13 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
     case 'stats': {
       wrapper.classList.add('cps-stats-bar');
       wrapper.style.cssText = '';
-      const items = (sec.items || []).map(s => `
+      const statItems = sec.items || [];
+      const items = statItems.map(s => `
         <div class="stat-cell">
           <div class="stat-num">${s.num}</div>
           <div class="stat-label">${s.label}</div>
         </div>`).join('');
-      wrapper.innerHTML = `<div class="stats-inner">${items}</div>`;
+      wrapper.innerHTML = `<div class="stats-inner" data-count="${statItems.length}">${items}</div>`;
       break;
     }
 
@@ -3789,7 +3812,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
         </div>` : labelHTML;
       wrapper.innerHTML = `<div class="container">
         ${headerHtml}
-        <div class="cps-fc-grid">${fcCards}</div>
+        <div class="cps-fc-grid${sec.fullWidth ? ' cps-fc-grid--full' : ''}">${fcCards}</div>
       </div>`;
       break;
     }
@@ -3817,14 +3840,17 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
         ${labelHTML}
         ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
         ${sec.subtitle ? `<p class="section-subtitle reveal reveal-delay-1" style="${subtitleStyle}">${sec.subtitle}</p>` : ''}
-        <div class="cps-bullets-list">${items}</div>
+        <div class="cps-bullets-list${sec.fullWidth ? ' cps-bullets-list--full' : ''}">${items}</div>
       </div>`;
       break;
     }
 
     // ── SERVICES GRID ────────────────────────────────────────────
     case 'services': {
-      const items = (sec.items || []).map((s, i) => `
+      const svcItems = sec.items || [];
+      const svcCount = svcItems.length;
+      const svcCols = svcCount <= 1 ? 1 : svcCount === 2 ? 2 : 3;
+      const items = svcItems.map((s, i) => `
         <div class="service-card reveal reveal-delay-${(i%3)+1}"
           ${s.detail ? `onclick="openCpsModalFromCard(this)"
             data-svc-title="${escAttr(s.title)}"
@@ -3842,7 +3868,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
         ${labelHTML}
         ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
         ${sec.subtitle ? `<p class="section-subtitle reveal reveal-delay-1" style="${subtitleStyle}">${sec.subtitle}</p>` : ''}
-        <div class="services-grid" style="margin-top:40px;">${items}</div>
+        <div class="services-grid" data-cols="${svcCols}" style="margin-top:40px;">${items}</div>
       </div>`;
       break;
     }
@@ -3975,7 +4001,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
           `<div class="cps-doc-item"><div class="cps-doc-check">✓</div>${item}</div>`).join('');
         return `<div class="cps-doc-category">
           <div class="cps-doc-category-title">${cat.title}</div>
-          <div class="cps-doc-items">${docItems}</div>
+          <div class="cps-doc-items${sec.fullWidth ? ' cps-doc-items--full' : ''}">${docItems}</div>
         </div>`;
       }).join('');
       wrapper.innerHTML = `<div class="container">
@@ -4037,7 +4063,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
         ${sec.subtitle ? `<p class="section-subtitle reveal reveal-delay-1" style="${subtitleStyle}">${sec.subtitle}</p>` : ''}
         <div class="reveal reveal-delay-2" style="overflow-x:auto;">
           <table class="cps-fee-table">
-            <thead><tr><th>Service</th><th>Fee</th><th>Notes</th></tr></thead>
+            <thead><tr><th>${sec.col1Label || 'Service'}</th><th>${sec.col2Label || 'Value'}</th><th>${sec.col3Label || 'Notes'}</th></tr></thead>
             <tbody>${rows}</tbody>
           </table>
         </div>

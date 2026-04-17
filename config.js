@@ -116,12 +116,12 @@ const SITE_CONFIG = {
       "label": "Elite Leagues"
     },
     {
-      "num": "★6",
-      "label": "Rating"
-    },
-    {
       "num": "Exclusive",
       "label": "Membership"
+    },
+    {
+      "num": "★6",
+      "label": "Rating"
     }
   ],
   "colors": {
@@ -776,56 +776,56 @@ const SITE_CONFIG = {
         },
         {
           "type": "steps",
-          "label": "Hardwood",
+          "label": "Hit the Hardwood",
           "background": "dark",
           "heading": "BRC Chalkboard",
           "subtitle": "",
           "items": [
             {
-              "title": "Conference Championship",
-              "body": "",
+              "title": "Registration & Conference Championships",
+              "body": "The BRC opens for registration, but bracket population will have to wait a little longer. So while thinking about that clever bracket name, catch some of the season ending conference championships, especially those conferences and teams you never hear about or have ever heard of. This small pre-game ritual could be the difference between you boasting about your predictive mindcraft, or having to listen to a fellow competitor boast about theirs.",
               "linkLabel": "",
               "linkType": "none",
               "linkUrl": "home"
             },
             {
               "title": "Selection Sunday",
-              "body": "",
+              "body": "BRC bracket entry begins. The teams are invited, the brackets are presented, and the real work begins. Will that 13 seed have the bench, the size, the shooters, or the logo/mascot combination to pull off that upset? You have until 12 on Thursday to think, rethink, make a change, bite your nails, then rethink some more, make another change, sweat the change, then finally, start formulating your excuses for these ridiculous decisions.",
               "linkLabel": "",
               "linkType": "none",
               "linkUrl": "home"
             },
             {
               "title": "Opening Weekend (R64/32)",
-              "body": "",
+              "body": "Here we go...no more making silly decisions. You're locked in for the ride. And out of the gate, excuses start flying. Are you laughing or crying? Are you looking forward to the Sweet Sixteen or next season? Are you thinking about that BRC Wizard tattoo, or deleting your Facebook account? Fun, ain't it.",
               "linkLabel": "",
               "linkType": "none",
               "linkUrl": "home"
             },
             {
               "title": "Sweet Sixteen - Elite Eight",
-              "body": "",
+              "body": "The second weekend is usually where the tournament separates the haves, from the have, to hide and rethink joining a church league next year, nots. You didn't think those first rounds would mean much, but here you are hoping that that 6 seed was truly undervalued or you're bragging is about to bite you in the @#$.",
               "linkLabel": "",
               "linkType": "none",
               "linkUrl": "home"
             },
             {
               "title": "Final Four",
-              "body": "",
+              "body": "If you are still tracking your bracket, congratulations, you've come a long way. But finishing second still means you're a loser, and finishing 5th is, well, possible grounds for an 11-month suspension from BRC.",
               "linkLabel": "",
               "linkType": "none",
               "linkUrl": "home"
             },
             {
               "title": "Championship Game",
-              "body": "",
+              "body": "We are here...are you? This is the game the entire league has been waiting for. Glory for the winner and yikers, for the others. The BRC is built for winners, so double down and maybe even throw a mortgage bet at Vegas Odds, because if you don't come home with that BRC trophy, what do you have to go home to?!",
               "linkLabel": "",
               "linkType": "none",
               "linkUrl": "home"
             },
             {
               "title": "One Moment in Time Celebration",
-              "body": "",
+              "body": "The annual dinner celebration for the BRC winner and trophy presentation is a grand event. There's never any confetti or loud music, but who needs that when you've got a giant platter of Veg-All Casserole, and Waldorf Salad. Hold that trophy up high, and take it home, you deserve all the attention. By the way, the second place loser might need a place to crash for a little while...can you help some family out?",
               "linkLabel": "",
               "linkType": "none",
               "linkUrl": "home"
@@ -1565,26 +1565,29 @@ const SITE_CONFIG = {
         },
         {
           "type": "fees",
-          "label": "Fee Schedule Label",
+          "label": "Data Table Label",
           "background": "dark",
-          "heading": "Fee Schedule Heading",
-          "subtitle": "Fee Schedule Subtitle",
+          "heading": "Data Table Heading",
+          "subtitle": "Data Table Subtitle",
+          "col1Label": "Service",
+          "col2Label": "Required",
+          "col3Label": "Notes",
           "disclaimer": "",
           "items": [
             {
-              "service": "Fee Schedule Service 1",
-              "amount": "Fee 1",
-              "detail": "Fee Schedule Service 1 Details",
-              "note": "Fee Schedule Service 1 Note",
+              "service": "Data Table Service 1",
+              "amount": "Required 1",
+              "detail": "Data Table Service 1 Details",
+              "note": "Data Table Service 1 Note",
               "linkLabel": "Fee 1 Link",
               "linkType": "external",
               "linkUrl": "home"
             },
             {
-              "service": "Fee Schedule Service 2",
-              "amount": "Fee 2",
-              "detail": "Fee Schedule Service 2 Details",
-              "note": "Fee Schedule Service 2 Note",
+              "service": "Data Table Service 2",
+              "amount": "Required 2",
+              "detail": "Data Table Service 2 Details",
+              "note": "Data Table Service 2 Note",
               "linkLabel": "",
               "linkType": "none",
               "linkUrl": "home"
@@ -1913,7 +1916,7 @@ const SITE_CONFIG = {
   "aboutBio3": "She is a member of the Alabama Bar Association, the American Academy of Adoption Attorneys (AAAA), and has been recognized as a Super Lawyer in Alabama Family Law for eight consecutive years. She is admitted to practice in all Alabama courts and regularly handles cases in Jefferson, Shelby, St. Clair, and Cullman counties.",
   "aboutBio4": "When she's not advocating for families in court, Amy volunteers with the Alabama Foster Care Association and speaks at community workshops on adoption awareness.",
   "footerBio": "Where Legends Are Made & Legacies Are Settled",
-  "_savedAt": 1776400629366,
+  "_savedAt": 1776459385924,
   "contactSubmitLabel": "Request Free Abuse",
   "contactSuccessMsg": "Ugh...you're so unworthy.",
   "heroPrimaryDest": "contact",
