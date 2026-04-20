@@ -1242,7 +1242,7 @@ h2.section-title {
 }
 .faq-item-link:hover { opacity: 0.75; }
 .cps-section-dark .faq-item-link { color: var(--gold-light); }
-.faq-item.open .faq-answer { max-height: 300px; }
+.faq-item.open .faq-answer { max-height: 2000px; }
 
 /* FAQ dark/alt section theming */
 .cps-section-dark .faq-item { border-color: rgba(255,255,255,0.12); }
@@ -1628,7 +1628,9 @@ footer {
   .cps-fc-card { border-right: none; }
   .cps-fc-header { flex-direction: column; }
   .cps-fc-badge { display: none; }
-  .services-grid .service-card { flex: 1 1 100%; }
+  .services-grid .service-card,
+  .services-grid[data-cols="2"] .service-card,
+  .services-grid[data-cols="3"] .service-card { flex: 1 1 100%; }
   .testimonials-track { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
@@ -3022,11 +3024,10 @@ function buildStats() {
 /* =============================================
    WHY CHOOSE US
    ============================================= */
-function toggleFaq(id) {
-  const item = document.getElementById(id);
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
   if (!item) return;
   const wasOpen = item.classList.contains('open');
-  // Close all in same container
   const parent = item.closest('.faq-grid');
   if (parent) parent.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
   if (!wasOpen) item.classList.add('open');
@@ -3908,8 +3909,8 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
           f.linkType === 'internal' ? `showPage('${escAttr(f.linkUrl)}')` : `openSmartLink('${escAttr(f.linkType)}','${escAttr(f.linkUrl)}')`
         }">${escAttr(f.linkLabel)} →</div>` : '';
         return `
-        <div class="faq-item" id="cpfaq-${idx}-${i}">
-          <div class="faq-question" onclick="toggleFaq('cpfaq-${idx}-${i}')">
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
             <span class="faq-question-text">${f.q}</span>
             <div class="faq-toggle"><span class="faq-toggle-icon">+</span></div>
           </div>
