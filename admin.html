@@ -645,6 +645,22 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
 
 /* Section move/delete controls */
 .cp-section-controls { display: flex; align-items: center; gap: 6px; }
+.cp-anchor-field {
+  display: flex; align-items: center; gap: 6px;
+  width: 200px; margin-left: auto; margin-right: 12px; flex-shrink: 0;
+}
+.cp-anchor-field label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); white-space: nowrap; flex-shrink: 0;
+}
+.cp-anchor-field input {
+  font-family: monospace; font-size: 12px;
+  padding: 3px 7px; border: 1px solid var(--border); border-radius: 3px;
+  background: #fff; color: var(--text); width: 100%;
+  transition: border-color 0.15s;
+}
+.cp-anchor-field input:focus { outline: none; border-color: var(--gold); }
+.cp-anchor-select { margin-top: 6px; }
 .cp-move-btn {
   background: none; border: 1px solid var(--border); border-radius: 3px;
   color: var(--muted); cursor: pointer; font-size: 13px;
@@ -841,11 +857,11 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
           <div class="form-row-2">
             <div class="field-group">
               <label>Phone (Display)</label>
-              <input type="tel" id="f_phone" placeholder="(205) 515-9271"/>
+              <input type="tel" id="f_phone" placeholder="(555) 000-0000"/>
             </div>
             <div class="field-group">
               <label>Phone (Raw, for tel: link)</label>
-              <input type="text" id="f_phoneRaw" placeholder="+12055159271"/>
+              <input type="text" id="f_phoneRaw" placeholder="+15550000000"/>
             </div>
           </div>
           <div class="form-row-2">
@@ -1378,33 +1394,23 @@ const LS_FAB     = () => window._SITE_KEY + '_adminFabPos';
    STATE
    ============================================= */
 let DATA = {
-  firmName:"Osborne Law Firm, LLC", tagline:"Adoption Attorney", preloaderTagline:"Adoption Attorneys · Alabama",
+  firmName:"", tagline:"", preloaderTagline:"",
   pageHeaders:{
-    about:        {label:"About Us",         title:"Meet Our Team",                    subtitle:""},
+    about:        {label:"About Us",   title:"About Us", subtitle:""},
     contact:      {label:"Get in Touch"},
   },
-  attorneyName:"Amy Michelle Osborne", attorneyDegree:"J.D., Birmingham School of Law",
-  attorneyCredentials:["AL State Bar","J.D., Birmingham Law","ABA Member","Super Lawyers","AAAA Member"],
+  attorneyName:"", attorneyDegree:"",
+  attorneyCredentials:[],
   aboutBio1:"", aboutBio2:"",
   attorneyPhoto:"",
   aboutNavLabel:"About Us",
   attorneys:[],
-  phone:"(205) 515-9271", phoneRaw:"+12055159271",
-  fax:"(205) 434-3975", email:"osborneadoptions@gmail.com",
-  address:"4770 Eastern Valley Road, Suite 111", city:"McCalla", state:"Alabama", stateAbbr:"AL", zip:"35111",
-  hours:[
-    {days:"Monday \u2013 Thursday",hours:"8:30 AM \u2013 5:30 PM"},
-    {days:"Friday",hours:"8:30 AM \u2013 4:00 PM"},
-    {days:"Saturday \u2013 Sunday",hours:"Closed"}
-  ],
+  phone:"", phoneRaw:"",
+  fax:"", email:"",
+  address:"", city:"", state:"", stateAbbr:"", zip:"",
+  hours:[],
   socialLinks:[],
-  stats:[
-    {num:"20+",label:"Years of Adoption Law"},
-    {num:"500+",label:"Families Helped"},
-    {num:"9",label:"Adoption Service Types"},
-    {num:"AL",label:"State Bar Member"},
-    {num:"\u22c54.9",label:"Client Rating"}
-  ],
+  stats:[],
   colors:{navy:"#0f2340",navyLight:"#1a3560",gold:"#c9a84c",goldLight:"#e8c97a",goldPale:"#faf6ec",warmWhite:"#fffdf9",cream:"#f9f6f0",chrome:"#060f1d"},
   fontColors:{heading:"#0f2340",body:"#5c5a53",onDark:"#ffffff",onDarkMuted:"#f3f8fb"},
   fontDisplay:"Playfair Display", fontBody:"DM Sans",
@@ -1414,27 +1420,26 @@ let DATA = {
   heroBg:{type:"color",bgColor:"#0f2340",imagePath:"",imagePosition:"center center",slides:[],
     transition:"crossfade",transitionSpeed:2,slideDuration:8,pauseOnHover:false,showDots:true,
     autoplay:true,motionType:"zoom-out",motionSpeed:20,overlayColor:"#0f2340",overlayOpacity:0.3},
-  heroHeadline:"Building Families Through the Law, With Heart.",
-  heroSubline:"We guide adoptive parents, birth parents, and families through every step of the adoption process \u2014 clearly, compassionately, and with deep legal expertise.",
-  heroTrustBullets:["Free Initial Consultation","20+ Years Experience","Statewide Alabama Practice"],
-  heroPrimaryLabel:"Free Consultation", heroPrimaryLinkType:"internal", heroPrimaryLinkUrl:"contact",
-  heroSecondaryLabel:"Our Services", heroSecondaryLinkType:"internal", heroSecondaryLinkUrl:"services",
-  whyChooseUs:{heading:"A Trusted Partner Through Every Step",subtext:"We know adoption is more than a legal process \u2014 it\u2019s the beginning of a family.",badgeNum:"20+",badgeLabel:"Years",bullets:[]},
-  contactHeadline:"Schedule Your Free Consultation",
-  contactSubline:"No obligation, no pressure \u2014 just honest answers about your adoption options.",
-  contactFormHeading:"Let\u2019s Talk About Your Family",
-  contactFormIntro:"Fill out this form and we\u2019ll get back to you within one business day.",
-  contactPrivacyNote:"\ud83d\udd12 Your information is strictly confidential.",
+  heroHeadline:"",
+  heroSubline:"",
+  heroTrustBullets:[],
+  heroPrimaryLabel:"", heroPrimaryLinkType:"internal", heroPrimaryLinkUrl:"contact",
+  heroSecondaryLabel:"", heroSecondaryLinkType:"internal", heroSecondaryLinkUrl:"services",
+  whyChooseUs:{heading:"",subtext:"",badgeNum:"",badgeLabel:"",bullets:[]},
+  contactHeadline:"",
+  contactSubline:"",
+  contactFormHeading:"",
+  contactFormIntro:"",
+  contactPrivacyNote:"",
   contactForm:[
-    {type:'text',     label:'First Name',               placeholder:'Jane',                                required:true,  halfWidth:true,  options:[]},
-    {type:'text',     label:'Last Name',                placeholder:'Smith',                               required:true,  halfWidth:true,  options:[]},
-    {type:'email',    label:'Email Address',             placeholder:'jane@email.com',                      required:true,  halfWidth:false, options:[]},
-    {type:'phone',    label:'Phone Number',              placeholder:'(205) 555-0000',                      required:false, halfWidth:false, options:[]},
-    {type:'select',   label:'Adoption Type',             placeholder:'Select adoption type...',             required:false, halfWidth:false, options:['Stepparent Adoption','Relative / Kinship Adoption','Private Placement Adoption','Agency Adoption','Adult Adoption','Interstate Adoption (ICPC)','Contested Adoption','Termination of Parental Rights','Same-Sex / Second-Parent Adoption','Not Sure / General Question']},
-    {type:'textarea', label:'Tell Us About Your Situation', placeholder:"Share as much or as little as you'd like...", required:false, halfWidth:false, options:[]}
+    {type:'text',  label:'First Name',    placeholder:'', required:true,  halfWidth:true,  options:[]},
+    {type:'text',  label:'Last Name',     placeholder:'', required:true,  halfWidth:true,  options:[]},
+    {type:'email', label:'Email Address', placeholder:'', required:true,  halfWidth:false, options:[]},
+    {type:'phone', label:'Phone Number',  placeholder:'', required:false, halfWidth:false, options:[]},
+    {type:'textarea', label:'Message',    placeholder:'', required:false, halfWidth:false, options:[]}
   ],
   services:[], faqs:[], testimonials:[], blogPosts:[], processSteps:[], processRequirements:[],
-  ctaLabel:"Free Consultation",
+  ctaLabel:"",
   pageToggles:{about:true,contact:true},
   homeToggles:{stats:true,why:true,testimonials:true},
   customPages:[],
@@ -2510,6 +2515,27 @@ function getInternalPageOptions(currentVal) {
   ).join('');
 }
 
+function getAnchorOptions(pageSlug, currentAnchor) {
+  let sections = [];
+  if (pageSlug === 'home') sections = DATA.homeSections || [];
+  else if (pageSlug === 'about') sections = DATA.aboutSections || [];
+  else {
+    const cp = (DATA.customPages||[]).find(p => p.slug === pageSlug);
+    sections = cp ? (cp.sections || []) : [];
+  }
+  const anchored = sections.filter(s => s.anchorId && s.anchorId.trim());
+  if (!anchored.length) return '<option value="">— No anchors on this page —</option>';
+  return '<option value="">— No anchor (top of page) —</option>' +
+    anchored.map(s =>
+      `<option value="${escHtml(s.anchorId)}"${currentAnchor===s.anchorId?' selected':''}>#${escHtml(s.anchorId)}${s.label ? ' — ' + escHtml(s.label) : s.heading ? ' — ' + escHtml(s.heading) : ''}</option>`
+    ).join('');
+}
+
+function updateAnchorSelect(anchorSel, pageSlug, currentVal) {
+  if (!anchorSel) return;
+  anchorSel.innerHTML = getAnchorOptions(pageSlug, currentVal || '');
+}
+
 /* =============================================
    CONTACT FORM FIELD BUILDER
    ============================================= */
@@ -2769,11 +2795,13 @@ function onCpLinkTypeChange(pi, si, pref, sel) {
   const wrap = document.getElementById(`cp-link-wrap-${key}`);
   const intEl = document.getElementById(`cp-link-internal-${key}`);
   const extEl = document.getElementById(`cp-link-external-${key}`);
+  const anchorEl = document.getElementById(`cp-link-anchor-${key}`);
   if (!wrap) return;
   const val = sel.value;
   wrap.classList.toggle('visible', val !== 'none');
   if (intEl) intEl.style.display = val === 'internal' ? 'block' : 'none';
   if (extEl) extEl.style.display = (val === 'external' || val === 'file') ? 'block' : 'none';
+  if (anchorEl) anchorEl.style.display = val === 'internal' ? 'block' : 'none';
   // Update label on external input
   const urlInput = document.getElementById(`cp-link-url-${key}`);
   if (urlInput) {
@@ -2792,6 +2820,7 @@ function onJurisdictionLinkTypeChange(pi, si, sel) {
   const val = sel.value;
   const intEl = document.getElementById('cp-jur-internal-' + pi + '-' + si);
   const urlEl = document.getElementById('cp-jur-url-' + pi + '-' + si);
+  const anchorEl = document.getElementById('cp-jur-anchor-' + pi + '-' + si);
   if (intEl) intEl.style.display = val === 'internal' ? '' : 'none';
   if (urlEl) {
     urlEl.style.display = (val === 'external' || val === 'file') ? '' : 'none';
@@ -2800,12 +2829,14 @@ function onJurisdictionLinkTypeChange(pi, si, sel) {
     if (label) label.textContent = val === 'file' ? 'File Path / URL' : 'External URL';
     if (input) input.placeholder = val === 'file' ? 'files/doc.pdf' : 'https://';
   }
+  if (anchorEl) anchorEl.style.display = val === 'internal' ? '' : 'none';
 }
 
 function onFeeLinkTypeChange(pi, si, ii, sel) {
   const val = sel.value;
   const intEl = document.getElementById('cp-fee-internal-' + pi + '-' + si + '-' + ii);
   const urlEl = document.getElementById('cp-fee-url-' + pi + '-' + si + '-' + ii);
+  const anchorEl = document.getElementById('cp-fee-anchor-' + pi + '-' + si + '-' + ii);
   if (intEl) intEl.style.display = val === 'internal' ? '' : 'none';
   if (urlEl) {
     urlEl.style.display = (val === 'external' || val === 'file') ? '' : 'none';
@@ -2814,12 +2845,14 @@ function onFeeLinkTypeChange(pi, si, ii, sel) {
     if (label) label.textContent = val === 'file' ? 'File Path / URL' : 'External URL';
     if (input) input.placeholder = val === 'file' ? 'files/doc.pdf' : 'https://';
   }
+  if (anchorEl) anchorEl.style.display = val === 'internal' ? '' : 'none';
 }
 
 function onTimelineLinkTypeChange(pi, si, ii, sel) {
   const val = sel.value;
   const intEl = document.getElementById('cp-tl-internal-' + pi + '-' + si + '-' + ii);
   const urlEl = document.getElementById('cp-tl-url-' + pi + '-' + si + '-' + ii);
+  const anchorEl = document.getElementById('cp-tl-anchor-' + pi + '-' + si + '-' + ii);
   if (intEl) intEl.style.display = val === 'internal' ? '' : 'none';
   if (urlEl) {
     urlEl.style.display = (val === 'external' || val === 'file') ? '' : 'none';
@@ -2828,12 +2861,14 @@ function onTimelineLinkTypeChange(pi, si, ii, sel) {
     if (label) label.textContent = val === 'file' ? 'File Path / URL' : 'External URL';
     if (input) input.placeholder = val === 'file' ? 'files/doc.pdf' : 'https://';
   }
+  if (anchorEl) anchorEl.style.display = val === 'internal' ? '' : 'none';
 }
 
 function onFaqLinkTypeChange(pi, si, ii, sel) {
   const val = sel.value;
   const intEl = document.getElementById('cp-faq-internal-' + pi + '-' + si + '-' + ii);
   const urlEl = document.getElementById('cp-faq-url-' + pi + '-' + si + '-' + ii);
+  const anchorEl = document.getElementById('cp-faq-anchor-' + pi + '-' + si + '-' + ii);
   if (intEl) intEl.style.display = val === 'internal' ? '' : 'none';
   if (urlEl) {
     urlEl.style.display = (val === 'external' || val === 'file') ? '' : 'none';
@@ -2842,12 +2877,14 @@ function onFaqLinkTypeChange(pi, si, ii, sel) {
     if (label) label.textContent = val === 'file' ? 'File Path / URL' : 'External URL';
     if (input) input.placeholder = val === 'file' ? 'files/doc.pdf' : 'https://';
   }
+  if (anchorEl) anchorEl.style.display = val === 'internal' ? '' : 'none';
 }
 
 function onStepLinkTypeChange(pi, si, ii, sel) {
   const val = sel.value;
   const intEl = document.getElementById('cp-step-internal-' + pi + '-' + si + '-' + ii);
   const urlEl = document.getElementById('cp-step-url-' + pi + '-' + si + '-' + ii);
+  const anchorEl = document.getElementById('cp-step-anchor-' + pi + '-' + si + '-' + ii);
   if (intEl) intEl.style.display = val === 'internal' ? '' : 'none';
   if (urlEl) {
     urlEl.style.display = (val === 'external' || val === 'file') ? '' : 'none';
@@ -2856,6 +2893,7 @@ function onStepLinkTypeChange(pi, si, ii, sel) {
     if (label) label.textContent = val === 'file' ? 'File Path / URL' : 'External URL';
     if (input) input.placeholder = val === 'file' ? 'files/doc.pdf' : 'https://';
   }
+  if (anchorEl) anchorEl.style.display = val === 'internal' ? '' : 'none';
 }
 
 function loadHeroBtnField(which, linkType, linkUrl) {
@@ -2892,6 +2930,7 @@ function onFeatureCardLinkTypeChange(pi, si, ii, sel) {
   const val = sel.value;
   const intEl = document.getElementById('cp-fc-internal-' + pi + '-' + si + '-' + ii);
   const urlEl = document.getElementById('cp-fc-url-' + pi + '-' + si + '-' + ii);
+  const anchorEl = document.getElementById('cp-fc-anchor-' + pi + '-' + si + '-' + ii);
   if (intEl) intEl.style.display = val === 'internal' ? '' : 'none';
   if (urlEl) {
     urlEl.style.display = (val === 'external' || val === 'file') ? '' : 'none';
@@ -2900,12 +2939,14 @@ function onFeatureCardLinkTypeChange(pi, si, ii, sel) {
     if (label) label.textContent = val === 'file' ? 'File Path / URL' : 'External URL';
     if (input) input.placeholder = val === 'file' ? 'files/doc.pdf' : 'https://';
   }
+  if (anchorEl) anchorEl.style.display = val === 'internal' ? '' : 'none';
 }
 
 function onServiceBtnLinkTypeChange(pi, si, ii, sel) {
   const val = sel.value;
   const intEl = document.getElementById('cp-svc-internal-' + pi + '-' + si + '-' + ii);
   const urlEl = document.getElementById('cp-svc-url-' + pi + '-' + si + '-' + ii);
+  const anchorEl = document.getElementById('cp-svc-anchor-' + pi + '-' + si + '-' + ii);
   if (intEl) intEl.style.display = val === 'internal' ? '' : 'none';
   if (urlEl) {
     urlEl.style.display = (val === 'external' || val === 'file') ? '' : 'none';
@@ -2914,12 +2955,14 @@ function onServiceBtnLinkTypeChange(pi, si, ii, sel) {
     if (label) label.textContent = val === 'file' ? 'File Path / URL' : 'External URL';
     if (input) input.placeholder = val === 'file' ? 'files/doc.pdf' : 'https://';
   }
+  if (anchorEl) anchorEl.style.display = val === 'internal' ? '' : 'none';
 }
 
 function onBulletLinkTypeChange(pi, si, ii, sel) {
   const val = sel.value;
   const intEl = document.getElementById('cp-bullet-internal-' + pi + '-' + si + '-' + ii);
   const urlEl = document.getElementById('cp-bullet-url-' + pi + '-' + si + '-' + ii);
+  const anchorEl = document.getElementById('cp-bullet-anchor-' + pi + '-' + si + '-' + ii);
   if (intEl) intEl.style.display = val === 'internal' ? '' : 'none';
   if (urlEl) {
     urlEl.style.display = (val === 'external' || val === 'file') ? '' : 'none';
@@ -2928,6 +2971,7 @@ function onBulletLinkTypeChange(pi, si, ii, sel) {
     if (label) label.textContent = val === 'file' ? 'File Path / URL' : 'External URL';
     if (input) input.placeholder = val === 'file' ? 'files/doc.pdf' : 'https://';
   }
+  if (anchorEl) anchorEl.style.display = val === 'internal' ? '' : 'none';
 }
 
 function onTestimonialsShowReviewsChange(pi, si, cb) {
@@ -3534,6 +3578,8 @@ function collectHomeSingleSection_forPi(secCard, pi, si, existing) {
     }
     const typeEl = secCard.querySelector('[data-field="linkType"]');
     if (typeEl) sec.linkType = typeEl.value;
+    const anchorEl = secCard.querySelector('[data-field="link_anchorId"]');
+    if (anchorEl) sec.link_anchorId = anchorEl.value.trim();
   }
 
   // Button appendage
@@ -3552,6 +3598,8 @@ function collectHomeSingleSection_forPi(secCard, pi, si, existing) {
         }
         sec[pref + '_linkUrl'] = visible ? urlEl.value.trim() : (existing[pref + '_linkUrl'] || '');
       }
+      const anchorEl = secCard.querySelector('[data-field="' + pref + '_anchorId"]');
+      if (anchorEl) sec[pref + '_anchorId'] = anchorEl.value.trim();
     });
   }
 
@@ -3797,6 +3845,10 @@ function buildCustomSectionHtml(sec, pi, si) {
   return `<div class="cp-section-card open" data-pi="${pi}" data-si="${si}">
     <div class="cp-section-header" onclick="toggleCpSection(this)">
       <span class="cp-section-type-badge">${typeLabel}${sec.label ? ' — ' + escHtml(sec.label) : ''}</span>
+      ${!isAppendage && !isRichtext ? `<div class="cp-anchor-field" onclick="event.stopPropagation()">
+        <label>#</label>
+        <input type="text" data-cp="${pi}" data-sec="${si}" data-field="anchorId" value="${escHtml(sec.anchorId||'')}" placeholder="anchor-id" title="Anchor ID — used for section links"/>
+      </div>` : ''}
       <div class="cp-section-controls">
         <button class="cp-move-btn" onclick="moveCpSection(${typeof pi==='string'?("'"+pi+"'"):pi},${si},-1);event.stopPropagation();" title="Move up">↑</button>
         <button class="cp-move-btn" onclick="moveCpSection(${typeof pi==='string'?("'"+pi+"'"):pi},${si},1);event.stopPropagation();" title="Move down">↓</button>
@@ -3903,7 +3955,14 @@ function buildCpSectionTypeFields(sec, pi, si) {
           </div>
           <div class="field-group" id="cp-fc-internal-${pi}-${si}-${ii}" style="margin-bottom:4px;${showInt}">
             <label>Internal Page</label>
-            <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl">${intOpts}</select>
+            <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl"
+              onchange="updateAnchorSelect(document.getElementById('cp-fc-anchor-sel-${pi}-${si}-${ii}'),this.value,'')">${intOpts}</select>
+            <div class="field-group cp-anchor-select" id="cp-fc-anchor-${pi}-${si}-${ii}" style="margin-top:6px;margin-bottom:0;">
+              <label>Scroll to Section (optional)</label>
+              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="anchorId" id="cp-fc-anchor-sel-${pi}-${si}-${ii}">
+                ${getAnchorOptions(it.linkUrl||'', it.anchorId||'')}
+              </select>
+            </div>
           </div>
           <div class="field-group" id="cp-fc-url-${pi}-${si}-${ii}" style="margin-bottom:4px;${showUrl}">
             <label>${urlLabel}</label>
@@ -3952,7 +4011,14 @@ function buildCpSectionTypeFields(sec, pi, si) {
             </div>
             <div class="field-group" id="cp-bullet-internal-${pi}-${si}-${ii}" style="margin:0;${showInt}">
               <label>Internal Page</label>
-              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl">${intOpts}</select>
+              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl"
+                onchange="updateAnchorSelect(document.getElementById('cp-bullet-anchor-sel-${pi}-${si}-${ii}'),this.value,'')">${intOpts}</select>
+              <div class="field-group cp-anchor-select" id="cp-bullet-anchor-${pi}-${si}-${ii}" style="margin-top:6px;margin-bottom:0;">
+                <label>Scroll to Section (optional)</label>
+                <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="anchorId" id="cp-bullet-anchor-sel-${pi}-${si}-${ii}">
+                  ${getAnchorOptions(it.linkUrl||'', it.anchorId||'')}
+                </select>
+              </div>
             </div>
             <div class="field-group" id="cp-bullet-url-${pi}-${si}-${ii}" style="margin:0;${showUrl}">
               <label>${urlLabel}</label>
@@ -4004,7 +4070,14 @@ function buildCpSectionTypeFields(sec, pi, si) {
           </div>
           <div class="field-group" id="cp-svc-internal-${pi}-${si}-${ii}" style="margin-bottom:4px;${showInt}">
             <label>Internal Page</label>
-            <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnLinkUrl">${intOpts}</select>
+            <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnLinkUrl"
+              onchange="updateAnchorSelect(document.getElementById('cp-svc-anchor-sel-${pi}-${si}-${ii}'),this.value,'')">${intOpts}</select>
+            <div class="field-group cp-anchor-select" id="cp-svc-anchor-${pi}-${si}-${ii}" style="margin-top:6px;margin-bottom:0;">
+              <label>Scroll to Section (optional)</label>
+              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnAnchorId" id="cp-svc-anchor-sel-${pi}-${si}-${ii}">
+                ${getAnchorOptions(it.btnLinkUrl||'', it.btnAnchorId||'')}
+              </select>
+            </div>
           </div>
           <div class="field-group" id="cp-svc-url-${pi}-${si}-${ii}" style="margin-bottom:4px;${showUrl}">
             <label>${urlLabel}</label>
@@ -4050,7 +4123,14 @@ function buildCpSectionTypeFields(sec, pi, si) {
           </div>
           <div class="field-group" id="cp-step-internal-${pi}-${si}-${ii}" style="margin-bottom:4px;${showInt}">
             <label>Internal Page</label>
-            <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl">${intOpts}</select>
+            <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl"
+              onchange="updateAnchorSelect(document.getElementById('cp-step-anchor-sel-${pi}-${si}-${ii}'),this.value,'')">${intOpts}</select>
+            <div class="field-group cp-anchor-select" id="cp-step-anchor-${pi}-${si}-${ii}" style="margin-top:6px;margin-bottom:0;">
+              <label>Scroll to Section (optional)</label>
+              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="anchorId" id="cp-step-anchor-sel-${pi}-${si}-${ii}">
+                ${getAnchorOptions(it.linkUrl||'', it.anchorId||'')}
+              </select>
+            </div>
           </div>
           <div class="field-group" id="cp-step-url-${pi}-${si}-${ii}" style="margin-bottom:4px;${showUrl}">
             <label>${urlLabel}</label>
@@ -4096,7 +4176,14 @@ function buildCpSectionTypeFields(sec, pi, si) {
           </div>
           <div class="field-group" id="cp-faq-internal-${pi}-${si}-${ii}" style="margin-bottom:4px;${showInt}">
             <label>Internal Page</label>
-            <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl">${intOpts}</select>
+            <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl"
+              onchange="updateAnchorSelect(document.getElementById('cp-faq-anchor-sel-${pi}-${si}-${ii}'),this.value,'')">${intOpts}</select>
+            <div class="field-group cp-anchor-select" id="cp-faq-anchor-${pi}-${si}-${ii}" style="margin-top:6px;margin-bottom:0;">
+              <label>Scroll to Section (optional)</label>
+              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="anchorId" id="cp-faq-anchor-sel-${pi}-${si}-${ii}">
+                ${getAnchorOptions(it.linkUrl||'', it.anchorId||'')}
+              </select>
+            </div>
           </div>
           <div class="field-group" id="cp-faq-url-${pi}-${si}-${ii}" style="margin-bottom:4px;${showUrl}">
             <label>${urlLabel}</label>
@@ -4297,7 +4384,14 @@ function buildCpSectionTypeFields(sec, pi, si) {
               <div class="cp-smart-link-wrap${showPrimLinkCls}" id="cp-link-wrap-${pi}-${si}-cta_primary_">
                 <div id="cp-link-internal-${pi}-${si}-cta_primary_" style="display:${primIntDisp};">
                   <div class="field-group" style="margin:0;"><label>Internal Page</label>
-                    <select ${p} data-field="cta_primary_linkUrl" id="cp-link-isel-${pi}-${si}-cta_primary_">${primIntOpts}</select>
+                    <select ${p} data-field="cta_primary_linkUrl" id="cp-link-isel-${pi}-${si}-cta_primary_"
+                      onchange="updateAnchorSelect(document.getElementById('cp-link-anchor-sel-${pi}-${si}-cta_primary_'),this.value,'')">${primIntOpts}</select>
+                  </div>
+                  <div class="field-group cp-anchor-select" id="cp-link-anchor-${pi}-${si}-cta_primary_" style="margin-top:6px;margin-bottom:0;display:${primIntDisp};">
+                    <label>Scroll to Section (optional)</label>
+                    <select ${p} data-field="cta_primary_anchorId" id="cp-link-anchor-sel-${pi}-${si}-cta_primary_">
+                      ${getAnchorOptions(ctaPrimUrl, sec.cta_primary_anchorId||'')}
+                    </select>
                   </div>
                 </div>
                 <div id="cp-link-external-${pi}-${si}-cta_primary_" style="display:${primExtDisp};">
@@ -4328,7 +4422,14 @@ function buildCpSectionTypeFields(sec, pi, si) {
               <div class="cp-smart-link-wrap${showSecLinkCls}" id="cp-link-wrap-${pi}-${si}-cta_secondary_">
                 <div id="cp-link-internal-${pi}-${si}-cta_secondary_" style="display:${secIntDisp};">
                   <div class="field-group" style="margin:0;"><label>Internal Page</label>
-                    <select ${p} data-field="cta_secondary_linkUrl" id="cp-link-isel-${pi}-${si}-cta_secondary_">${secIntOpts}</select>
+                    <select ${p} data-field="cta_secondary_linkUrl" id="cp-link-isel-${pi}-${si}-cta_secondary_"
+                      onchange="updateAnchorSelect(document.getElementById('cp-link-anchor-sel-${pi}-${si}-cta_secondary_'),this.value,'')">${secIntOpts}</select>
+                  </div>
+                  <div class="field-group cp-anchor-select" id="cp-link-anchor-${pi}-${si}-cta_secondary_" style="margin-top:6px;margin-bottom:0;display:${secIntDisp};">
+                    <label>Scroll to Section (optional)</label>
+                    <select ${p} data-field="cta_secondary_anchorId" id="cp-link-anchor-sel-${pi}-${si}-cta_secondary_">
+                      ${getAnchorOptions(ctaSecUrl, sec.cta_secondary_anchorId||'')}
+                    </select>
                   </div>
                 </div>
                 <div id="cp-link-external-${pi}-${si}-cta_secondary_" style="display:${secExtDisp};">
@@ -4397,7 +4498,14 @@ function buildCpSectionTypeFields(sec, pi, si) {
           </div>
           <div class="field-group" id="cp-tl-internal-${pi}-${si}-${ii}" style="margin-bottom:4px;${showInt}">
             <label>Internal Page</label>
-            <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl">${intOpts}</select>
+            <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl"
+              onchange="updateAnchorSelect(document.getElementById('cp-tl-anchor-sel-${pi}-${si}-${ii}'),this.value,'')">${intOpts}</select>
+            <div class="field-group cp-anchor-select" id="cp-tl-anchor-${pi}-${si}-${ii}" style="margin-top:6px;margin-bottom:0;">
+              <label>Scroll to Section (optional)</label>
+              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="anchorId" id="cp-tl-anchor-sel-${pi}-${si}-${ii}">
+                ${getAnchorOptions(it.linkUrl||'', it.anchorId||'')}
+              </select>
+            </div>
           </div>
           <div class="field-group" id="cp-tl-url-${pi}-${si}-${ii}" style="margin-bottom:4px;${showUrl}">
             <label>${urlLabel}</label>
@@ -4449,7 +4557,14 @@ function buildCpSectionTypeFields(sec, pi, si) {
           </div>
           <div class="field-group" id="cp-fee-internal-${pi}-${si}-${ii}" style="margin-bottom:4px;${showInt}">
             <label>Internal Page</label>
-            <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl">${intOpts}</select>
+            <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl"
+              onchange="updateAnchorSelect(document.getElementById('cp-fee-anchor-sel-${pi}-${si}-${ii}'),this.value,'')">${intOpts}</select>
+            <div class="field-group cp-anchor-select" id="cp-fee-anchor-${pi}-${si}-${ii}" style="margin-top:6px;margin-bottom:0;">
+              <label>Scroll to Section (optional)</label>
+              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="anchorId" id="cp-fee-anchor-sel-${pi}-${si}-${ii}">
+                ${getAnchorOptions(it.linkUrl||'', it.anchorId||'')}
+              </select>
+            </div>
           </div>
           <div class="field-group" id="cp-fee-url-${pi}-${si}-${ii}" style="margin-bottom:4px;${showUrl}">
             <label>${urlLabel}</label>
@@ -4504,7 +4619,14 @@ function buildCpSectionTypeFields(sec, pi, si) {
         </div>
         <div class="field-group" id="cp-jur-internal-${pi}-${si}" style="margin-bottom:4px;${showInt}">
           <label>Internal Page</label>
-          <select ${p} data-field="linkUrl">${intOpts}</select>
+          <select ${p} data-field="linkUrl"
+            onchange="updateAnchorSelect(document.getElementById('cp-jur-anchor-sel-${pi}-${si}'),this.value,'')">${intOpts}</select>
+          <div class="field-group cp-anchor-select" id="cp-jur-anchor-${pi}-${si}" style="margin-top:6px;margin-bottom:0;">
+            <label>Scroll to Section (optional)</label>
+            <select ${p} data-field="jur_anchorId" id="cp-jur-anchor-sel-${pi}-${si}">
+              ${getAnchorOptions(sec.linkUrl||'', sec.anchorId||'')}
+            </select>
+          </div>
         </div>
         <div class="field-group" id="cp-jur-url-${pi}-${si}" style="margin-bottom:4px;${showUrl}">
           <label>${urlLabel}</label>
@@ -4662,8 +4784,15 @@ function cpSmartLinkFields(sec, pi, si, defaultLabelPlaceholder, prefix) {
       <div id="cp-link-internal-${pi}-${si}-${pref||'x'}" style="display:${linkType==='internal'?'block':'none'};">
         <div class="field-group" style="margin:0;">
           <label>Internal Page</label>
-          <select ${p} data-field="${pref}linkUrl" id="cp-link-isel-${pi}-${si}-${pref||'x'}">
+          <select ${p} data-field="${pref}linkUrl" id="cp-link-isel-${pi}-${si}-${pref||'x'}"
+            onchange="updateAnchorSelect(document.getElementById('cp-link-anchor-sel-${pi}-${si}-${pref||'x'}'),this.value,'')">
             ${internalOpts}
+          </select>
+        </div>
+        <div class="field-group cp-anchor-select" id="cp-link-anchor-${pi}-${si}-${pref||'x'}" style="margin-top:6px;margin-bottom:0;">
+          <label>Scroll to Section (optional)</label>
+          <select ${p} data-field="${pref||'link_'}anchorId" id="cp-link-anchor-sel-${pi}-${si}-${pref||'x'}">
+            ${getAnchorOptions(sec[(pref||'link_')+'linkUrl']||'', sec[(pref||'link_')+'anchorId']||'')}
           </select>
         </div>
       </div>
@@ -5072,7 +5201,7 @@ function collectCpSections(card, pi, existingSections) {
       return sel ? sel.textContent.toLowerCase() : (existing.background || 'light');
     };
 
-    const sec = { type, label: get('label'), background: getBg() };
+    const sec = { type, label: get('label'), background: getBg(), anchorId: get('anchorId') };
 
     // Type-specific collection
     switch (type) {
@@ -5088,20 +5217,22 @@ function collectCpSections(card, pi, existingSections) {
       case 'feature-cards':
         sec.label = get('label'); sec.heading = get('heading'); sec.body = get('body');
         sec.badgeNum = get('badgeNum'); sec.badgeLabel = get('badgeLabel');
-        sec.items = collectCpSubItems(secCard, pi, si, ['num','title','body','linkLabel','linkType','linkUrl']); break;
+        sec.fullWidth = secCard.querySelector('[data-field="fullWidth"]')?.checked || false;
+        sec.items = collectCpSubItems(secCard, pi, si, ['num','title','body','linkLabel','linkType','linkUrl','anchorId']); break;
       case 'bullets':
         sec.heading = get('heading'); sec.subtitle = get('subtitle');
-        sec.items = collectCpSubItems(secCard, pi, si, ['icon','title','desc','linkType','linkUrl']); break;
+        sec.fullWidth = secCard.querySelector('[data-field="fullWidth"]')?.checked || false;
+        sec.items = collectCpSubItems(secCard, pi, si, ['icon','title','desc','linkType','linkUrl','anchorId']); break;
       case 'services':
         sec.heading = get('heading'); sec.subtitle = get('subtitle');
-        sec.items = collectCpSubItems(secCard, pi, si, ['icon','title','desc','detail','btnLabel','btnLinkType','btnLinkUrl']); break;
+        sec.items = collectCpSubItems(secCard, pi, si, ['icon','title','desc','detail','btnLabel','btnLinkType','btnLinkUrl','btnAnchorId']); break;
       case 'steps':
         sec.heading = get('heading'); sec.subtitle = get('subtitle');
-        sec.items = collectCpSubItems(secCard, pi, si, ['title','body','linkLabel','linkType','linkUrl']); break;
+        sec.items = collectCpSubItems(secCard, pi, si, ['title','body','linkLabel','linkType','linkUrl','anchorId']); break;
       case 'faq':
         sec.heading = get('heading'); sec.subtitle = get('subtitle');
         sec.fullWidth = secCard.querySelector('[data-field="fullWidth"]')?.checked || false;
-        sec.items = collectCpSubItems(secCard, pi, si, ['q','a','linkLabel','linkType','linkUrl']); break;
+        sec.items = collectCpSubItems(secCard, pi, si, ['q','a','linkLabel','linkType','linkUrl','anchorId']); break;
       case 'testimonials':
         sec.heading = get('heading'); sec.subtitle = get('subtitle');
         sec.showReviews = secCard.querySelector('[data-field="showReviews"]')?.checked !== false;
@@ -5122,22 +5253,26 @@ function collectCpSections(card, pi, existingSections) {
         sec.cta_secondary_linkType  = get('cta_secondary_linkType')  || 'none';
         sec.cta_primary_linkUrl     = collectCpSmartLinkUrl(secCard, pi, si, 'cta_primary_',   sec.cta_primary_linkType);
         sec.cta_secondary_linkUrl   = collectCpSmartLinkUrl(secCard, pi, si, 'cta_secondary_', sec.cta_secondary_linkType);
+        sec.cta_primary_anchorId    = get('cta_primary_anchorId');
+        sec.cta_secondary_anchorId  = get('cta_secondary_anchorId');
         break;
       case 'checklist':
         sec.heading = get('heading'); sec.subtitle = get('subtitle');
+        sec.fullWidth = secCard.querySelector('[data-field="fullWidth"]')?.checked || false;
         sec.categories = collectCpChecklistCategories(secCard, pi, si); break;
       case 'timeline':
         sec.heading = get('heading'); sec.subtitle = get('subtitle');
-        sec.items = collectCpSubItems(secCard, pi, si, ['date','title','body','linkLabel','linkType','linkUrl']); break;
+        sec.items = collectCpSubItems(secCard, pi, si, ['date','title','body','linkLabel','linkType','linkUrl','anchorId']); break;
       case 'fees':
         sec.heading = get('heading'); sec.subtitle = get('subtitle');
         sec.col1Label = get('col1Label'); sec.col2Label = get('col2Label'); sec.col3Label = get('col3Label');
         sec.disclaimer = get('disclaimer');
-        sec.items = collectCpSubItems(secCard, pi, si, ['service','amount','detail','note','linkLabel','linkType','linkUrl']); break;
+        sec.items = collectCpSubItems(secCard, pi, si, ['service','amount','detail','note','linkLabel','linkType','linkUrl','anchorId']); break;
       case 'jurisdiction':
         sec.icon = get('icon'); sec.title = get('title');
         sec.heading = get('heading'); sec.body = get('body');
-        sec.linkLabel = get('linkLabel'); sec.linkType = get('linkType'); sec.linkUrl = get('linkUrl'); break;
+        sec.linkLabel = get('linkLabel'); sec.linkType = get('linkType'); sec.linkUrl = get('linkUrl');
+        sec.jur_anchorId = get('jur_anchorId'); break;
       case 'team':
         sec.heading = get('heading'); sec.useAttorneys = getCheck('useAttorneys'); break;
       case 'form':
@@ -5147,12 +5282,15 @@ function collectCpSections(card, pi, existingSections) {
         sec.fields = collectFormFields(secCard, pi, si); break;
       case 'link':
         sec.linkType = get('linkType'); sec.linkLabel = get('linkLabel');
-        sec.linkUrl = collectCpSmartLinkUrl(secCard, pi, si, '', sec.linkType); break;
+        sec.linkUrl = collectCpSmartLinkUrl(secCard, pi, si, '', sec.linkType);
+        sec.link_anchorId = get('link_anchorId'); break;
       case 'button':
         sec.primary_linkType  = get('primary_linkType');  sec.primary_linkLabel  = get('primary_linkLabel');
         sec.primary_linkUrl   = collectCpSmartLinkUrl(secCard, pi, si, 'primary_', sec.primary_linkType);
+        sec.primary_anchorId  = get('primary_anchorId');
         sec.secondary_linkType = get('secondary_linkType'); sec.secondary_linkLabel = get('secondary_linkLabel');
-        sec.secondary_linkUrl  = collectCpSmartLinkUrl(secCard, pi, si, 'secondary_', sec.secondary_linkType); break;
+        sec.secondary_linkUrl  = collectCpSmartLinkUrl(secCard, pi, si, 'secondary_', sec.secondary_linkType);
+        sec.secondary_anchorId = get('secondary_anchorId'); break;
       case 'richtext': {
         const editor = secCard.querySelector('[data-field="richContent"]');
         sec.richContent  = editor ? editor.innerHTML : (existing.richContent || '');
@@ -5245,6 +5383,12 @@ function collectCpSmartLinkUrl(secCard, pi, si, pref, linkType) {
   }
   const inp = document.getElementById(`cp-link-url-${key}`);
   return inp ? inp.value.trim() : '';
+}
+
+function collectCpAnchorId(secCard, pi, si, pref) {
+  const key = `${pi}-${si}-${pref||'x'}`;
+  const sel = document.getElementById(`cp-link-anchor-sel-${key}`);
+  return sel ? sel.value : '';
 }
 
 

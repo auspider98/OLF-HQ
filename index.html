@@ -1802,6 +1802,8 @@ footer {
   padding: clamp(48px, 7vw, 80px) var(--gutter);
   text-align: center;
 }
+.cps-section-light .cps-cta-banner { background: var(--cream); }
+.cps-section-alt .cps-cta-banner { background: var(--gold-pale); }
 .cps-cta-banner .cps-heading {
   font-family: var(--font-display);
   font-size: clamp(26px, 3.5vw, 44px);
@@ -1810,12 +1812,27 @@ footer {
   margin-bottom: 16px;
   line-height: 1.2;
 }
+.cps-section-light .cps-cta-banner .cps-heading,
+.cps-section-alt .cps-cta-banner .cps-heading { color: var(--text-head); }
 .cps-cta-banner .cps-body {
   font-size: 16px;
   color: rgba(255,255,255,0.65);
   line-height: 1.7;
   max-width: 560px;
   margin: 0 auto 32px;
+}
+.cps-section-light .cps-cta-banner .cps-body,
+.cps-section-alt .cps-cta-banner .cps-body { color: var(--text-muted); }
+.cps-section-light .cps-cta-banner .btn-outline,
+.cps-section-alt .cps-cta-banner .btn-outline {
+  background: transparent;
+  color: var(--navy);
+  border-color: var(--navy);
+}
+.cps-section-light .cps-cta-banner .btn-outline:hover,
+.cps-section-alt .cps-cta-banner .btn-outline:hover {
+  background: rgba(15,35,64,0.06);
+  border-color: var(--navy);
 }
 .cps-cta-banner .cps-actions {
   display: flex;
@@ -1881,6 +1898,18 @@ footer {
   .cps-doc-item { border-right: none; }
   .cps-doc-items .cps-doc-item:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid #e8e3d8; }
 }
+
+/* Checklist dark section theming */
+.cps-section-dark .cps-doc-category { border-color: rgba(255,255,255,0.12); }
+.cps-section-dark .cps-doc-category-title { background: rgba(255,255,255,0.07); color: var(--gold); }
+.cps-section-dark .cps-doc-item { color: rgba(255,255,255,0.75); border-right-color: rgba(255,255,255,0.08); border-bottom-color: rgba(255,255,255,0.08); }
+.cps-section-dark .cps-doc-items--full .cps-doc-item:nth-last-child(2):nth-child(n) { border-bottom-color: rgba(255,255,255,0.08); }
+.cps-section-dark .cps-doc-check { background: rgba(255,255,255,0.06); border-color: rgba(201,168,76,0.5); color: var(--gold); }
+
+/* Checklist alt section theming */
+.cps-section-alt .cps-doc-category { border-color: var(--border); }
+.cps-section-alt .cps-doc-item { border-right-color: var(--border); border-bottom-color: var(--border); }
+.cps-section-alt .cps-doc-items--full .cps-doc-item:nth-last-child(2):nth-child(n) { border-bottom-color: var(--border); }
 
 /* Timeline */
 .cps-timeline { }
@@ -1972,6 +2001,7 @@ footer {
   margin-top: 32px;
   font-size: 14px;
 }
+.cps-fee-wrap { overflow-x: auto; }
 .cps-fee-table thead tr {
   background: var(--navy);
   color: var(--gold);
@@ -1991,6 +2021,7 @@ footer {
   color: var(--text-body);
   vertical-align: top;
 }
+.cps-fee-detail { color: var(--text-muted); font-size: 13px; }
 .cps-fee-table tbody tr:last-child td { border-bottom: none; }
 .cps-fee-table tbody tr:hover td { background: var(--gold-pale); }
 .cps-fee-amount {
@@ -2019,10 +2050,48 @@ footer {
 /* Fee table dark/alt section theming */
 .cps-section-dark .cps-fee-table thead tr { background: rgba(255,255,255,0.07); }
 .cps-section-dark .cps-fee-table td { border-bottom-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75); }
+.cps-section-dark .cps-fee-detail { color: rgba(255,255,255,0.5); }
 .cps-section-dark .cps-fee-table tbody tr:hover td { background: rgba(255,255,255,0.05); }
 .cps-section-dark .cps-fee-amount { color: #fff; }
-.cps-section-dark .cps-fee-note { color: rgba(255,255,255,0.5); }
+.cps-section-dark .cps-fee-note { color: rgba(255,255,255,0.4); }
 .cps-section-alt .cps-fee-table td { border-bottom-color: var(--border); }
+
+/* Mobile card layout */
+@media (max-width: 600px) {
+  .cps-fee-wrap { overflow-x: visible; }
+  .cps-fee-table thead { display: none; }
+  .cps-fee-table tbody, .cps-fee-table tr, .cps-fee-table td { display: block; width: 100%; }
+  .cps-fee-table tr {
+    border: 1px solid #e8e3d8;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .cps-fee-table tbody tr:last-child td { border-bottom: 1px solid #e8e3d8; }
+  .cps-fee-table tbody tr:last-child td:last-child { border-bottom: none; }
+  .cps-fee-table td { border-bottom: 1px solid #e8e3d8; border-radius: 0; }
+  .cps-fee-table td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-family: var(--font-body);
+  }
+  .cps-fee-table tbody tr:hover td { background: var(--gold-pale); }
+  .cps-section-dark .cps-fee-table tbody tr:hover td { background: rgba(255,255,255,0.05); }
+  .cps-fee-amount { white-space: normal; }
+  /* Dark mobile card */
+  .cps-section-dark .cps-fee-table tr { border-color: rgba(255,255,255,0.1); }
+  .cps-section-dark .cps-fee-table td { border-bottom-color: rgba(255,255,255,0.1); }
+  .cps-section-dark .cps-fee-table tbody tr:last-child td:last-child { border-bottom: none; }
+  /* Alt mobile card */
+  .cps-section-alt .cps-fee-table tr { border-color: var(--border); }
+  .cps-section-alt .cps-fee-table td { border-bottom-color: var(--border); }
+}
 
 /* Jurisdiction Notice */
 .cps-jurisdiction {
@@ -3440,7 +3509,7 @@ let currentPage = 'home';
 
 let _suppressHistoryPush = false;
 
-function showPage(name) {
+function showPage(name, anchor) {
   // Redirect to home if core page is disabled
   const pt = CFG.pageToggles || {};
   const disableable = ['about','contact'];
@@ -3484,7 +3553,28 @@ function showPage(name) {
   });
 
   currentPage = name;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (anchor) {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    setTimeout(() => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const target = document.getElementById(anchor);
+          console.log('[anchor debug] looking for id:', anchor, '→ found:', target);
+          if (target) {
+            const headerH = document.getElementById('site-header')?.offsetHeight || 88;
+            const rect = target.getBoundingClientRect();
+            const top = rect.top + window.scrollY - headerH - 16;
+            console.log('[anchor debug] rect.top:', rect.top, 'scrollY:', window.scrollY, 'headerH:', headerH, '→ scrolling to:', top);
+            window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+          } else {
+            console.log('[anchor debug] element not found — all section ids:', Array.from(document.querySelectorAll('section[id]')).map(el => el.id));
+          }
+        });
+      });
+    }, 100);
+  } else {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   // Header solid on non-home pages
   const header = document.getElementById('site-header');
@@ -3704,6 +3794,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
 
   const wrapper = document.createElement('section');
   wrapper.className = `section ${bgClass}`;
+  if (sec.anchorId) wrapper.id = sec.anchorId;
 
   // First section: replaces the page banner — clear fixed header, use banner typography
   if (isFirst) {
@@ -3748,7 +3839,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
         ${sec.heading ? `<${headTag} class="${headClass} cps-heading">${sec.heading}</${headTag}>` : ''}
         <div class="cps-body">${formatBody(sec.body)}</div>
         ${(sec.cta_linkLabel || sec.ctaLabel) ? `<div style="margin-top:28px;"><button class="btn-primary" ${
-          sec.cta_linkType === 'internal' ? `onclick="showPage('${escAttr(sec.cta_linkUrl || 'contact')}')"` :
+          sec.cta_linkType === 'internal' ? `onclick="showPage('${escAttr(sec.cta_linkUrl || 'contact')}','${escAttr(sec.cta_anchorId||'')}')"` :
           (sec.cta_linkType === 'external' || sec.cta_linkType === 'file') ? `onclick="openSmartLink('${escAttr(sec.cta_linkType)}','${escAttr(sec.cta_linkUrl)}')"` :
           `onclick="showPage('contact')"`
         }>${sec.cta_linkLabel || sec.ctaLabel} →</button></div>` : ''}
@@ -3781,7 +3872,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
         const hasLink = card.linkType && card.linkType !== 'none' && card.linkUrl && card.linkLabel;
         const linkOnclick = hasLink
           ? (card.linkType === 'internal'
-              ? 'showPage(\'' + escAttr(card.linkUrl) + '\')'
+              ? 'showPage(\'' + escAttr(card.linkUrl) + '\',\'' + escAttr(card.anchorId||'') + '\')'
               : 'openSmartLink(\'' + escAttr(card.linkType) + '\',\'' + escAttr(card.linkUrl) + '\')')
           : '';
         const linkHtml = hasLink
@@ -3824,7 +3915,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
         const hasLink = item.linkType && item.linkType !== 'none' && item.linkUrl;
         const clickAttr = hasLink
           ? (item.linkType === 'internal'
-              ? `onclick="showPage('${escAttr(item.linkUrl)}')" style="cursor:pointer;"`
+              ? `onclick="showPage('${escAttr(item.linkUrl)}','${escAttr(item.anchorId||'')}')" style="cursor:pointer;"`
               : `onclick="openSmartLink('${escAttr(item.linkType)}','${escAttr(item.linkUrl)}')" style="cursor:pointer;"`)
           : '';
         const arrow = hasLink ? `<span class="cps-bullet-arrow">→</span>` : '';
@@ -3859,7 +3950,8 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
             data-svc-detail="${escAttr(s.detail || s.desc)}"
             data-svc-btn-label="${escAttr(s.btnLabel||'')}"
             data-svc-btn-type="${escAttr(s.btnLinkType||'internal')}"
-            data-svc-btn-url="${escAttr(s.btnLinkUrl||'contact')}"` : ''}>
+            data-svc-btn-url="${escAttr(s.btnLinkUrl||'contact')}"
+            data-svc-btn-anchor="${escAttr(s.btnAnchorId||'')}"` : ''}>
           <div class="service-icon">${s.icon || '⚖️'}</div>
           <h3 class="service-title">${s.title}</h3>
           <p class="service-desc">${s.desc}</p>
@@ -3879,7 +3971,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
       const items = (sec.items || []).map((s, i) => {
         const hasLink = s.linkType && s.linkType !== 'none' && s.linkUrl && s.linkLabel;
         const linkHtml = hasLink ? `<div class="step-link" onclick="${
-          s.linkType === 'internal' ? `showPage('${escAttr(s.linkUrl)}')` : `openSmartLink('${escAttr(s.linkType)}','${escAttr(s.linkUrl)}')`
+          s.linkType === 'internal' ? `showPage('${escAttr(s.linkUrl)}','${escAttr(s.anchorId||'')}')` : `openSmartLink('${escAttr(s.linkType)}','${escAttr(s.linkUrl)}')`
         }">${escAttr(s.linkLabel)} →</div>` : '';
         return `
         <div class="process-step${i===0?' step-active':''}" data-step="${i+1}">
@@ -3906,7 +3998,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
       const items = (sec.items || []).map((f, i) => {
         const hasLink = f.linkType && f.linkType !== 'none' && f.linkUrl && f.linkLabel;
         const linkHtml = hasLink ? `<div class="faq-item-link" onclick="${
-          f.linkType === 'internal' ? `showPage('${escAttr(f.linkUrl)}')` : `openSmartLink('${escAttr(f.linkType)}','${escAttr(f.linkUrl)}')`
+          f.linkType === 'internal' ? `showPage('${escAttr(f.linkUrl)}','${escAttr(f.anchorId||'')}')` : `openSmartLink('${escAttr(f.linkType)}','${escAttr(f.linkUrl)}')`
         }">${escAttr(f.linkLabel)} →</div>` : '';
         return `
         <div class="faq-item">
@@ -3978,10 +4070,10 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
       const secType   = sec.cta_secondary_linkType  || 'internal';
       const secUrl    = sec.cta_secondary_linkUrl   || sec.secondaryTarget || 'services';
       const primClick = primType === 'internal'
-        ? `onclick="showPage('${escAttr(primUrl)}')" `
+        ? `onclick="showPage('${escAttr(primUrl)}','${escAttr(sec.cta_primary_anchorId||'')}')" `
         : `onclick="openSmartLink('${escAttr(primType)}','${escAttr(primUrl)}')" `;
       const secClick  = secType === 'internal'
-        ? `onclick="showPage('${escAttr(secUrl)}')" `
+        ? `onclick="showPage('${escAttr(secUrl)}','${escAttr(sec.cta_secondary_anchorId||'')}')" `
         : `onclick="openSmartLink('${escAttr(secType)}','${escAttr(secUrl)}')" `;
       const primBtn   = primLabel ? `<button class="btn-primary" ${primClick}>${escAttr(primLabel)} →</button>` : '';
       const secBtn    = secLabel  ? `<button class="btn-outline" ${secClick}>${escAttr(secLabel)}</button>` : '';
@@ -4019,7 +4111,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
       const items = (sec.items || []).map((item, i) => {
         const hasLink = item.linkType && item.linkType !== 'none' && item.linkUrl && item.linkLabel;
         const linkHtml = hasLink ? `<div class="cps-timeline-link" onclick="${
-          item.linkType === 'internal' ? `showPage('${escAttr(item.linkUrl)}')` : `openSmartLink('${escAttr(item.linkType)}','${escAttr(item.linkUrl)}')`
+          item.linkType === 'internal' ? `showPage('${escAttr(item.linkUrl)}','${escAttr(item.anchorId||'')}')` : `openSmartLink('${escAttr(item.linkType)}','${escAttr(item.linkUrl)}')`
         }">${escAttr(item.linkLabel)} →</div>` : '';
         return `
         <div class="cps-timeline-item reveal">
@@ -4049,22 +4141,28 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
       const rows = (sec.items || []).map(row => {
         const hasLink = row.linkType && row.linkType !== 'none' && row.linkUrl && row.linkLabel;
         const linkHtml = hasLink ? `<div class="cps-fee-link" onclick="${
-          row.linkType === 'internal' ? `showPage('${escAttr(row.linkUrl)}')` : `openSmartLink('${escAttr(row.linkType)}','${escAttr(row.linkUrl)}')`
+          row.linkType === 'internal' ? `showPage('${escAttr(row.linkUrl)}','${escAttr(row.anchorId||'')}')` : `openSmartLink('${escAttr(row.linkType)}','${escAttr(row.linkUrl)}')`
         }">${escAttr(row.linkLabel)} →</div>` : '';
+        const col1Label = sec.col1Label || 'Service';
+        const col2Label = sec.col2Label || 'Value';
+        const col3Label = sec.col3Label || 'Notes';
         return `
         <tr>
-          <td><strong>${row.service}</strong>${row.note ? `<div class="cps-fee-note">${row.note}</div>` : ''}${linkHtml}</td>
-          <td><div class="cps-fee-amount">${row.amount}</div></td>
-          <td style="color:var(--text-muted);font-size:13px;">${row.detail || ''}</td>
+          <td data-label="${escAttr(col1Label)}"><strong>${row.service}</strong>${row.note ? `<div class="cps-fee-note">${row.note}</div>` : ''}${linkHtml}</td>
+          <td data-label="${escAttr(col2Label)}"><div class="cps-fee-amount">${row.amount}</div></td>
+          <td data-label="${escAttr(col3Label)}" class="cps-fee-detail">${row.detail || ''}</td>
         </tr>`;
       }).join('');
+      const col1Label = sec.col1Label || 'Service';
+      const col2Label = sec.col2Label || 'Value';
+      const col3Label = sec.col3Label || 'Notes';
       wrapper.innerHTML = `<div class="container">
         ${labelHTML}
         ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
         ${sec.subtitle ? `<p class="section-subtitle reveal reveal-delay-1" style="${subtitleStyle}">${sec.subtitle}</p>` : ''}
-        <div class="reveal reveal-delay-2" style="overflow-x:auto;">
+        <div class="reveal reveal-delay-2 cps-fee-wrap">
           <table class="cps-fee-table">
-            <thead><tr><th>${sec.col1Label || 'Service'}</th><th>${sec.col2Label || 'Value'}</th><th>${sec.col3Label || 'Notes'}</th></tr></thead>
+            <thead><tr><th>${col1Label}</th><th>${col2Label}</th><th>${col3Label}</th></tr></thead>
             <tbody>${rows}</tbody>
           </table>
         </div>
@@ -4077,7 +4175,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
     case 'jurisdiction': {
       const hasLink = sec.linkType && sec.linkType !== 'none' && sec.linkUrl && sec.linkLabel;
       const linkHtml = hasLink ? `<div class="cps-jurisdiction-link" onclick="${
-        sec.linkType === 'internal' ? `showPage('${escAttr(sec.linkUrl)}')` : `openSmartLink('${escAttr(sec.linkType)}','${escAttr(sec.linkUrl)}')`
+        sec.linkType === 'internal' ? `showPage('${escAttr(sec.linkUrl)}','${escAttr(sec.jur_anchorId||'')}')` : `openSmartLink('${escAttr(sec.linkType)}','${escAttr(sec.linkUrl)}')`
       }">${escAttr(sec.linkLabel)} →</div>` : '';
       wrapper.innerHTML = `<div class="container">
         ${labelHTML}
@@ -4213,7 +4311,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
       let clickHandler = '';
       if (hasLink) {
         if (sec.linkType === 'internal') {
-          clickHandler = `onclick="showPage('${escAttr(sec.linkUrl)}')"`;
+          clickHandler = `onclick="showPage('${escAttr(sec.linkUrl)}','${escAttr(sec.link_anchorId||'')}')"`;
         } else {
           clickHandler = `onclick="openSmartLink('${escAttr(sec.linkType)}','${escAttr(sec.linkUrl)}')"`;
         }
@@ -4282,18 +4380,18 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
                            : 'cps-section-light';
       wrapper.className = `cps-appendage ${inheritedClass}`;
 
-      function makeBtnClick(linkType, linkUrl) {
+      function makeBtnClick(linkType, linkUrl, anchorId) {
         if (!linkType || linkType === 'none' || !linkUrl) return '';
-        if (linkType === 'internal') return `onclick="showPage('${escAttr(linkUrl)}')"`;
+        if (linkType === 'internal') return `onclick="showPage('${escAttr(linkUrl)}','${escAttr(anchorId||'')}')"`;
         return `onclick="openSmartLink('${escAttr(linkType)}','${escAttr(linkUrl)}')"`;
       }
       const hasPrimary = sec.primary_linkType && sec.primary_linkType !== 'none' && sec.primary_linkUrl;
       const hasSecondary = sec.secondary_linkType && sec.secondary_linkType !== 'none' && sec.secondary_linkUrl;
       const primaryBtn = (hasPrimary || sec.primary_linkLabel)
-        ? `<button class="btn-primary" ${makeBtnClick(sec.primary_linkType, sec.primary_linkUrl)}>${sec.primary_linkLabel || 'Learn More'} →</button>`
+        ? `<button class="btn-primary" ${makeBtnClick(sec.primary_linkType, sec.primary_linkUrl, sec.primary_anchorId)}>${sec.primary_linkLabel || 'Learn More'} →</button>`
         : '';
       const secondaryBtn = (hasSecondary || sec.secondary_linkLabel)
-        ? `<button class="btn-outline-dark" ${makeBtnClick(sec.secondary_linkType, sec.secondary_linkUrl)}>${sec.secondary_linkLabel || 'Learn More'}</button>`
+        ? `<button class="btn-outline-dark" ${makeBtnClick(sec.secondary_linkType, sec.secondary_linkUrl, sec.secondary_anchorId)}>${sec.secondary_linkLabel || 'Learn More'}</button>`
         : '';
       wrapper.innerHTML = `<div class="container">
         <div class="cps-button-actions reveal">
@@ -4329,9 +4427,9 @@ function escAttr(str) {
 }
 
 // Resolves and opens a smart link — handles external URL prefix and file paths
-function openSmartLink(linkType, linkUrl) {
+function openSmartLink(linkType, linkUrl, anchor) {
   if (!linkUrl) return;
-  if (linkType === 'internal') { showPage(linkUrl); return; }
+  if (linkType === 'internal') { showPage(linkUrl, anchor || ''); return; }
   let url = linkUrl.trim();
   if (linkType === 'external' && url && !/^https?:\/\//i.test(url)) url = 'https://' + url;
   const a = document.createElement('a');
@@ -4347,6 +4445,7 @@ function openSmartLink(linkType, linkUrl) {
 // Generic modal for custom page service cards
 let _modalBtnLinkType = 'internal';
 let _modalBtnLinkUrl = 'contact';
+let _modalBtnAnchorId = '';
 
 function closeServiceModal() {
   const m = document.getElementById('serviceModal');
@@ -4355,16 +4454,17 @@ function closeServiceModal() {
 }
 
 function openCpsModalFromCard(el) {
-  const title      = el.dataset.svcTitle    || '';
-  const icon       = el.dataset.svcIcon     || '⚖️';
-  const body       = el.dataset.svcDetail   || '';
-  const btnLabel   = el.dataset.svcBtnLabel || '';
-  const btnLinkType = el.dataset.svcBtnType || 'internal';
-  const btnLinkUrl  = el.dataset.svcBtnUrl  || 'contact';
-  openCpsModal(title, icon, body, btnLabel, btnLinkType, btnLinkUrl);
+  const title       = el.dataset.svcTitle      || '';
+  const icon        = el.dataset.svcIcon       || '⚖️';
+  const body        = el.dataset.svcDetail     || '';
+  const btnLabel    = el.dataset.svcBtnLabel   || '';
+  const btnLinkType = el.dataset.svcBtnType    || 'internal';
+  const btnLinkUrl  = el.dataset.svcBtnUrl     || 'contact';
+  const btnAnchorId = el.dataset.svcBtnAnchor  || '';
+  openCpsModal(title, icon, body, btnLabel, btnLinkType, btnLinkUrl, btnAnchorId);
 }
 
-function openCpsModal(title, icon, body, btnLabel, btnLinkType, btnLinkUrl) {
+function openCpsModal(title, icon, body, btnLabel, btnLinkType, btnLinkUrl, btnAnchorId) {
   document.getElementById('modal-icon').textContent = icon;
   document.getElementById('modal-title').textContent = title;
   document.getElementById('modal-body').textContent = body;
@@ -4374,7 +4474,8 @@ function openCpsModal(title, icon, body, btnLabel, btnLinkType, btnLinkUrl) {
     const label = btnLabel || 'Schedule a Consultation';
     btn.textContent = label + ' →';
     _modalBtnLinkType = btnLinkType || 'internal';
-    _modalBtnLinkUrl = btnLinkUrl || 'contact';
+    _modalBtnLinkUrl  = btnLinkUrl  || 'contact';
+    _modalBtnAnchorId = btnAnchorId || '';
     cta.style.display = (btnLinkType === 'none' && !btnLabel) ? 'none' : '';
   }
   document.getElementById('serviceModal').classList.add('open');
@@ -4383,7 +4484,7 @@ function openCpsModal(title, icon, body, btnLabel, btnLinkType, btnLinkUrl) {
 
 function handleModalCta() {
   closeServiceModal();
-  openSmartLink(_modalBtnLinkType, _modalBtnLinkUrl);
+  openSmartLink(_modalBtnLinkType, _modalBtnLinkUrl, _modalBtnAnchorId);
 }
 
 // Custom form submission handler
