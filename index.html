@@ -2423,6 +2423,256 @@ footer {
 @media (max-width: 580px) {
   .cps-form-field-row { grid-template-columns: 1fr; gap: 18px; }
 }
+
+/* Tight padding for marquee and logo strip — content doesn't need full section breathing room */
+.cps-section-marquee,
+.cps-section-logo-strip { padding: 12px 0; }
+.cps-accordion { margin-top: 40px; }
+.cps-acc-item {
+  border-bottom: 1px solid #e8e3d8;
+}
+.cps-acc-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 0;
+  cursor: pointer;
+}
+.cps-acc-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text-head);
+  line-height: 1.4;
+  flex: 1;
+}
+.cps-acc-chevron {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid #e8e3d8;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  color: var(--text-muted);
+  transition: background 0.2s, border-color 0.2s, transform 0.35s;
+  line-height: 1;
+}
+.cps-acc-item.open .cps-acc-chevron {
+  background: var(--gold); border-color: var(--gold);
+  color: var(--navy); transform: rotate(45deg);
+}
+.cps-acc-body {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s var(--ease-out);
+}
+.cps-acc-item.open .cps-acc-body { max-height: 2000px; }
+.cps-acc-inner {
+  padding-bottom: 24px;
+  font-size: 14px; line-height: 1.85; color: var(--text-muted);
+}
+/* image positions */
+.cps-acc-img-top { margin-bottom: 16px; border-radius: 4px; overflow: hidden; aspect-ratio: 16/9; }
+.cps-acc-img-top img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cps-acc-img-side {
+  display: flex; gap: 24px; align-items: flex-start;
+}
+.cps-acc-img-side .cps-acc-thumb {
+  flex-shrink: 0; width: 200px; border-radius: 4px; overflow: hidden;
+  aspect-ratio: 16/9;
+}
+.cps-acc-img-side .cps-acc-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cps-acc-img-side .cps-acc-text-part { flex: 1; }
+@media (max-width: 600px) {
+  .cps-acc-img-side { flex-direction: column; }
+  .cps-acc-img-side .cps-acc-thumb { width: 100%; }
+}
+/* dark/alt theming */
+.cps-section-dark .cps-acc-item { border-bottom-color: rgba(255,255,255,0.12); }
+.cps-section-dark .cps-acc-title { color: #fff; }
+.cps-section-dark .cps-acc-chevron { border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.6); }
+.cps-section-dark .cps-acc-item.open .cps-acc-chevron { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+.cps-section-dark .cps-acc-inner { color: rgba(255,255,255,0.65); }
+.cps-section-alt .cps-acc-item { border-bottom-color: #ddd8cc; }
+
+/* ── LOGO STRIP ─────────────────────────────────────────────── */
+.cps-logo-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  margin-top: 48px;
+}
+.cps-logo-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+.cps-logo-item:hover { opacity: 0.8; }
+.cps-logo-img-wrap { display: flex; align-items: center; justify-content: center; }
+.cps-logo-img-wrap img {
+  display: block;
+  object-fit: contain;
+  height: auto;
+}
+/* size variants */
+.cps-logo-strip--small  .cps-logo-img-wrap img { width: 80px; }
+.cps-logo-strip--medium .cps-logo-img-wrap img { width: 120px; }
+.cps-logo-strip--large  .cps-logo-img-wrap img { width: 160px; }
+.cps-logo-caption {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+/* dark/alt theming */
+.cps-section-dark .cps-logo-caption { color: rgba(255,255,255,0.5); }
+@media (max-width: 600px) {
+  .cps-logo-strip { gap: 24px; }
+  .cps-logo-strip--large .cps-logo-img-wrap img { width: 120px; }
+}
+
+/* ── MARQUEE / TICKER ────────────────────────────────────────── */
+.cps-marquee-outer {
+  overflow: hidden;
+  position: relative;
+  padding: 20px 0;
+}
+/* fade edges */
+.cps-marquee-outer::before,
+.cps-marquee-outer::after {
+  content: '';
+  position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2;
+  pointer-events: none;
+}
+.cps-marquee-outer::before { left: 0; background: linear-gradient(to right, var(--warm-white), transparent); }
+.cps-marquee-outer::after  { right: 0; background: linear-gradient(to left, var(--warm-white), transparent); }
+.cps-section-dark .cps-marquee-outer::before { background: linear-gradient(to right, var(--navy), transparent); }
+.cps-section-dark .cps-marquee-outer::after  { background: linear-gradient(to left, var(--navy), transparent); }
+.cps-section-alt  .cps-marquee-outer::before { background: linear-gradient(to right, var(--cream), transparent); }
+.cps-section-alt  .cps-marquee-outer::after  { background: linear-gradient(to left, var(--cream), transparent); }
+
+.cps-marquee-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  gap: 0;
+}
+/* RTL direction */
+.cps-marquee-outer.dir-left  .cps-marquee-track { animation: marqueeLeft  var(--marquee-dur, 30s) linear infinite; }
+.cps-marquee-outer.dir-right .cps-marquee-track { animation: marqueeRight var(--marquee-dur, 30s) linear infinite; }
+.cps-marquee-outer.pause-hover:hover .cps-marquee-track { animation-play-state: paused; }
+
+@keyframes marqueeLeft  { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes marqueeRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+/* Text mode items */
+.cps-mq-text-item {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+}
+.cps-mq-text-content {
+  font-family: var(--font-display);
+  font-size: clamp(15px, 2vw, 18px);
+  color: var(--text-body);
+  padding: 0 8px;
+}
+.cps-mq-sep {
+  font-size: 18px;
+  color: var(--gold);
+  padding: 0 16px;
+  flex-shrink: 0;
+}
+/* Logo mode items */
+.cps-mq-logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 32px;
+}
+.cps-mq-logo-item img {
+  display: block;
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+/* Dark theming */
+.cps-section-dark .cps-mq-text-content { color: rgba(255,255,255,0.8); }
+
+/* ── VIDEO EMBED ─────────────────────────────────────────────── */
+.cps-video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #000;
+}
+.cps-video-frame iframe,
+.cps-video-frame video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* Full-width layout */
+.cps-video-layout--full .cps-video-frame { width: 100%; }
+
+/* Contained layout */
+.cps-video-layout--contained {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* Two-column layout */
+.cps-video-layout--two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+.cps-video-layout--two-col.video-right { }
+.cps-video-col { min-width: 0; }
+.cps-video-text { }
+.cps-video-text .cps-heading {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.8vw, 34px);
+  font-weight: 500;
+  color: var(--text-head);
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+.cps-video-text .cps-body {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--text-body);
+}
+.cps-video-text .cps-body p { margin-bottom: 14px; }
+.cps-video-text .cps-video-cta { margin-top: 28px; }
+
+/* Dark section overrides */
+.cps-section-dark .cps-video-text .cps-heading { color: #fff; }
+.cps-section-dark .cps-video-text .cps-body { color: rgba(255,255,255,0.65); }
+
+/* Mobile: two-col stacks, video always on top */
+@media (max-width: 768px) {
+  .cps-video-layout--two-col {
+    grid-template-columns: 1fr;
+  }
+  .cps-video-layout--two-col.video-right .cps-video-col { order: -1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cps-marquee-track { animation: none !important; }
+}
 </style>
 </head>
 <body>
@@ -3102,6 +3352,15 @@ function toggleFaq(el) {
   if (!wasOpen) item.classList.add('open');
 }
 
+function toggleAccordion(el) {
+  const item = el.closest('.cps-acc-item');
+  if (!item) return;
+  const wasOpen = item.classList.contains('open');
+  const parent = item.closest('.cps-accordion');
+  if (parent) parent.querySelectorAll('.cps-acc-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
 /* =============================================
    SHARED CARD RENDERERS
    (used by custom section types)
@@ -3725,7 +3984,7 @@ function getInheritedBg(sections, idx) {
   return 'light';
 }
 
-const CPS_NO_ZONE_TYPES = new Set(['link','button','cta','stats','two-col','feature-cards']);
+const CPS_NO_ZONE_TYPES = new Set(['link','button','cta','stats','two-col','feature-cards','video']);
 
 function applyTwoZoneLayout(wrapper, sec, isFirst) {
   if (CPS_NO_ZONE_TYPES.has(sec.type)) return;
@@ -3782,6 +4041,27 @@ function applyTwoZoneLayout(wrapper, sec, isFirst) {
   // No background change — wrapper keeps its section class bg
   // Just remove the container and replace with two zones
   container.replaceWith(headerZone, contentZone);
+}
+
+function buildVideoEmbed(url, mp4) {
+  if (mp4) {
+    return '<video controls playsinline style="width:100%;height:100%;object-fit:contain;">' +
+      '<source src="' + mp4 + '" type="video/mp4"/>' +
+      'Your browser does not support video.' +
+    '</video>';
+  }
+  if (!url) return '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:rgba(255,255,255,0.3);font-size:14px;">No video URL set</div>';
+  const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  if (ytMatch) {
+    const src = 'https://www.youtube.com/embed/' + ytMatch[1] + '?rel=0&controls=1';
+    return '<iframe src="' + src + '" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>';
+  }
+  const vimeoMatch = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (vimeoMatch) {
+    const src = 'https://player.vimeo.com/video/' + vimeoMatch[1] + '?controls=1';
+    return '<iframe src="' + src + '" allowfullscreen allow="autoplay; fullscreen; picture-in-picture"></iframe>';
+  }
+  return '<iframe src="' + escAttr(url) + '" allowfullscreen></iframe>';
 }
 
 function renderCustomSection(sec, idx, isFirst, allSections) {
@@ -4398,6 +4678,138 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
           ${primaryBtn}${secondaryBtn}
         </div>
       </div>`;
+      break;
+    }
+
+    // ── VIDEO EMBED ──────────────────────────────────────────────
+    case 'video': {
+      const layout   = sec.videoLayout   || 'contained';
+      const vidPos   = sec.videoPosition || 'left';
+      const embedUrl = sec.embedUrl      || '';
+      const mp4Url   = sec.mp4Url        || '';
+      const embedHtml = '<div class="cps-video-frame">' + buildVideoEmbed(embedUrl, mp4Url) + '</div>';
+
+      if (layout === 'two-col') {
+        const posClass = vidPos === 'right' ? ' video-right' : '';
+        const videoCol = '<div class="cps-video-col">' + embedHtml + '</div>';
+        const hasLink  = sec.cta_linkType && sec.cta_linkType !== 'none' && sec.cta_linkUrl && sec.cta_linkLabel;
+        const ctaHtml  = hasLink
+          ? '<div class="cps-video-cta"><button class="btn-primary" onclick="' +
+              (sec.cta_linkType === 'internal'
+                ? 'showPage(\'' + escAttr(sec.cta_linkUrl) + '\',\'' + escAttr(sec.cta_anchorId||'') + '\')'
+                : 'openSmartLink(\'' + escAttr(sec.cta_linkType) + '\',\'' + escAttr(sec.cta_linkUrl) + '\')') +
+            '">' + sec.cta_linkLabel + ' →</button></div>'
+          : '';
+        const textCol  = '<div class="cps-video-col cps-video-text reveal">' +
+          (sec.heading ? '<' + headTag + ' class="' + headClass + ' cps-heading">' + sec.heading + '</' + headTag + '>' : '') +
+          (sec.body    ? '<div class="cps-body">' + formatBody(sec.body) + '</div>' : '') +
+          ctaHtml +
+        '</div>';
+        wrapper.innerHTML = '<div class="container">' +
+          labelHTML +
+          '<div class="cps-video-layout--two-col' + posClass + ' reveal" style="margin-top:' + (labelHTML || sec.heading ? '0' : '0') + ';">' +
+            (vidPos === 'right' ? textCol + videoCol : videoCol + textCol) +
+          '</div>' +
+        '</div>';
+      } else {
+        const layoutClass = layout === 'full' ? 'cps-video-layout--full' : 'cps-video-layout--contained';
+        wrapper.innerHTML = '<div class="container">' +
+          labelHTML +
+          (sec.heading ? '<' + headTag + ' class="' + headClass + ' cps-heading reveal" style="margin-bottom:24px;">' + sec.heading + '</' + headTag + '>' : '') +
+          (sec.body    ? '<div class="cps-body reveal reveal-delay-1" style="margin-bottom:24px;">' + formatBody(sec.body) + '</div>' : '') +
+          '<div class="' + layoutClass + ' reveal reveal-delay-1">' + embedHtml + '</div>' +
+        '</div>';
+      }
+      break;
+    }
+
+    // ── ACCORDION ────────────────────────────────────────────────
+    case 'accordion': {
+      const items = (sec.items || []).map((item, i) => {
+        const imgPos = item.imagePos || 'none';
+        let bodyInner = '';
+        if (item.imagePath && imgPos === 'top') {
+          bodyInner = '<div class="cps-acc-img-top"><img src="' + item.imagePath + '" alt="' + (item.title || '') + '" loading="lazy"/></div>' + (item.body || '');
+        } else if (item.imagePath && (imgPos === 'left' || imgPos === 'right')) {
+          const thumb = '<div class="cps-acc-thumb"><img src="' + item.imagePath + '" alt="' + (item.title || '') + '" loading="lazy"/></div>';
+          const text = '<div class="cps-acc-text-part">' + (item.body || '') + '</div>';
+          bodyInner = '<div class="cps-acc-img-side">' + (imgPos === 'left' ? thumb + text : text + thumb) + '</div>';
+        } else {
+          bodyInner = item.body || '';
+        }
+        return '<div class="cps-acc-item">' +
+          '<div class="cps-acc-trigger" onclick="toggleAccordion(this)">' +
+            '<span class="cps-acc-title">' + (item.title || '') + '</span>' +
+            '<div class="cps-acc-chevron">+</div>' +
+          '</div>' +
+          '<div class="cps-acc-body"><div class="cps-acc-inner">' + bodyInner + '</div></div>' +
+        '</div>';
+      }).join('');
+      wrapper.innerHTML = '<div class="container">' +
+        labelHTML +
+        (sec.heading ? '<' + headTag + ' class="' + headClass + ' cps-heading reveal">' + sec.heading + '</' + headTag + '>' : '') +
+        (sec.subtitle ? '<p class="section-subtitle reveal reveal-delay-1" style="' + subtitleStyle + '">' + sec.subtitle + '</p>' : '') +
+        '<div class="cps-accordion reveal reveal-delay-1" style="margin-top:40px;">' + items + '</div>' +
+      '</div>';
+      break;
+    }
+
+    // ── LOGO STRIP ───────────────────────────────────────────────
+    case 'logo-strip': {
+      const logoSize = sec.logoSize || 'medium';
+      const logos = (sec.items || []).map(logo => {
+        const imgTag = logo.imagePath ? '<img src="' + logo.imagePath + '" alt="' + (logo.alt || logo.caption || '') + '" loading="lazy"/>' : '';
+        const inner = '<div class="cps-logo-img-wrap">' + imgTag + '</div>' + (logo.caption ? '<div class="cps-logo-caption">' + logo.caption + '</div>' : '');
+        if (logo.linkUrl) {
+          return '<div class="cps-logo-item" onclick="openSmartLink(\'external\',\'' + escAttr(logo.linkUrl) + '\')" style="cursor:pointer;">' + inner + '</div>';
+        }
+        return '<div class="cps-logo-item">' + inner + '</div>';
+      }).join('');
+      wrapper.classList.add('cps-section-logo-strip');
+      wrapper.innerHTML = '<div class="container">' +
+        labelHTML +
+        (sec.heading ? '<' + headTag + ' class="' + headClass + ' cps-heading reveal">' + sec.heading + '</' + headTag + '>' : '') +
+        (sec.subtitle ? '<p class="section-subtitle reveal reveal-delay-1" style="' + subtitleStyle + '">' + sec.subtitle + '</p>' : '') +
+        '<div class="cps-logo-strip cps-logo-strip--' + logoSize + ' reveal reveal-delay-1">' + logos + '</div>' +
+      '</div>';
+      break;
+    }
+
+    // ── MARQUEE / TICKER ─────────────────────────────────────────
+    case 'marquee': {
+      const mqMode = sec.mqMode || 'text';
+      const mqSpeed = sec.mqSpeed || 'medium';
+      const mqDir = sec.mqDir || 'left';
+      const mqPause = sec.mqPause !== false;
+      const mqSep = sec.mqSeparator || '·';
+      const speedMap = { slow: '50s', medium: '30s', fast: '15s' };
+      const dur = speedMap[mqSpeed] || '30s';
+      let trackInner = '';
+      if (mqMode === 'text') {
+        const text = sec.mqText || '';
+        const oneCopy = '<span class="cps-mq-text-item"><span class="cps-mq-text-content">' + text + '</span><span class="cps-mq-sep">' + mqSep + '</span></span>';
+        const halfTrack = oneCopy.repeat(10);
+        trackInner = halfTrack + halfTrack;
+      } else {
+        const logoItems = (sec.items || []).map(logo => {
+          const imgTag = logo.imagePath ? '<img src="' + logo.imagePath + '" alt="' + (logo.alt || '') + '" loading="lazy"/>' : '';
+          if (logo.linkUrl) return '<div class="cps-mq-logo-item" onclick="openSmartLink(\'external\',\'' + escAttr(logo.linkUrl) + '\')" style="cursor:pointer;">' + imgTag + '</div>';
+          return '<div class="cps-mq-logo-item">' + imgTag + '</div>';
+        }).join('');
+        trackInner = logoItems + logoItems;
+      }
+      const dirClass = 'dir-' + mqDir;
+      const pauseClass = mqPause ? ' pause-hover' : '';
+      const hasHeader = sec.heading || sec.subtitle || sec.label;
+      wrapper.classList.add('cps-section-marquee');
+      wrapper.innerHTML = '<div class="container">' +
+        labelHTML +
+        (sec.heading ? '<' + headTag + ' class="' + headClass + ' cps-heading reveal">' + sec.heading + '</' + headTag + '>' : '') +
+        (sec.subtitle ? '<p class="section-subtitle reveal reveal-delay-1" style="' + subtitleStyle + '">' + sec.subtitle + '</p>' : '') +
+      '</div>' +
+      '<div class="cps-marquee-outer ' + dirClass + pauseClass + '" style="--marquee-dur:' + dur + ';margin-top:' + (hasHeader ? '32px' : '0') + ';">' +
+        '<div class="cps-marquee-track">' + trackInner + '</div>' +
+      '</div>';
       break;
     }
 
