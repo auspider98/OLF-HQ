@@ -1124,7 +1124,7 @@ const SITE_CONFIG = {
           "logoSize": "large",
           "items": [
             {
-              "imagePath": "logos/ofc-shield.png",
+              "imagePath": "logos/OFC-shield.png",
               "alt": "",
               "caption": "",
               "linkUrl": ""
@@ -1214,7 +1214,7 @@ const SITE_CONFIG = {
           "logoSize": "medium",
           "items": [
             {
-              "imagePath": "logos/atliens.png",
+              "imagePath": "logos/ATLiens.png",
               "alt": "",
               "caption": "",
               "linkUrl": ""
@@ -2517,7 +2517,7 @@ const SITE_CONFIG = {
           "linkUrl": "https://auspider98.github.io/OFL/league.html?league=brc"
         },
         {
-          "imagePath": "logos/atliens.png",
+          "imagePath": "logos/ATLiens.png",
           "alt": "",
           "caption": "",
           "linkUrl": ""
@@ -2553,7 +2553,7 @@ const SITE_CONFIG = {
           "linkUrl": ""
         },
         {
-          "imagePath": "logos/ofc-shield.png",
+          "imagePath": "logos/OFC-shield.png",
           "alt": "",
           "caption": "",
           "linkUrl": "https://auspider98.github.io/OFL/league.html?league=ofc"
@@ -2621,7 +2621,7 @@ const SITE_CONFIG = {
   "footerBio": "Where Legends Are Made & Legacies Are Settled",
   "contactSubmitLabel": "Request Free Abuse",
   "contactSuccessMsg": "Ugh...you're so unworthy.",
-  "_savedAt": 1776805343749,
+  "_savedAt": 1776805754463,
   "aboutBio3": "She is a member of the Alabama Bar Association, the American Academy of Adoption Attorneys (AAAA), and has been recognized as a Super Lawyer in Alabama Family Law for eight consecutive years. She is admitted to practice in all Alabama courts and regularly handles cases in Jefferson, Shelby, St. Clair, and Cullman counties.",
   "aboutBio4": "When she's not advocating for families in court, Amy volunteers with the Alabama Foster Care Association and speaks at community workshops on adoption awareness.",
   "heroPrimaryDest": "contact",
