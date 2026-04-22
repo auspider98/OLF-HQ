@@ -2917,6 +2917,10 @@ footer {
 .cps-tier-card--gold .cps-tier-ribbon { background: var(--navy); color: var(--gold); }
 
 .cps-tier-img { width: 100%; display: block; object-fit: cover; }
+.cps-tier-img--sm { height: 120px; }
+.cps-tier-img--md { height: 200px; }
+.cps-tier-img--lg { height: 280px; }
+.cps-tier-img--sq { aspect-ratio: 1/1; height: auto; }
 .cps-tier-body { flex: 1; display: flex; flex-direction: column; padding: clamp(24px, 4vw, 36px); }
 .cps-tier-icon { font-size: 36px; margin-bottom: 16px; line-height: 1; }
 .cps-tier-name {
@@ -5078,7 +5082,8 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
         // Image or icon
         let mediaHtml = '';
         if (card.imagePath) {
-          mediaHtml = '<img class="cps-tier-img" src="' + card.imagePath + '" alt="' + escAttr(card.alt || card.name || '') + '" loading="lazy"/>';
+          const szClass = ' cps-tier-img--' + (card.imageSize || 'md');
+          mediaHtml = '<img class="cps-tier-img' + szClass + '" src="' + card.imagePath + '" alt="' + escAttr(card.alt || card.name || '') + '" loading="lazy"/>';
         } else if (card.icon) {
           mediaHtml = '<div class="cps-tier-icon">' + card.icon + '</div>';
         }

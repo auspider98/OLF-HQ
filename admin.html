@@ -647,6 +647,15 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
 
 /* Section move/delete controls */
 .cp-section-controls { display: flex; align-items: center; gap: 6px; }
+.cp-copyto-wrap { position: relative; }
+.cp-copyto-picker {
+  position: absolute; top: calc(100% + 6px); right: 0;
+  background: #fff; border: 1px solid #ddd; border-radius: 6px;
+  padding: 10px; min-width: 180px; z-index: 200;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+.cp-copyto-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+.cp-copyto-picker select { width: 100%; }
 .cp-anchor-field {
   display: flex; align-items: center; gap: 6px;
   width: 200px; margin-left: auto; margin-right: 12px; flex-shrink: 0;
@@ -1005,6 +1014,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
       <div class="cp-add-section-bar">
         <select id="about-type-select"></select>
         <button class="btn btn-gold btn-sm" onclick="addAboutSection()">+ Add Section</button>
+        <button class="btn btn-sm" onclick="openSectionImport('a')" title="Import section from JSON">⊕ Import</button>
       </div>
       </div><!-- /section-panels-wrap -->
     </div>
@@ -1231,6 +1241,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
           <!-- options injected by buildHomeSectionsList() -->
         </select>
         <button class="btn btn-gold btn-sm" onclick="addHomeSection()">+ Add Section</button>
+        <button class="btn btn-sm" onclick="openSectionImport('h')" title="Import section from JSON">⊕ Import</button>
       </div>
     </div>
 
@@ -3482,10 +3493,9 @@ function collectHomeSections() {
   if (!container) return DATA.homeSections || [];
   const sectionCards = container.querySelectorAll('.cp-section-card[data-pi="h"]');
   return Array.from(sectionCards).map((secCard, si) => {
-    const existing = (DATA.homeSections || [])[si] || {};
-    // Reuse collectCpSections logic by building a fake panel-like container
-    // We call collectCpSections with the container scoped to the section card's parent
-    return collectHomeSingleSection(secCard, si, existing);
+    const renderedSi = parseInt(secCard.dataset.si, 10);
+    const existing = (DATA.homeSections || [])[renderedSi] || (DATA.homeSections || [])[si] || {};
+    return collectHomeSingleSection(secCard, renderedSi, existing);
   });
 }
 
@@ -3494,8 +3504,9 @@ function collectAboutSections() {
   if (!container) return DATA.aboutSections || [];
   const sectionCards = container.querySelectorAll('.cp-section-card[data-pi="a"]');
   return Array.from(sectionCards).map((secCard, si) => {
-    const existing = (DATA.aboutSections || [])[si] || {};
-    return collectHomeSingleSection_forPi(secCard, 'a', si, existing);
+    const renderedSi = parseInt(secCard.dataset.si, 10);
+    const existing = (DATA.aboutSections || [])[renderedSi] || (DATA.aboutSections || [])[si] || {};
+    return collectHomeSingleSection_forPi(secCard, 'a', renderedSi, existing);
   });
 }
 
@@ -3713,12 +3724,13 @@ function collectHomeSingleSection_forPi(secCard, pi, si, existing) {
       const featureEls = secCard.querySelectorAll('[data-feature-list="' + ci + '"] [data-feature-idx]');
       return {
         name: g('name'), tagline: g('tagline'), price: g('price'), period: g('period'),
-        icon: g('icon'), imagePath: g('imagePath'), ribbon: g('ribbon'), note: g('note'),
+        icon: g('icon'), imagePath: g('imagePath'), imageSize: g('imageSize') || 'md', ribbon: g('ribbon'), note: g('note'),
         cardStyle:     cardEl.querySelector('[data-field="cardStyle"]')?.value || 'light',
         featured:      gb('featured'),
         cta_linkLabel: g('cta_linkLabel'),
         cta_linkType:  cardEl.querySelector('[data-field="cta_linkType"]')?.value || 'none',
         cta_linkUrl:   g('cta_linkUrl'),
+        cta_anchorId:  g('cta_anchorId'),
         features: Array.from(featureEls).map(fel => ({
           label:   fel.querySelector('[data-field="flabel"]')?.value.trim() || '',
           status:  fel.querySelector('[data-field="fstatus"]')?.value       || '',
@@ -3982,6 +3994,7 @@ function buildCpPagePanel(page, pi) {
     '<div class="cp-add-section-bar">' +
       '<select id="cp-type-select-' + pi + '">' + typeOptions + '</select>' +
       '<button class="btn btn-gold btn-sm" onclick="addCpSection(' + pi + ')">+ Add Section</button>' +
+      '<button class="btn btn-sm" onclick="openSectionImport(' + pi + ')" title="Import section from JSON">⊕ Import</button>' +
     '</div>';
 
   return div;
@@ -4067,6 +4080,16 @@ function buildCustomSectionHtml(sec, pi, si) {
       <div class="cp-section-controls">
         <button class="cp-move-btn" onclick="moveCpSection(${typeof pi==='string'?("'"+pi+"'"):pi},${si},-1);event.stopPropagation();" title="Move up">↑</button>
         <button class="cp-move-btn" onclick="moveCpSection(${typeof pi==='string'?("'"+pi+"'"):pi},${si},1);event.stopPropagation();" title="Move down">↓</button>
+        <button class="cp-move-btn" onclick="duplicateCpSection(${typeof pi==='string'?("'"+pi+"'"):pi},${si});event.stopPropagation();" title="Duplicate section">⧉</button>
+        <button class="cp-move-btn" onclick="exportCpSection(${typeof pi==='string'?("'"+pi+"'"):pi},${si});event.stopPropagation();" title="Export section JSON">↑📋</button>
+        <div class="cp-copyto-wrap" onclick="event.stopPropagation();">
+          <button class="cp-move-btn" onclick="toggleCpCopyTo(this)" title="Copy to page">→</button>
+          <div class="cp-copyto-picker" style="display:none;">
+            <div class="cp-copyto-label">Copy to page:</div>
+            ${getCopyToOptions(pi)}
+            <button class="btn-add" style="margin-top:6px;width:100%;" onclick="confirmCpCopyTo(this,${typeof pi==='string'?("'"+pi+"'"):pi},${si})">Copy</button>
+          </div>
+        </div>
         <button class="btn-remove" onclick="removeCpSection(${typeof pi==='string'?("'"+pi+"'"):pi},${si});event.stopPropagation();" title="Remove section">×</button>
         <span class="panel-chevron">▼</span>
       </div>
@@ -4997,6 +5020,15 @@ function buildCpSectionTypeFields(sec, pi, si) {
               '<input type="text" data-cp="' + pi + '" data-sec="' + si + '" data-arr="items" data-idx="' + ci + '" data-field="imagePath" value="' + escHtml(card.imagePath||'') + '" placeholder="images/tier.jpg"/></div>' +
           '</div>' +
           '<div class="form-row-2" style="margin-bottom:8px;">' +
+            '<div class="field-group" style="margin:0;"><label>Image Size</label>' +
+              '<select data-cp="' + pi + '" data-sec="' + si + '" data-arr="items" data-idx="' + ci + '" data-field="imageSize">' +
+                '<option value="sm"' +  (card.imageSize==='sm'            ? ' selected' : '') + '>Small (120px)</option>' +
+                '<option value="md"' +  ((card.imageSize||'md')==='md'    ? ' selected' : '') + '>Medium (200px)</option>' +
+                '<option value="lg"' +  (card.imageSize==='lg'            ? ' selected' : '') + '>Large (280px)</option>' +
+                '<option value="sq"' +  (card.imageSize==='sq'            ? ' selected' : '') + '>Square (1:1)</option>' +
+              '</select></div>' +
+          '</div>' +
+          '<div class="form-row-2" style="margin-bottom:8px;">' +
             '<div class="field-group" style="margin:0;"><label>Ribbon Label (optional)</label>' +
               '<input type="text" data-cp="' + pi + '" data-sec="' + si + '" data-arr="items" data-idx="' + ci + '" data-field="ribbon" value="' + escHtml(card.ribbon||'') + '" placeholder="Best Value"/></div>' +
             '<div class="field-group" style="margin:0;"><label>Card Style</label>' +
@@ -5035,6 +5067,8 @@ function buildCpSectionTypeFields(sec, pi, si) {
           '</div>' +
           '<div class="field-group" style="margin-bottom:8px;"><label>Link URL / Page Slug</label>' +
             '<input type="text" data-cp="' + pi + '" data-sec="' + si + '" data-arr="items" data-idx="' + ci + '" data-field="cta_linkUrl" value="' + escHtml(card.cta_linkUrl||'') + '" placeholder="https:// or page-slug"/></div>' +
+          '<div class="field-group" style="margin-bottom:8px;"><label>Anchor ID (optional)</label>' +
+            '<input type="text" data-cp="' + pi + '" data-sec="' + si + '" data-arr="items" data-idx="' + ci + '" data-field="cta_anchorId" value="' + escHtml(card.cta_anchorId||'') + '" placeholder="section-anchor-id"/></div>' +
           '<div class="field-group" style="margin-top:8px;"><label>Note / Fine Print (optional)</label>' +
             '<input type="text" data-cp="' + pi + '" data-sec="' + si + '" data-arr="items" data-idx="' + ci + '" data-field="note" value="' + escHtml(card.note||'') + '" placeholder="No credit card required"/></div>' +
         '</div>';
@@ -5044,7 +5078,7 @@ function buildCpSectionTypeFields(sec, pi, si) {
         <div class="field-group"><label>Heading (optional)</label><input type="text" ${p} data-field="heading" value="${v('heading')}"/></div>
         <div class="field-group"><label>Subtitle (optional)</label><input type="text" ${p} data-field="subtitle" value="${v('subtitle')}"/></div>
         <div class="cp-sub-items" data-cp-drag="${pi}-${si}-items">${cardRows}</div>
-        <button class="btn-add" onclick="addCpSubItem(${typeof pi==='string'?("'"+pi+"'"):pi},${si},'items',{name:'',tagline:'',price:'',period:'',icon:'',imagePath:'',ribbon:'',cardStyle:'light',featured:false,features:[],cta_linkType:'none',cta_linkLabel:'',cta_linkUrl:'',note:''})">+ Add Card</button>`;
+        <button class="btn-add" onclick="addCpSubItem(${typeof pi==='string'?("'"+pi+"'"):pi},${si},'items',{name:'',tagline:'',price:'',period:'',icon:'',imagePath:'',imageSize:'md',ribbon:'',cardStyle:'light',featured:false,features:[],cta_linkType:'none',cta_linkLabel:'',cta_linkUrl:'',cta_anchorId:'',note:''})">+ Add Card</button>`;
     }
 
     case 'gallery': {
@@ -5321,7 +5355,7 @@ function cpSmartLinkFields(sec, pi, si, defaultLabelPlaceholder, prefix) {
         <div class="field-group cp-anchor-select" id="cp-link-anchor-${pi}-${si}-${pref||'x'}" style="margin-top:6px;margin-bottom:0;">
           <label>Scroll to Section (optional)</label>
           <select ${p} data-field="${pref||'link_'}anchorId" id="cp-link-anchor-sel-${pi}-${si}-${pref||'x'}">
-            ${getAnchorOptions(sec[(pref||'link_')+'linkUrl']||'', sec[(pref||'link_')+'anchorId']||'')}
+            ${getAnchorOptions(pref ? sec[pref+'linkUrl']||'' : sec.linkUrl||'', sec[(pref||'link_')+'anchorId']||'')}
           </select>
         </div>
       </div>
@@ -5584,6 +5618,114 @@ function rebuildAfterMutation(pi) {
   else buildCustomPagesList();
 }
 
+function exportCpSection(pi, si) {
+  collectData();
+  const secs = cpSections(pi);
+  if (!secs || !secs[si]) return;
+  const json = JSON.stringify(secs[si], null, 2);
+  // Show in export modal so it works regardless of clipboard permissions
+  const overlay = document.getElementById('sectionExportOverlay');
+  const ta = document.getElementById('sectionExportJson');
+  ta.value = json;
+  overlay.style.display = 'flex';
+  setTimeout(() => { ta.select(); }, 50);
+  // Also attempt clipboard copy
+  navigator.clipboard.writeText(json).catch(() => {});
+}
+
+let _importTargetPi = null;
+function openSectionImport(pi) {
+  _importTargetPi = pi;
+  document.getElementById('sectionImportJson').value = '';
+  document.getElementById('sectionImportError').style.display = 'none';
+  const overlay = document.getElementById('sectionImportOverlay');
+  overlay.style.display = 'flex';
+}
+function closeSectionImport() {
+  document.getElementById('sectionImportOverlay').style.display = 'none';
+  _importTargetPi = null;
+}
+function confirmSectionImport() {
+  const raw = document.getElementById('sectionImportJson').value.trim();
+  const errEl = document.getElementById('sectionImportError');
+  errEl.style.display = 'none';
+  let sec;
+  try {
+    sec = JSON.parse(raw);
+  } catch(e) {
+    errEl.textContent = 'Invalid JSON — please check and try again.';
+    errEl.style.display = '';
+    return;
+  }
+  if (!sec || typeof sec !== 'object' || !sec.type) {
+    errEl.textContent = 'JSON must be a section object with a "type" field.';
+    errEl.style.display = '';
+    return;
+  }
+  sec.anchorId = '';
+  const destSecs = cpSections(_importTargetPi);
+  if (!destSecs) { errEl.textContent = 'Could not find destination page.'; errEl.style.display = ''; return; }
+  destSecs.push(sec);
+  closeSectionImport();
+  rebuildAfterMutation(_importTargetPi);
+  autosave();
+  toast('Section imported successfully');
+}
+
+function getCopyToOptions(currentPi) {
+  const pages = [
+    { pi: 'h', label: 'Home' },
+    { pi: 'a', label: 'About Us' },
+  ];
+  (DATA.customPages || []).forEach((p, idx) => {
+    if (p.enabled !== false) pages.push({ pi: idx, label: p.navLabel || p.slug || ('Page ' + idx) });
+  });
+  return '<select class="cp-copyto-select">' +
+    pages.filter(p => String(p.pi) !== String(currentPi))
+      .map(p => `<option value="${p.pi}">${p.label}</option>`)
+      .join('') +
+  '</select>';
+}
+
+function toggleCpCopyTo(btn) {
+  // Close any other open pickers first
+  document.querySelectorAll('.cp-copyto-picker').forEach(p => {
+    if (p !== btn.nextElementSibling) p.style.display = 'none';
+  });
+  const picker = btn.nextElementSibling;
+  picker.style.display = picker.style.display === 'none' ? '' : 'none';
+}
+
+function duplicateCpSection(pi, si) {
+  collectData();
+  const secs = cpSections(pi);
+  if (!secs || !secs[si]) return;
+  const clone = JSON.parse(JSON.stringify(secs[si]));
+  clone.anchorId = '';
+  secs.splice(si + 1, 0, clone);
+  rebuildAfterMutation(pi);
+  autosave();
+}
+
+function confirmCpCopyTo(btn, pi, si) {
+  const picker = btn.closest('.cp-copyto-picker');
+  const sel = picker.querySelector('.cp-copyto-select');
+  if (!sel) return;
+  const rawVal = sel.value;
+  const destPi = rawVal === 'h' ? 'h' : rawVal === 'a' ? 'a' : parseInt(rawVal, 10);
+  collectData();
+  const srcSecs = cpSections(pi);
+  if (!srcSecs || !srcSecs[si]) return;
+  const clone = JSON.parse(JSON.stringify(srcSecs[si]));
+  clone.anchorId = '';
+  const destSecs = cpSections(destPi);
+  if (!destSecs) return;
+  destSecs.push(clone);
+  picker.style.display = 'none';
+  rebuildAfterMutation(destPi);
+  autosave();
+}
+
 function removeCpSection(pi, si) {
   const secs = cpSections(pi);
   if (!secs) return;
@@ -5593,6 +5735,7 @@ function removeCpSection(pi, si) {
 }
 
 function moveCpSection(pi, si, dir) {
+  collectData();
   const secs = cpSections(pi);
   if (!secs) return;
   const newIdx = si + dir;
@@ -5712,10 +5855,12 @@ function collectCustomPages() {
 function collectCpSections(card, pi, existingSections) {
   const sectionCards = card.querySelectorAll(`.cp-section-card[data-pi="${pi}"]`);
   return Array.from(sectionCards).map((secCard, si) => {
-    const existing = existingSections[si] || {};
+    // Use the rendered data-si (the index baked into field data-sec attributes at render time)
+    const renderedSi = parseInt(secCard.dataset.si, 10);
+    const existing = existingSections[renderedSi] || existingSections[si] || {};
     const type = existing.type || '';
     const get = (field) => {
-      const els = Array.from(secCard.querySelectorAll(`[data-cp="${pi}"][data-sec="${si}"][data-field="${field}"]`));
+      const els = Array.from(secCard.querySelectorAll(`[data-cp="${pi}"][data-sec="${renderedSi}"][data-field="${field}"]`));
       if (!els.length) return (existing[field] ?? '');
       const visible = els.find(el => {
         let node = el;
@@ -5728,7 +5873,7 @@ function collectCpSections(card, pi, existingSections) {
       return (visible || els[0]).value.trim();
     };
     const getCheck = (field) => {
-      const el = secCard.querySelector(`[data-cp="${pi}"][data-sec="${si}"][data-field="${field}"]`);
+      const el = secCard.querySelector(`[data-cp="${pi}"][data-sec="${renderedSi}"][data-field="${field}"]`);
       return el ? el.checked : (existing[field] ?? true);
     };
     const getBg = () => {
@@ -5837,12 +5982,13 @@ function collectCpSections(card, pi, existingSections) {
           const featureEls = secCard.querySelectorAll('[data-feature-list="' + ci + '"] [data-feature-idx]');
           return {
             name: cg('name'), tagline: cg('tagline'), price: cg('price'), period: cg('period'),
-            icon: cg('icon'), imagePath: cg('imagePath'), ribbon: cg('ribbon'), note: cg('note'),
+            icon: cg('icon'), imagePath: cg('imagePath'), imageSize: cg('imageSize') || 'md', ribbon: cg('ribbon'), note: cg('note'),
             cardStyle:     cardEl.querySelector('[data-field="cardStyle"]')?.value || 'light',
             featured:      cgb('featured'),
             cta_linkLabel: cg('cta_linkLabel'),
             cta_linkType:  cardEl.querySelector('[data-field="cta_linkType"]')?.value || 'none',
             cta_linkUrl:   cg('cta_linkUrl'),
+            cta_anchorId:  cg('cta_anchorId'),
             features: Array.from(featureEls).map(fel => ({
               label:   fel.querySelector('[data-field="flabel"]')?.value.trim() || '',
               status:  fel.querySelector('[data-field="fstatus"]')?.value       || '',
@@ -5873,21 +6019,21 @@ function collectCpSections(card, pi, existingSections) {
         sec.items = collectCpSubItems(secCard, pi, si, ['imagePath','alt','linkUrl']); break;
       case 'link':
         sec.linkType = get('linkType'); sec.linkLabel = get('linkLabel');
-        sec.linkUrl = collectCpSmartLinkUrl(secCard, pi, si, '', sec.linkType);
-        sec.link_anchorId = get('link_anchorId'); break;
+        sec.linkUrl = collectCpSmartLinkUrl(secCard, pi, renderedSi, '', sec.linkType);
+        sec.link_anchorId = collectCpAnchorId(secCard, pi, renderedSi, ''); break;
       case 'button':
         sec.primary_linkType  = get('primary_linkType');  sec.primary_linkLabel  = get('primary_linkLabel');
-        sec.primary_linkUrl   = collectCpSmartLinkUrl(secCard, pi, si, 'primary_', sec.primary_linkType);
-        sec.primary_anchorId  = get('primary_anchorId');
+        sec.primary_linkUrl   = collectCpSmartLinkUrl(secCard, pi, renderedSi, 'primary_', sec.primary_linkType);
+        sec.primary_anchorId  = collectCpAnchorId(secCard, pi, renderedSi, 'primary_');
         sec.secondary_linkType = get('secondary_linkType'); sec.secondary_linkLabel = get('secondary_linkLabel');
-        sec.secondary_linkUrl  = collectCpSmartLinkUrl(secCard, pi, si, 'secondary_', sec.secondary_linkType);
-        sec.secondary_anchorId = get('secondary_anchorId'); break;
+        sec.secondary_linkUrl  = collectCpSmartLinkUrl(secCard, pi, renderedSi, 'secondary_', sec.secondary_linkType);
+        sec.secondary_anchorId = collectCpAnchorId(secCard, pi, renderedSi, 'secondary_'); break;
       case 'richtext': {
         const editor = secCard.querySelector('[data-field="richContent"]');
         sec.richContent  = editor ? editor.innerHTML : (existing.richContent || '');
         sec.imagePath    = get('imagePath');
-        sec.imagePos     = secCard.querySelector(`[data-cp="${pi}"][data-sec="${si}"][data-field="imagePos"]`)?.value || 'none';
-        sec.imageSize    = secCard.querySelector(`[data-cp="${pi}"][data-sec="${si}"][data-field="imageSize"]`)?.value || 'md';
+        sec.imagePos     = secCard.querySelector(`[data-cp="${pi}"][data-sec="${renderedSi}"][data-field="imagePos"]`)?.value || 'none';
+        sec.imageSize    = secCard.querySelector(`[data-cp="${pi}"][data-sec="${renderedSi}"][data-field="imageSize"]`)?.value || 'md';
         sec.imageCaption = get('imageCaption');
         sec.fullWidth    = secCard.querySelector('[data-field="fullWidth"]')?.checked || false;
         // Background for richtext: read selected cp-bg-option
@@ -6505,6 +6651,11 @@ function closeMobileNav() {
 window.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('dragover', e => e.preventDefault());
   document.addEventListener('drop', e => e.preventDefault());
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.cp-copyto-wrap')) {
+      document.querySelectorAll('.cp-copyto-picker').forEach(p => p.style.display = 'none');
+    }
+  });
 
   function applyData(parsed) {
     DATA = Object.assign({}, DATA, parsed);
@@ -6590,5 +6741,32 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
+<!-- Section Export Modal -->
+<div id="sectionExportOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9000;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:10px;padding:28px;width:min(520px,90vw);box-shadow:0 8px 40px rgba(0,0,0,0.2);">
+    <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:6px;">Export Section JSON</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">Copy the JSON below, then paste it into another admin's Import Section dialog.</div>
+    <textarea id="sectionExportJson" rows="12" style="width:100%;font-family:monospace;font-size:12px;border:1px solid #ddd;border-radius:6px;padding:10px;resize:vertical;" readonly></textarea>
+    <div style="display:flex;gap:10px;margin-top:16px;justify-content:flex-end;">
+      <button class="btn btn-sm" onclick="document.getElementById('sectionExportOverlay').style.display='none'">Close</button>
+      <button class="btn btn-gold btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('sectionExportJson').value).then(()=>toast('Copied to clipboard')).catch(()=>toast('Select all and copy manually'))">Copy to Clipboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- Section Import Modal -->
+<div id="sectionImportOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9000;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:10px;padding:28px;width:min(520px,90vw);box-shadow:0 8px 40px rgba(0,0,0,0.2);">
+    <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:6px;">Import Section from JSON</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">Paste the exported section JSON below. The section will be appended to the selected page.</div>
+    <textarea id="sectionImportJson" rows="10" style="width:100%;font-family:monospace;font-size:12px;border:1px solid #ddd;border-radius:6px;padding:10px;resize:vertical;" placeholder='{"type":"text","heading":"…"}'></textarea>
+    <div id="sectionImportError" style="color:#c0392b;font-size:12px;margin-top:6px;display:none;"></div>
+    <div style="display:flex;gap:10px;margin-top:16px;justify-content:flex-end;">
+      <button class="btn btn-sm" onclick="closeSectionImport()">Cancel</button>
+      <button class="btn btn-gold btn-sm" onclick="confirmSectionImport()">Import Section</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

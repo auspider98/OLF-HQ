@@ -797,6 +797,69 @@ const SITE_CONFIG = {
           ]
         },
         {
+          "type": "richtext",
+          "label": "",
+          "background": "dark",
+          "anchorId": "",
+          "richContent": "<p><span style=\"font-size: 17px;\">We want to be upfront with you: this is a courtesy page. The OFL does not have a formal application process because the OFL does not accept external applications. However, we recognize that some of you will submit something regardless, and we respect that level of conviction.</span></p><p><span style=\"font-size: 17px;\">All submissions received through this page are read by the Commissioner personally, filed under \"Applications,\" and reviewed during his annual reflection period, which typically falls sometime between Week 14 and the start of the following draft season. Responses are not guaranteed but are occasionally issued when the mood strikes.</span></p><p><span style=\"font-size: 17px;\">Please be honest in your submission. The Commissioner has seen everything. They are not impressed by embellishment. They are, however, entertained by it, so there's that.</span></p><!--EndFragment-->\n\n",
+          "imagePath": "",
+          "imagePos": "none",
+          "imageSize": "md",
+          "imageCaption": "",
+          "fullWidth": true
+        },
+        {
+          "type": "faq",
+          "label": "Before You Apply",
+          "background": "light",
+          "anchorId": "",
+          "heading": "The Pre-Application Self-Assessment",
+          "subtitle": "Answer these questions honestly before submitting. Then submit anyway. We'll know.",
+          "fullWidth": false,
+          "items": [
+            {
+              "q": "Are you related to an Osborne by blood?",
+              "a": "If yes: you may have a case. Proceed with application. If no: proceed with application anyway, but temper expectations accordingly. 'No' here is not automatically disqualifying, it just makes things significantly harder, which is to say, nearly impossible.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "Are you in a committed relationship with an OFL member?",
+              "a": "If yes: this is your strongest non-blood pathway. The relationship will need to clear an informal vetting process that consists largely of showing up to the draft and being a normal person. If no: this pathway is currently unavailable to you unless you begin a relationship, in which case, please don't join the OFL for relationship-strategic reasons. That's weird.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "How would you describe your fantasy football philosophy?",
+              "a": "There is no wrong answer here. There are answers that reveal you to be someone who 'doesn't really follow it but thought it might be fun,' which is not ideal. The OFL runs at a high competitive temperature. Casual participants do not thrive.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "What would you bring to the OFL?",
+              "a": "Think carefully. 'Energy' is not sufficient. 'Really caring about the draft' is table stakes. We are looking for something that genuinely distinguishes your hypothetical membership. Commissioner Spider will be reading this section of your application with a particular critical eye.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "Do you accept that Commissioner Spider's decisions are final?",
+              "a": "This is not optional. If your answer is anything other than an unambiguous yes, please do not submit this application. The OFL is not a democracy. It has never been a democracy. It will not become a democracy on your behalf.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            }
+          ]
+        },
+        {
           "type": "bullets",
           "label": "Frequently Wondered",
           "background": "dark",
@@ -848,6 +911,56 @@ const SITE_CONFIG = {
           ]
         },
         {
+          "type": "steps",
+          "label": "The Process",
+          "background": "alt",
+          "anchorId": "",
+          "heading": "What Happens After You Submit",
+          "subtitle": "For transparency, here is the full lifecycle of an OFL application.",
+          "items": [
+            {
+              "title": "Submission",
+              "body": "Your application is received. An automatic confirmation is not sent because this is a fantasy sports league and not a corporate HR department. You will simply have to trust that it arrived.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "title": "Commissioner Review",
+              "body": "The Commissioner reads your application at a time of his choosing. This may be immediately. It may be weeks later. The timing is not an indicator of your application's status. The Commish is a busy, ok.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "title": "Informal Consultation",
+              "body": "If your application clears the initial read without generating an automatic mental rejection, the Commissioner may — informally — consult with one or two key members. This is not a committee review. It is more like the Commish is texting someone and saying 'hey, this is hilarious!'",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "title": "The Decision",
+              "body": "A decision is rendered. It is never communicated to you through any channel whatsoever, unless you want to check the Fools Asking Questions page, the postings from the Mailroom floor, or you get that knowing look at the next family event.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "title": "Appeals",
+              "body": "There are no appeals. This step exists only to inform you that this step does not exist.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            }
+          ]
+        },
+        {
           "type": "richtext",
           "label": "",
           "background": "light",
@@ -857,7 +970,17 @@ const SITE_CONFIG = {
           "imagePos": "none",
           "imageSize": "md",
           "imageCaption": "",
-          "fullWidth": false
+          "fullWidth": true
+        },
+        {
+          "type": "link",
+          "label": "",
+          "background": "light",
+          "anchorId": "",
+          "linkType": "internal",
+          "linkLabel": "Take the Membership Questionnaire...Please.",
+          "linkUrl": "faqs",
+          "link_anchorId": "faq-membership"
         },
         {
           "type": "services",
@@ -1005,7 +1128,7 @@ const SITE_CONFIG = {
           "background": "dark",
           "anchorId": "",
           "heading": "Hold Up, Stop Right There!",
-          "body": "If you have read this far, there is a reasonable chance you are currently composing a message to someone you know in the OFL asking them to 'put in a word for you.' Please pause.\n\nYour OFL contact cannot help you. Not because they don't like you — they probably do, you seem nice — but because the structural barriers to OFL membership are not social. They are constitutional. The Commissioners constitution. Which he wrote. And which he also interprets. You can see the challenge.\n\nWe encourage you to start your own league. Name it whatever you want. Draft whomever you please. Let in everyone. Be the inclusive fantasy football utopia the OFL has never aspired to be. We support this vision for you. We are simply not in it.",
+          "body": "If you have read this far, there is a reasonable chance you are currently composing a message to someone you know in the OFL asking them to 'put in a word for you.' Please pause.\n\nYour OFL contact cannot help you. Not because they don't like you — they probably do, you seem nice — but because the structural barriers to OFL membership are not social. They are constitutional. The Commissioners constitution. Which he wrote. And which he also interprets. You can see the challenge.\n\nWe encourage you to start your own league. Name it whatever you want. Draft whomever you please. Let in everyone. Be the inclusive fantasy football utopia the OFL has never aspired to be. We support this vision for you. Have a go.",
           "cta_primary_linkLabel": "",
           "cta_secondary_linkLabel": "Start Your Own League",
           "cta_primary_linkType": "none",
@@ -1014,41 +1137,6 @@ const SITE_CONFIG = {
           "cta_secondary_linkUrl": "Google.com",
           "cta_primary_anchorId": "",
           "cta_secondary_anchorId": ""
-        },
-        {
-          "type": "faq",
-          "label": "Still Confused",
-          "background": "alt",
-          "anchorId": "FAQ-membership",
-          "heading": "Membership Questionaire",
-          "subtitle": "",
-          "fullWidth": true,
-          "items": [
-            {
-              "q": "Are you a member of the Osborne family, by blood or relationship?",
-              "a": "If YES, proceed to question #2. If NO, don't panic, just get back on the horse you came in on, and hit the trail, clown!",
-              "linkLabel": "",
-              "linkType": "none",
-              "linkUrl": "home",
-              "anchorId": ""
-            },
-            {
-              "q": "Did you receive an invitation to join the OFL?",
-              "a": "If YES, then proceed the question #3. If NO, then get your act together, you're an embarrassment to your loved ones! Click the link below to get some help!",
-              "linkLabel": "",
-              "linkType": "none",
-              "linkUrl": "home",
-              "anchorId": ""
-            },
-            {
-              "q": "Do you accept the invitation to the OFL?",
-              "a": "If YES, click the Acceptance link below. If NO, then take a second to rethink this life changing choice. Then when you've cleared the fog from your head and taken your head from your @$#, click that Acceptance button, before Mama finds out!",
-              "linkLabel": "Accept Invitation",
-              "linkType": "external",
-              "linkUrl": "home",
-              "anchorId": ""
-            }
-          ]
         }
       ]
     },
@@ -1059,40 +1147,187 @@ const SITE_CONFIG = {
       "enabled": true,
       "sections": [
         {
-          "type": "feature-cards",
+          "type": "pricing",
           "label": "Birthplace of Bragging Rights",
-          "background": "alt",
+          "background": "dark",
           "anchorId": "",
           "heading": "The Battlegrounds",
-          "body": "The OFC and BRC are sister leagues under the OFL umbrella. They are equal in prestige and unequal in almost every other measurable way.",
-          "badgeNum": "",
-          "badgeLabel": "",
-          "fullWidth": false,
+          "subtitle": "The OFC and BRC are sister leagues under the OFL umbrella. They are equal in prestige and unequal in almost every other measurable way.",
           "items": [
             {
-              "num": "01",
-              "title": "Blue Ribbon Cup",
-              "body": "Think you know how to negotiate a 64 lane highway with four bald 12 seeds strapped to your rig. You don't and you'll find out soon enough, no else does either.",
-              "linkLabel": "Red Ribbons are for Sissies",
-              "linkType": "internal",
-              "linkUrl": "leagues",
-              "anchorId": "league-brc"
+              "name": "Blue Ribbon Cup",
+              "tagline": "Think you know how to negotiate a 64 lane highway with four bald 12 seeds strapped to your rig. You don't and you'll find out soon enough, no else does either.",
+              "price": "Elite",
+              "period": "Membership",
+              "icon": "",
+              "imagePath": "logos/brc.png",
+              "imageSize": "sm",
+              "ribbon": "BRC",
+              "note": "",
+              "cardStyle": "dark",
+              "featured": true,
+              "cta_linkLabel": "Red Ribbons are for Sissies",
+              "cta_linkType": "internal",
+              "cta_linkUrl": "leagues",
+              "cta_anchorId": "league-brc",
+              "features": [
+                {
+                  "label": "Membership",
+                  "status": "",
+                  "isGroup": true
+                },
+                {
+                  "label": "15 Annual Bracketologists",
+                  "status": "yes",
+                  "isGroup": false
+                },
+                {
+                  "label": "Official Website Access",
+                  "status": "yes",
+                  "isGroup": true
+                },
+                {
+                  "label": "Field Roster Visibility",
+                  "status": "yes",
+                  "isGroup": false
+                },
+                {
+                  "label": "Tournament Standings",
+                  "status": "yes",
+                  "isGroup": false
+                },
+                {
+                  "label": "Scenario Generator",
+                  "status": "yes",
+                  "isGroup": false
+                },
+                {
+                  "label": "Head to Head Breakdowns",
+                  "status": "yes",
+                  "isGroup": false
+                },
+                {
+                  "label": "Hall of Records",
+                  "status": "yes",
+                  "isGroup": false
+                },
+                {
+                  "label": "Bracket Editor/Fixer",
+                  "status": "no",
+                  "isGroup": false
+                },
+                {
+                  "label": "Hardware",
+                  "status": "yes",
+                  "isGroup": true
+                },
+                {
+                  "label": "Golden Terminator Championship Trophy",
+                  "status": "yes",
+                  "isGroup": false
+                },
+                {
+                  "label": "Awards for Seasons Best",
+                  "status": "yes",
+                  "isGroup": false
+                },
+                {
+                  "label": "Giant Paycheck",
+                  "status": "no",
+                  "isGroup": false
+                }
+              ]
             },
             {
-              "num": "02",
-              "title": "Osborne Football Club",
-              "body": "An exclusive club for those who think they can ride a roster full of overpaid talent to the height of monstrous glory.",
-              "linkLabel": "Fling Mud, Family Style",
-              "linkType": "internal",
-              "linkUrl": "leagues",
-              "anchorId": "league-ofc"
+              "name": "Osborne Football Club",
+              "tagline": "An exclusive club for those who think they can ride a roster full of overpaid talent to the height of monstrous glory.",
+              "price": "Elite",
+              "period": "Membership",
+              "icon": "",
+              "imagePath": "logos/OFC-shield.png",
+              "imageSize": "sm",
+              "ribbon": "OFC",
+              "note": "",
+              "cardStyle": "dark",
+              "featured": true,
+              "cta_linkLabel": "Flinging Mud, Family Style",
+              "cta_linkType": "internal",
+              "cta_linkUrl": "leagues",
+              "cta_anchorId": "league-ofc",
+              "features": [
+                {
+                  "label": "Membership",
+                  "status": "",
+                  "isGroup": true
+                },
+                {
+                  "label": "6 Veteran Teams",
+                  "status": "yes",
+                  "isGroup": false
+                },
+                {
+                  "label": "Official Website Access",
+                  "status": "yes",
+                  "isGroup": true
+                },
+                {
+                  "label": "Owner Career Stats",
+                  "status": "yes",
+                  "isGroup": false
+                },
+                {
+                  "label": "Team Pages & Stats",
+                  "status": "yes",
+                  "isGroup": false
+                },
+                {
+                  "label": "Standings & Weekly Game Stats",
+                  "status": "yes",
+                  "isGroup": false
+                },
+                {
+                  "label": "Playoff Brackets",
+                  "status": "yes",
+                  "isGroup": false
+                },
+                {
+                  "label": "Hall of Records",
+                  "status": "yes",
+                  "isGroup": false
+                },
+                {
+                  "label": "Cheat Codes",
+                  "status": "no",
+                  "isGroup": false
+                },
+                {
+                  "label": "Hardware",
+                  "status": "yes",
+                  "isGroup": true
+                },
+                {
+                  "label": "Monster Lombardi Championship Trophy",
+                  "status": "yes",
+                  "isGroup": false
+                },
+                {
+                  "label": "Awards for Seasons Best",
+                  "status": "yes",
+                  "isGroup": false
+                },
+                {
+                  "label": "NIL Money",
+                  "status": "no",
+                  "isGroup": false
+                }
+              ]
             }
           ]
         },
         {
           "type": "richtext",
           "label": "",
-          "background": "alt",
+          "background": "dark",
           "anchorId": "",
           "richContent": "<p>The OFL operates two leagues of such caliber that we really should charge admission. We do not charge admission. That would be tacky. We do, however, maintain the most rigorous entry standards in the region, which is better than money.</p><p>Each league has its own identity, its own champion, and its own particular brand of competitive dysfunction that makes family gatherings 40% more interesting and 60% more tense. This is the OFL difference.</p>",
           "imagePath": "",
@@ -1185,6 +1420,16 @@ const SITE_CONFIG = {
           ]
         },
         {
+          "type": "link",
+          "label": "",
+          "background": "light",
+          "anchorId": "",
+          "linkType": "internal",
+          "linkLabel": "BRC Violation Schedule & Catastrophe Ledger",
+          "linkUrl": "the-experience",
+          "link_anchorId": "brc-penalty"
+        },
+        {
           "type": "logo-strip",
           "label": "",
           "background": "light",
@@ -1273,6 +1518,16 @@ const SITE_CONFIG = {
               "anchorId": ""
             }
           ]
+        },
+        {
+          "type": "link",
+          "label": "",
+          "background": "light",
+          "anchorId": "",
+          "linkType": "internal",
+          "linkLabel": "OFC Violation Schedule & Catastrophe Ledger",
+          "linkUrl": "the-experience",
+          "link_anchorId": "ofc-penalty"
         },
         {
           "type": "logo-strip",
@@ -1447,83 +1702,9 @@ const SITE_CONFIG = {
         },
         {
           "type": "fees",
-          "label": "OFC Penalty Ledger",
-          "background": "light",
-          "anchorId": "",
-          "heading": "The OFC Fine & Penalty Schedule",
-          "subtitle": "The Commissioner's office maintains a binding schedule of fines and punishments for conduct unbecoming of an OFL competitor. All rulings are final. All fines are emotional.",
-          "col1Label": "Offense",
-          "col2Label": "Penalty",
-          "col3Label": "Notes",
-          "disclaimer": "",
-          "items": [
-            {
-              "service": "Drafting a Kicker Before Round 12",
-              "amount": "Immediate Mockery",
-              "detail": "Kickers are not people. Draft them accordingly.",
-              "note": "The group chat will not recover for 48 hours. Screenshot archived in the Hall of Records.",
-              "linkLabel": "",
-              "linkType": "none",
-              "linkUrl": "home",
-              "anchorId": ""
-            },
-            {
-              "service": "Starting a Bye-Week Player",
-              "amount": "Loss of Trash Talk Privileges",
-              "detail": "The calendar is free. Check it.",
-              "note": "48-hour communication blackout from any game-day smack talk. You forfeit the moral high ground.",
-              "linkLabel": "",
-              "linkType": "none",
-              "linkUrl": "home",
-              "anchorId": ""
-            },
-            {
-              "service": "Offering a Trade So Lopsided It Insults Everyone",
-              "amount": "Formal Veto + Written Apology",
-              "detail": "The Commissioner will title the veto memo. Titles have included: 'Are You Serious Right Now.'",
-              "note": "The Commissioner issues a veto with editorial commentary. The commentary is the real punishment.",
-              "linkLabel": "",
-              "linkType": "none",
-              "linkUrl": "home",
-              "anchorId": ""
-            },
-            {
-              "service": "Complaining About a Loss Attributable to Own Bad Picks",
-              "amount": "Mandatory Mirror Time",
-              "detail": "There is no way to verify compliance. The honor system is invoked. You know what you did.",
-              "note": "You are required to sit quietly with yourself for 10 minutes and reflect on the picks you made.",
-              "linkLabel": "",
-              "linkType": "none",
-              "linkUrl": "home",
-              "anchorId": ""
-            },
-            {
-              "service": "Claiming You 'Don't Even Care' After a Loss",
-              "amount": "Retroactive Point Deduction (Spiritual)",
-              "detail": "You care. We all care. That's why we're here.",
-              "note": "Points are not actually deducted. But the Commissioner will remember. And the Commish's memory is long.",
-              "linkLabel": "",
-              "linkType": "none",
-              "linkUrl": "home",
-              "anchorId": ""
-            },
-            {
-              "service": "Attempting to Negotiate With The Commissioner",
-              "amount": "Negotiation Terminated + Notes Compared",
-              "detail": "The Commissioner is not a negotiating partner. He is the ruling body.",
-              "note": "The negotiation is terminated immediately. The Commissioner notes the attempt. The attempt is discussed later.",
-              "linkLabel": "",
-              "linkType": "none",
-              "linkUrl": "home",
-              "anchorId": ""
-            }
-          ]
-        },
-        {
-          "type": "fees",
           "label": "BRC Penalty Ledger",
           "background": "alt",
-          "anchorId": "",
+          "anchorId": "brc-penalty",
           "heading": "The BRC Bracket Violation Schedule",
           "subtitle": "The Blue Ribbon Cup has its own code of conduct, separate from the OFC but equally enforceable. The BRC is chaos on the court — it is not chaos in the league office.",
           "col1Label": "Violation",
@@ -1614,6 +1795,288 @@ const SITE_CONFIG = {
           ]
         },
         {
+          "type": "fees",
+          "label": "BRC Hall of Records",
+          "background": "alt",
+          "anchorId": "brc-ledger",
+          "heading": "The BRC All-Time Bracket Catastrophe Ledger",
+          "subtitle": "The OFL maintains an official record of bracket-related incidents that have become permanent BRC lore. Names are withheld. The incidents are not.",
+          "col1Label": "The Incident",
+          "col2Label": "Severity",
+          "col3Label": "Status in League Memory",
+          "disclaimer": "All incidents verified by the Commissioner and at least two witnesses. Disputing your entry on this ledger results in your entry being bolded.",
+          "items": [
+            {
+              "service": "Picked all four 1-seeds to the Final Four and all four lost before the Elite 8",
+              "amount": "🔴 Historic",
+              "detail": "Statistically improbable. Personally devastating. Brought up at least twice per season.",
+              "note": "The person who did this knows who they are. So does everyone else.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Submitted bracket 4 minutes after tipoff, disqualified, watched from the sidelines all season",
+              "amount": "🔴 Procedural",
+              "detail": "Rules were explained. Rules were acknowledged. Tipoff was misjudged by exactly four minutes.",
+              "note": "Commissioner Spider's ruling: disqualified with dignity. The dignity part was Spider's addition.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Picked the same team to win the BRC for four consecutive years. They have not won. They have not made the Final Four.",
+              "amount": "🟠 Committed",
+              "detail": "Loyalty is admirable. Bracket loyalty to a team with this track record is a personality.",
+              "note": "Going on year five. The rest of the BRC is watching with a mixture of pity and respect.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Had the only correct Final Four before the Elite 8, then lost all four in the same weekend",
+              "amount": "🔴 Collapse of the Century",
+              "detail": "Mathematical perfection followed by total structural failure. The bracket equivalent of a house of cards in a wind tunnel.",
+              "note": "This person led the BRC standings for six days. Six very good days. Then the weekend happened.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Won the BRC having correctly picked zero of the four Final Four teams",
+              "amount": "🟢 Legendary / Suspicious",
+              "detail": "Technically legal. Statistically bewildering. Investigated informally by Commissioner Spider. Nothing actionable was found.",
+              "note": "Rules say you win if you have the most points. Points were had. Championship was earned. Eyebrows remain raised.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Sent 14 'this is fine' texts while their entire bracket was eliminated over a single 48-hour window",
+              "amount": "🟠 Psychological",
+              "detail": "Fourteen texts. Each one more committed to the 'this is fine' energy than the last. The group chat still has them.",
+              "note": "It was not fine. The BRC thanks this member for the content.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            }
+          ]
+        },
+        {
+          "type": "link",
+          "label": "",
+          "background": "light",
+          "anchorId": "",
+          "linkType": "internal",
+          "linkLabel": "FAQ - BRC Forensics",
+          "linkUrl": "faqs",
+          "link_anchorId": "faq-brc"
+        },
+        {
+          "type": "fees",
+          "label": "OFC Penalty Ledger",
+          "background": "light",
+          "anchorId": "ofc-penalty",
+          "heading": "The OFC Fine & Penalty Schedule",
+          "subtitle": "The Commissioner's office maintains a binding schedule of fines and punishments for conduct unbecoming of an OFL competitor. All rulings are final. All fines are emotional.",
+          "col1Label": "Offense",
+          "col2Label": "Penalty",
+          "col3Label": "Notes",
+          "disclaimer": "",
+          "items": [
+            {
+              "service": "Drafting a Kicker Before Round 12",
+              "amount": "Immediate Mockery",
+              "detail": "Kickers are not people. Draft them accordingly.",
+              "note": "The group chat will not recover for 48 hours. Screenshot archived in the Hall of Records.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Starting a Bye-Week Player",
+              "amount": "Loss of Trash Talk Privileges",
+              "detail": "The calendar is free. Check it.",
+              "note": "48-hour communication blackout from any game-day smack talk. You forfeit the moral high ground.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Offering a Trade So Lopsided It Insults Everyone",
+              "amount": "Formal Veto + Written Apology",
+              "detail": "The Commissioner will title the veto memo. Titles have included: 'Are You Serious Right Now.'",
+              "note": "The Commissioner issues a veto with editorial commentary. The commentary is the real punishment.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Complaining About a Loss Attributable to Own Bad Picks",
+              "amount": "Mandatory Mirror Time",
+              "detail": "There is no way to verify compliance. The honor system is invoked. You know what you did.",
+              "note": "You are required to sit quietly with yourself for 10 minutes and reflect on the picks you made.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Claiming You 'Don't Even Care' After a Loss",
+              "amount": "Retroactive Point Deduction (Spiritual)",
+              "detail": "You care. We all care. That's why we're here.",
+              "note": "Points are not actually deducted. But the Commissioner will remember. And the Commish's memory is long.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Attempting to Negotiate With The Commissioner",
+              "amount": "Negotiation Terminated + Notes Compared",
+              "detail": "The Commissioner is not a negotiating partner. He is the ruling body.",
+              "note": "The negotiation is terminated immediately. The Commissioner notes the attempt. The attempt is discussed later.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            }
+          ]
+        },
+        {
+          "type": "fees",
+          "label": "OFC Hall of Records",
+          "background": "alt",
+          "anchorId": "ofc-ledger",
+          "heading": "The OFC All-Time Season Catastrophe Ledger",
+          "subtitle": "The OFL maintains an official record of season-defining incidents, collapses, and decisions that have permanently entered league lore. Names are withheld. The incidents are not. Commissioner Spider has verified every entry.",
+          "col1Label": "The Incident",
+          "col2Label": "Severity",
+          "col3Label": "Status in League Memory",
+          "disclaimer": "All entries verified by the Commissioner and at least two witnesses. Disputing your entry results in your entry being bolded and read aloud at the next draft.",
+          "items": [
+            {
+              "service": "Traded away a player who won the OFC Offensive Player of the Year award the following week",
+              "amount": "🔴 Generational",
+              "detail": "The trade cleared the veto process. The irony did not. The receiving team said nothing publicly. They didn't need to.",
+              "note": "This player is still being referenced in draft conversations. He retired two seasons ago.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Started a quarterback who was listed as Doubtful on Wednesday, Thursday, Friday, and Saturday. Played him anyway.",
+              "amount": "🔴 Defiant",
+              "detail": "The quarterback did not play. The backup scored 31 points. The starting lineup decision was not revised before kickoff.",
+              "note": "When asked why, the response was: 'I had a feeling.' The feeling was wrong.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Led the OFC by three games with two weeks left. Missed the playoffs.",
+              "amount": "🔴 Historic Collapse",
+              "detail": "The math required for this outcome was so improbable that Commissioner Spider requested a manual audit of the standings. The standings were correct. The collapse was real.",
+              "note": "This is referenced annually as the benchmark for late-season failure. It set a standard that has not been approached.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Benched a running back for a 'better matchup' the week said running back scored 48 points",
+              "amount": "🔴 Matchup Hubris",
+              "detail": "The 'better matchup' pick scored 6 points. The benched player scored 48. The margin of defeat was 41 points. The matchup analysis was thorough and completely incorrect.",
+              "note": "The matchup spreadsheet was never discussed again. Commissioner Spider archived it.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Picked up a waiver wire player at 3am, started him, he fumbled twice and scored zero points",
+              "amount": "🟠 Midnight Decision Energy",
+              "detail": "The 3am pickup was made with reported 'high confidence.' The waiver wire claim cleared. The player did not deliver. The confidence was not revisited publicly.",
+              "note": "Late-night waiver wire decisions are now informally referred to as '3am energy' in the group chat. This member coined the term.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Scored the most points in OFC history in a single week — in a loss, because the opponent scored more",
+              "amount": "🟠 Peak Futility",
+              "detail": "Record-breaking offensive output. Zero impact on the outcome. The opponent simply scored more. This is the fantasy football experience distilled to its purest form.",
+              "note": "The record stands. The loss also stands. Both are in the books. Commissioner Spider acknowledged both with equal gravity.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Won the OFC Championship having never held first place at any point during the regular season",
+              "amount": "🟢 Suspicious / Legendary",
+              "detail": "Technically legal. Raised questions about the nature of regular season performance as a championship predictor. Commissioner Spider reviewed the precedent and issued no statement, which was itself a statement.",
+              "note": "This member's draft position the following year was watched very closely by everyone.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Submitted a trade offer containing a player who had been on IR for three weeks",
+              "amount": "🟡 Administrative Chaos",
+              "detail": "The IR designation was visible on the platform. The player was listed in the offer as the 'centerpiece.' Commissioner Spider voided the offer with a note described as 'brief but thorough.'",
+              "note": "Roster management awareness is now item 4 on the official pre-trade checklist that did not previously exist.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Predicted a specific final record in the pre-draft group chat. Hit the exact record — but reversed (wins became losses)",
+              "amount": "🟡 Prophetic / Ironic",
+              "detail": "The prediction was made with unusual specificity. The record arrived with unusual accuracy. The math simply applied in the wrong direction.",
+              "note": "The original message was screenshot immediately and has been shared at the start of every subsequent season.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "service": "Dropped a player who scored a hat-trick of touchdowns the following week for another team",
+              "amount": "🟠 Waiver Wire Grief",
+              "detail": "The drop was described as a 'roster management decision.' The player responded to being dropped by delivering the best performance of his season. The roster management decision was not vindicated.",
+              "note": "Commissioner Spider noted this in the end-of-season debrief. He did not need to say much. The numbers spoke.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            }
+          ]
+        },
+        {
+          "type": "link",
+          "label": "",
+          "background": "light",
+          "anchorId": "",
+          "linkType": "internal",
+          "linkLabel": "FAQ - OFC Forensics",
+          "linkUrl": "faqs",
+          "link_anchorId": "faq-ofc"
+        },
+        {
           "type": "bullets",
           "label": "Trash Talking",
           "background": "light",
@@ -1671,6 +2134,66 @@ const SITE_CONFIG = {
               "anchorId": ""
             }
           ]
+        },
+        {
+          "type": "steps",
+          "label": "Whining",
+          "background": "dark",
+          "anchorId": "",
+          "heading": "Formal Grievance Protocol",
+          "subtitle": "The OFL Headquarters recognizes that, occasionally, a competitor may feel the need to express their confusion regarding Commissioner rulings. To ensure your complaint is properly ignored, please follow these mandatory steps.",
+          "items": [
+            {
+              "title": "The Pre-Qualification Vestibule",
+              "body": "Before submitting a grievance, you must confirm your standing.\nThe \"Loser\" Surcharge: If your current PPG (Points Per Game) is in the bottom 25% of the league, you must pay a $50 \"Incompetence Processing Fee.\" We do not take complaints from teams that can't win.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "title": "Notarized Statistical Proof",
+              "body": "The OFL does not deal in \"vibes\" or \"feelings.\"\n​You must provide a 15-page spread-sheet demonstrating how you think you're right. and you must prove that your grievance would still matter if you weren't currently in last place. (Most complaints fail at this stage).",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "title": "The \"Oracle\" Tribunal",
+              "body": "If you survive Step 2, your case is moved to the Tribunal, consisting of \n​The Commissioner (Spider), a digital rendering of the Oracle Trophy, a mirror (so you can look at the person responsible for your team's failure). To pass this step, it must be a unanimous decision and the Commissioner always votes \"No.\"",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "title": "The Cooling-off Period (Mandatory)",
+              "body": "To ensure your complaint isn't just \"emotional heat,\" the OFL institutes a mandatory 48-month waiting period.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "title": "The Final Adjudication",
+              "body": "Should your complaint reach the Commissioner's desk after 4 years of processing, a final decision will be rendered.\n​Outcome A: The complaint is dismissed due to \"Expired Relevance.\"\n​Outcome B: The complaint is found to have merit, but the Commissioner issues a Retroactive Rule Change that makes his original action legal.\n​Outcome C: You are billed for the Commissioner's time and subscribed to Women's World for the remainder of the calendar year.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            }
+          ]
+        },
+        {
+          "type": "link",
+          "label": "",
+          "background": "light",
+          "anchorId": "",
+          "linkType": "internal",
+          "linkLabel": "Appeals Process FAQ",
+          "linkUrl": "faqs",
+          "link_anchorId": "faq-appeals"
         }
       ]
     },
@@ -1683,7 +2206,7 @@ const SITE_CONFIG = {
         {
           "type": "faq",
           "label": "Wait...What?",
-          "background": "alt",
+          "background": "light",
           "anchorId": "faq-fools",
           "heading": "Fools Asking Questions",
           "subtitle": "How to get your IP address blocked, and bullied on all of your social media platforms.",
@@ -1773,7 +2296,42 @@ const SITE_CONFIG = {
         },
         {
           "type": "faq",
-          "label": "",
+          "label": "Still Confused",
+          "background": "alt",
+          "anchorId": "faq-membership",
+          "heading": "Membership Questionaire",
+          "subtitle": "",
+          "fullWidth": true,
+          "items": [
+            {
+              "q": "Are you a member of the Osborne family, by blood or relationship?",
+              "a": "If YES, proceed to question #2. If NO, don't panic, just get back on the horse you came in on, and hit the trail, clown!",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "Did you receive an invitation to join the OFL?",
+              "a": "If YES, then proceed the question #3. If NO, then get your act together, you're an embarrassment to your loved ones! Click the link below to get some help!",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "Do you accept the invitation to the OFL?",
+              "a": "If YES, click the Acceptance link below. If NO, then take a second to rethink this life changing choice. Then when you've cleared the fog from your head and taken your head from your @$#, click that Acceptance button, before Mama finds out!",
+              "linkLabel": "Accept Invitation",
+              "linkType": "external",
+              "linkUrl": "home",
+              "anchorId": ""
+            }
+          ]
+        },
+        {
+          "type": "faq",
+          "label": "Just Curious",
           "background": "light",
           "anchorId": "faq-leagues",
           "heading": "Questions About the Leagues",
@@ -1815,6 +2373,159 @@ const SITE_CONFIG = {
             {
               "q": "Has anyone ever won both leagues in the same year?",
               "a": "This theoretical achievement is referred to internally as 'The Double.' It has not been accomplished. The person who accomplishes it will not have to pay for their own beverage at the championship gala. This is the only prize worthy of the feat.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            }
+          ]
+        },
+        {
+          "type": "faq",
+          "label": "BRC Forensics",
+          "background": "dark",
+          "anchorId": "faq-brc",
+          "heading": "BRC Bracket Autopsy FAQ",
+          "subtitle": "Every year, after the nets are cut and the dust settles, BRC members seek answers. These are the official responses to the questions Commissioner Spider's office receives every single tournament.",
+          "fullWidth": false,
+          "items": [
+            {
+              "q": "My bracket was perfect through the first round. Why did it completely collapse?",
+              "a": "Because March Madness is a two-act play. Act One is designed to give you false confidence. Act Two is designed to take everything you have built and redistribute it to someone who picked a 10-seed on a hunch. This is the BRC experience. It was always going to happen. The bracket knew.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "I picked the champion correctly. Why didn't I win the BRC?",
+              "a": "Because you got the champion right and approximately nothing else. Picking the champion is worth a lot of points in the final round. It is worth very few points in rounds one through five. The BRC is a tournament of accumulation, not a single correct answer at the end. You picked the destination but none of the stops.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "A 15-seed beat my 2-seed. Is there any precedent for this?",
+              "a": "Yes. It happens. It has happened before. It will happen again. The BRC has a formal position on this: you should have hedged. Not on that specific game — you couldn't have known. But somewhere in your bracket, you over-trusted a seed number. This is where it collected its debt.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "Can I challenge the outcome of a game that affected my bracket?",
+              "a": "No. The OFL does not have standing to challenge NCAA game outcomes. Commissioner Spider has looked into this. The NCAA has not responded to his inquiries. The results stand.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "I want to formally protest the seeding of a team that busted my bracket.",
+              "a": "Your protest has been received. It has been forwarded to the NCAA Selection Committee, which has not responded and will not respond. Commissioner Spider's official note on your protest: 'The seeding was fine. The bracket was not.' The matter is closed.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "Is it possible to have a 'good bracket' and still finish last in the BRC?",
+              "a": "No. Finishing last in the BRC means your bracket was, by the only measure that matters in a competition, not good enough. A bracket that feels right is not the same as a bracket that scores. The BRC operates on points, not feelings. Your feelings are noted and have been filed in the 'Feelings' folder, which is in the trash.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            }
+          ]
+        },
+        {
+          "type": "faq",
+          "label": "OFC Forensics",
+          "background": "dark",
+          "anchorId": "faq-ofc",
+          "heading": "OFC Season Autopsy FAQ",
+          "subtitle": "At the close of every OFC season, members seek answers. These are the official responses to the questions Commissioner Spider's office receives every single year without fail.",
+          "fullWidth": false,
+          "items": [
+            {
+              "q": "My team scored the most points in the league but I missed the playoffs. How is this possible?",
+              "a": "Because the OFC does not award a trophy for points scored. It awards a trophy for wins. These are related but not equivalent. You faced the right opponents in the wrong order and the wrong opponents at the right time. This is fantasy football. The schedule is not in your control. Your draft was. We encourage reflection on the draft.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "I lost by 0.4 points. Whose fault is this?",
+              "a": "Yours. Specifically, it is the fault of the decision you made on Saturday night regarding your flex spot. Commissioner Spider reviewed the outcome. The flex decision was suboptimal. The margin of 0.4 points is a math problem with a known cause. The cause is the flex spot. The flex spot was your call.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "My star player got injured in Week 1. The season was essentially over at that point, correct?",
+              "a": "No. The OFC has a documented history of members who lost their primary pick in Week 1 and still made the playoffs. The season was not over. Your willingness to compete was over. These are different things. One of them is recoverable. Commissioner Spider would like to note that the waiver wire existed and was not fully utilized.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "I was robbed by a bad referee call that cost my player a touchdown, which cost me my playoff spot.",
+              "a": "The OFL does not adjudicate NFL officiating disputes. Commissioner Spider looked into the call. The call was correct. Even if the call had been wrong, the margin of your defeat exceeded one touchdown's point value. There were other factors. The officiating was not the primary factor.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "The player I drafted in the second round was a bust. Is this the draft service's fault?",
+              "a": "The draft service provided projections. Projections are not guarantees. You selected the player. The player underperformed. The draft service did not play football. The player did. The accountability chain runs from your draft board to your roster, not from a website to your season record.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "I went 8-5 and still missed the playoffs. This seems unfair.",
+              "a": "The OFC playoff structure rewards the members who finished ahead of you. Going 8-5 is a good record. It is not always a playoff record. This is determined by how many people went 9-4 or better, which is information that was available to you in real time throughout the season. The standings were public. The math was accessible. We encourage you to check them earlier next season.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "Can I formally protest the trade that happened in Week 8 that I believe changed the competitive balance of the league?",
+              "a": "The trade was reviewed by Commissioner Spider at the time of submission. It was approved. Retroactive protests of approved trades are not within the OFC's procedural framework. What you are experiencing is not an injustice. It is a correctly processed transaction that you wish had gone differently. These are not the same thing.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            },
+            {
+              "q": "I finished last. What is the official explanation?",
+              "a": "The official explanation is that the other members finished higher. This is complete and accurate. If you are looking for a more detailed breakdown, Commissioner Spider's office can provide a post-season summary of the decisions that contributed most meaningfully to the outcome, but the summary will reach the same conclusion. We recommend using the off-season to study the decisions identified in that summary.",
+              "linkLabel": "",
+              "linkType": "none",
+              "linkUrl": "home",
+              "anchorId": ""
+            }
+          ]
+        },
+        {
+          "type": "faq",
+          "label": "Still Whining",
+          "background": "alt",
+          "anchorId": "faq-appeals",
+          "heading": "Question About the Appeals Process",
+          "subtitle": "",
+          "fullWidth": false,
+          "items": [
+            {
+              "q": "How do I appeal a decision by the Commissioner?",
+              "a": "There are no appeals. Please refer to a spouse, or loved one for emotional support regarding your fragile aspirations. A grievance against the Commissioner is simply a confession that you weren't monstrous enough to win anyway.",
               "linkLabel": "",
               "linkType": "none",
               "linkUrl": "home",
@@ -1908,77 +2619,7 @@ const SITE_CONFIG = {
       "navLabel": "Complaints",
       "emoji": "🤬",
       "enabled": false,
-      "sections": [
-        {
-          "type": "steps",
-          "label": "Whining",
-          "background": "dark",
-          "anchorId": "",
-          "heading": "Formal Grievance Protocol",
-          "subtitle": "The OFL Headquarters recognizes that, occasionally, a competitor may feel the need to express their confusion regarding Commissioner rulings. To ensure your complaint is properly ignored, please follow these mandatory steps.",
-          "items": [
-            {
-              "title": "The Pre-Qualification Vestibule",
-              "body": "Before submitting a grievance, you must confirm your standing.\nThe \"Loser\" Surcharge: If your current PPG (Points Per Game) is in the bottom 25% of the league, you must pay a $50 \"Incompetence Processing Fee.\" We do not take complaints from teams that can't win.",
-              "linkLabel": "",
-              "linkType": "none",
-              "linkUrl": "home",
-              "anchorId": ""
-            },
-            {
-              "title": "Notarized Statistical Proof",
-              "body": "The OFL does not deal in \"vibes\" or \"feelings.\"\n​You must provide a 15-page spread-sheet demonstrating how you think you're right. and you must prove that your grievance would still matter if you weren't currently in last place. (Most complaints fail at this stage).",
-              "linkLabel": "",
-              "linkType": "none",
-              "linkUrl": "home",
-              "anchorId": ""
-            },
-            {
-              "title": "The \"Oracle\" Tribunal",
-              "body": "If you survive Step 2, your case is moved to the Tribunal, consisting of \n​The Commissioner (Spider), a digital rendering of the Oracle Trophy, a mirror (so you can look at the person responsible for your team's failure). To pass this step, it must be a unanimous decision and the Commissioner always votes \"No.\"",
-              "linkLabel": "",
-              "linkType": "none",
-              "linkUrl": "home",
-              "anchorId": ""
-            },
-            {
-              "title": "The Cooling-off Period (Mandatory)",
-              "body": "To ensure your complaint isn't just \"emotional heat,\" the OFL institutes a mandatory 48-month waiting period.",
-              "linkLabel": "",
-              "linkType": "none",
-              "linkUrl": "home",
-              "anchorId": ""
-            },
-            {
-              "title": "The Final Adjudication",
-              "body": "Should your complaint reach the Commissioner's desk after 4 years of processing, a final decision will be rendered.\n​Outcome A: The complaint is dismissed due to \"Expired Relevance.\"\n​Outcome B: The complaint is found to have merit, but the Commissioner issues a Retroactive Rule Change that makes his original action legal.\n​Outcome C: You are billed for the Commissioner's time and subscribed to Women's World for the remainder of the calendar year.",
-              "linkLabel": "",
-              "linkType": "none",
-              "linkUrl": "home",
-              "anchorId": ""
-            }
-          ]
-        },
-        {
-          "type": "faq",
-          "label": "Still Whining",
-          "background": "alt",
-          "anchorId": "",
-          "heading": "Question About the Appeals Process",
-          "subtitle": "",
-          "fullWidth": false,
-          "items": [
-            {
-              "q": "How do I appeal a decision by the Commissioner?",
-              "a": "There are no appeals. Please refer to a spouse, or loved one for emotional support regarding your fragile aspirations. A grievance against the Commissioner is simply a confession that you weren't monstrous enough to win anyway.",
-              "linkLabel": "",
-              "linkType": "none",
-              "linkUrl": "home",
-              "anchorId": ""
-            }
-          ]
-        }
-      ]
+      "sections": []
     },
     {
       "slug": "page-sections",
@@ -2527,6 +3168,7 @@ const SITE_CONFIG = {
               "period": "/ month",
               "icon": "",
               "imagePath": "",
+              "imageSize": "md",
               "ribbon": "Card 1",
               "note": "",
               "cardStyle": "dark",
@@ -2534,6 +3176,7 @@ const SITE_CONFIG = {
               "cta_linkLabel": "",
               "cta_linkType": "none",
               "cta_linkUrl": "",
+              "cta_anchorId": "",
               "features": [
                 {
                   "label": "Feature 1",
@@ -2584,6 +3227,7 @@ const SITE_CONFIG = {
               "period": "/ month",
               "icon": "",
               "imagePath": "",
+              "imageSize": "md",
               "ribbon": "Card 2",
               "note": "",
               "cardStyle": "alt",
@@ -2591,6 +3235,7 @@ const SITE_CONFIG = {
               "cta_linkLabel": "",
               "cta_linkType": "none",
               "cta_linkUrl": "",
+              "cta_anchorId": "",
               "features": [
                 {
                   "label": "Feature 1",
@@ -2641,6 +3286,7 @@ const SITE_CONFIG = {
               "period": "/ month",
               "icon": "",
               "imagePath": "",
+              "imageSize": "md",
               "ribbon": "Card 3",
               "note": "",
               "cardStyle": "light",
@@ -2648,6 +3294,7 @@ const SITE_CONFIG = {
               "cta_linkLabel": "",
               "cta_linkType": "none",
               "cta_linkUrl": "",
+              "cta_anchorId": "",
               "features": [
                 {
                   "label": "Feature 1",
@@ -3040,7 +3687,7 @@ const SITE_CONFIG = {
   "footerBio": "Where Legends Are Made & Legacies Are Settled",
   "contactSubmitLabel": "Request Free Abuse",
   "contactSuccessMsg": "Ugh...you're so unworthy.",
-  "_savedAt": 1776876197301,
+  "_savedAt": 1776894547965,
   "aboutBio3": "She is a member of the Alabama Bar Association, the American Academy of Adoption Attorneys (AAAA), and has been recognized as a Super Lawyer in Alabama Family Law for eight consecutive years. She is admitted to practice in all Alabama courts and regularly handles cases in Jefferson, Shelby, St. Clair, and Cullman counties.",
   "aboutBio4": "When she's not advocating for families in court, Amy volunteers with the Alabama Foster Care Association and speaks at community workshops on adoption awareness.",
   "heroPrimaryDest": "contact",
