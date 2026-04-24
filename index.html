@@ -189,6 +189,139 @@ nav.main-nav { display: none !important; }
   transition: opacity 1.5s ease-out;
 }
 
+/* ── PIN OVERLAY ─────────────────────────────────────────────────────────── */
+.pin-overlay {
+  position: fixed; inset: 0; z-index: 4000;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--navy);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s var(--ease-out);
+}
+.pin-overlay.open { opacity: 1; pointer-events: all; }
+.pin-box {
+  display: flex; flex-direction: column; align-items: center;
+  width: min(265px, 88vw);
+}
+.pin-box.shake { animation: pinShake 0.4s ease-out; }
+@keyframes pinShake {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-8px); }
+  40%      { transform: translateX(8px); }
+  60%      { transform: translateX(-6px); }
+  80%      { transform: translateX(6px); }
+}
+.pin-site-label {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+  text-align: center; margin-bottom: 17px;
+}
+.pin-headline {
+  font-family: var(--font-display);
+  font-size: clamp(27px, 6.5vw, 43px);
+  font-weight: 400; color: #fff; line-height: 1.1;
+  text-align: center; margin-bottom: 26px;
+}
+.pin-dots { display: flex; gap: 13px; margin-bottom: 7px; }
+.pin-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  background: transparent;
+  transition: background 0.15s, border-color 0.15s;
+}
+.pin-dot.filled { background: #fff; border-color: #fff; }
+.pin-wrong {
+  font-size: 11px; color: rgba(255,80,80,0.9);
+  min-height: 16px; margin-bottom: 17px;
+  text-align: center; letter-spacing: 0.05em;
+}
+.pin-pad {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 9px; width: 100%; margin-top: 7px;
+}
+.pin-btn {
+  height: 54px; border-radius: 6px;
+  font-size: 17px; font-weight: 500; font-family: var(--font-body);
+  background: rgba(255,255,255,0.07);
+  color: #fff; border: none; cursor: pointer;
+  transition: background 0.15s, transform 0.08s;
+  letter-spacing: 0.05em;
+}
+.pin-btn:hover { background: rgba(255,255,255,0.13); }
+.pin-btn:active { transform: scale(0.94); background: rgba(255,255,255,0.18); }
+.pin-btn-clear {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.45); background: transparent;
+}
+.pin-btn-clear:hover { background: transparent; color: rgba(255,255,255,0.7); }
+.pin-btn-back {
+  font-size: 16px; color: rgba(255,255,255,0.55);
+  background: transparent;
+}
+.pin-btn-back:hover { background: transparent; color: #fff; }
+
+.pin-back-wrap { margin-top: 20px; text-align: center; }
+.pin-back-btn {
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); cursor: pointer;
+  transition: color 0.2s;
+}
+.pin-back-btn:hover { color: rgba(255,255,255,0.6); }
+
+.pin-moment {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; text-align: center;
+  width: min(280px, 88vw);
+  animation: pinMomentIn 0.4s var(--ease-out);
+}
+@keyframes pinMomentIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.pin-moment-emoji {
+  font-size: 52px; margin-bottom: 20px; line-height: 1;
+}
+.pin-moment-headline {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 6vw, 38px);
+  font-weight: 400; color: #fff;
+  margin-bottom: 10px; line-height: 1.2;
+}
+.pin-moment-sub {
+  font-size: 13px; color: rgba(255,255,255,0.5);
+  letter-spacing: 0.05em; line-height: 1.6;
+}
+.pin-moment-denied .pin-moment-headline {
+  letter-spacing: 0.15em; font-family: var(--font-body);
+  font-weight: 600; font-size: clamp(18px, 4vw, 26px);
+  color: rgba(255,80,80,0.9);
+}
+.pin-moment-denied .pin-moment-sub { color: rgba(255,255,255,0.4); }
+.pin-moment-countdown {
+  margin-top: 24px; font-size: 32px; font-weight: 300;
+  color: rgba(255,255,255,0.25); font-family: var(--font-body);
+  min-height: 40px;
+}
+.pin-overlay.theme-gold { background: var(--gold); }
+.pin-overlay.theme-gold .pin-site-label { color: rgba(15,35,64,0.5); }
+.pin-overlay.theme-gold .pin-headline { color: var(--navy); }
+.pin-overlay.theme-gold .pin-dot { border-color: rgba(15,35,64,0.3); }
+.pin-overlay.theme-gold .pin-dot.filled { background: var(--navy); border-color: var(--navy); }
+.pin-overlay.theme-gold .pin-btn { background: rgba(15,35,64,0.1); color: var(--navy); }
+.pin-overlay.theme-gold .pin-btn:hover { background: rgba(15,35,64,0.18); }
+.pin-overlay.theme-gold .pin-btn-clear,
+.pin-overlay.theme-gold .pin-btn-back { background: transparent; color: rgba(15,35,64,0.45); }
+
+/* Light theme */
+.pin-overlay.theme-light { background: var(--warm-white); }
+.pin-overlay.theme-light .pin-site-label { color: var(--text-muted); }
+.pin-overlay.theme-light .pin-headline { color: var(--navy); }
+.pin-overlay.theme-light .pin-dot { border-color: #ccc; }
+.pin-overlay.theme-light .pin-dot.filled { background: var(--navy); border-color: var(--navy); }
+.pin-overlay.theme-light .pin-btn { background: #ede9e0; color: var(--navy); }
+.pin-overlay.theme-light .pin-btn:hover { background: #e0dbd0; }
+.pin-overlay.theme-light .pin-btn-clear,
+.pin-overlay.theme-light .pin-btn-back { background: transparent; color: #aaa; }
+
 /* Search nav button */
 .search-nav-btn {
   background: none; border: none; cursor: pointer;
@@ -3454,12 +3587,22 @@ const SITE_DEFAULTS = {
     noResultsSubtext: 'Try a different search term.',
     resultsPerPage: 5,
     excludedPages: [],
-  }
+  },
+  siteAccess: 'public',
+  sessionDays: 7,
+  pinPad: {
+    headline: 'Members Only',
+    subtext:  'Enter your PIN to continue',
+    wrongMsg: 'Incorrect PIN. Try again.',
+    theme:    'dark',
+  },
+  members: [],
+  pageAccess: {},
 };
 
 const CFG = Object.assign({}, SITE_DEFAULTS, typeof SITE_CONFIG !== 'undefined' ? SITE_CONFIG : {});
 // Deep merge nested objects
-['colors','fontColors','whyChooseUs','heroBg','pageTitles','pageHeaders','search'].forEach(k => {
+['colors','fontColors','whyChooseUs','heroBg','pageTitles','pageHeaders','search','pinPad','pageAccess'].forEach(k => {
   if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG[k]) {
     CFG[k] = Object.assign({}, SITE_DEFAULTS[k], SITE_CONFIG[k]);
   }
@@ -3478,7 +3621,7 @@ if (!Array.isArray(CFG.customPages)) CFG.customPages = [];
         if (Array.isArray(parsed[k]) && parsed[k].length === 0 && Array.isArray(CFG[k]) && CFG[k].length > 0) return;
         CFG[k] = parsed[k];
       });
-      ['colors','fontColors','whyChooseUs','heroBg','pageTitles','pageHeaders','search'].forEach(k => {
+      ['colors','fontColors','whyChooseUs','heroBg','pageTitles','pageHeaders','search','pinPad','pageAccess'].forEach(k => {
         if (parsed[k]) CFG[k] = Object.assign({}, CFG[k], parsed[k]);
       });
       // Custom pages: fully replace if present in preview, but only if items have valid titles
@@ -4130,7 +4273,7 @@ function buildFooter() {
 function buildNav() {
   const pt = CFG.pageToggles || {};
   const navPages = [
-    { key: 'about',        label: CFG.aboutNavLabel || CFG.pageHeaders?.about?.label || 'About' },
+    { key: 'about', label: CFG.aboutNavLabel || CFG.pageHeaders?.about?.label || 'About' },
   ];
   const nav = document.getElementById('drawer-links');
   if (!nav) return;
@@ -4139,6 +4282,7 @@ function buildNav() {
   const homeLink = document.createElement('span');
   homeLink.className = 'nav-link';
   homeLink.textContent = 'Home';
+  homeLink.dataset.pageKey = 'home';
   homeLink.onclick = () => { showPage('home'); toggleMobileNav(); };
   parts.push(homeLink);
   // Core pages
@@ -4147,16 +4291,18 @@ function buildNav() {
     const link = document.createElement('span');
     link.className = 'nav-link';
     link.textContent = p.label;
+    link.dataset.pageKey = p.key;
     link.onclick = () => { showPage(p.key); toggleMobileNav(); };
     parts.push(link);
   });
   // Custom pages
-  (CFG.customPages || []).forEach(cp => {
+  (CFG.customPages || []).forEach((cp, i) => {
     if (cp.enabled === false) return;
     const link = document.createElement('span');
     link.className = 'nav-link';
     link.textContent = cp.navLabel || cp.header?.title || cp.slug;
     link.dataset.slug = cp.slug;
+    link.dataset.pageKey = 'cp-' + i;
     link.onclick = () => { showPage(cp.slug); toggleMobileNav(); };
     parts.push(link);
   });
@@ -4172,12 +4318,31 @@ function buildNav() {
     btn.onclick = () => { showPage('contact'); toggleMobileNav(); };
     parts.push(btn);
   }
+  // Member badge / sign out
+  const m = getCurrentMember();
+  if (m) {
+    const divider2 = document.createElement('div');
+    divider2.className = 'mobile-nav-divider';
+    parts.push(divider2);
+    const badge = document.createElement('span');
+    badge.className = 'nav-link';
+    badge.style.cssText = 'font-size:13px;opacity:0.7;cursor:default;';
+    badge.textContent = (m.emoji || '\u{1F464}') + ' ' + m.name;
+    parts.push(badge);
+    const signOutBtn = document.createElement('span');
+    signOutBtn.className = 'nav-link';
+    signOutBtn.style.cssText = 'font-size:13px;color:var(--gold);';
+    signOutBtn.textContent = 'Sign Out';
+    signOutBtn.onclick = () => { signOut(); toggleMobileNav(); };
+    parts.push(signOutBtn);
+  }
   nav.innerHTML = '';
   parts.forEach(el => nav.appendChild(el));
   // Update active state
   document.getElementById('mobile-nav').querySelectorAll('.nav-link').forEach(l => {
     l.classList.toggle('active', l.textContent.toLowerCase().includes(currentPage));
   });
+  updateNavForMember();
   buildFooterNav();
 }
 
@@ -4263,6 +4428,15 @@ let _suppressHistoryPush = false;
 
 function showPage(name, anchor) {
   clearSearchHighlights();
+
+  // Check page access — show PIN if locked
+  const pageKey = name === 'home' ? 'home' : name === 'about' ? 'about' :
+    (CFG.customPages||[]).reduce((k, p, i) => p.slug === name ? 'cp-'+i : k, null);
+  if (pageKey && !canAccessPage(pageKey)) {
+    openPinOverlay(name);
+    return;
+  }
+
   // Redirect to home if core page is disabled
   const pt = CFG.pageToggles || {};
   const disableable = ['about','contact'];
@@ -4371,6 +4545,11 @@ window.addEventListener('popstate', e => {
    MOBILE NAV
    ============================================= */
 function toggleMobileNav() {
+  // If site requires PIN and user isn't authenticated, show PIN instead of nav
+  if ((CFG.siteAccess === 'pin') && !getCurrentMember()) {
+    openPinOverlay(null);
+    return;
+  }
   const nav = document.getElementById('mobile-nav');
   const btn = document.getElementById('hamburger');
   const backdrop = document.getElementById('navBackdrop');
@@ -4799,6 +4978,274 @@ document.addEventListener('click', e => {
   const overlay = document.getElementById('searchOverlay');
   if (overlay && overlay.classList.contains('open') && e.target === overlay) closeSearch();
 });
+
+// ── PIN AUTH ENGINE ───────────────────────────────────────────────────────
+
+let _pinEntry = '';
+let _pinPendingPage = null; // page to navigate to after successful auth
+let _authInitialized = false;
+let _wrongAttempts = 0;
+
+function _getSessionKey() { return (window._SITE_KEY || 'site') + '_member'; }
+
+function getCurrentMember() {
+  try {
+    const days = CFG.sessionDays ?? 7;
+    const store = days === 0 ? sessionStorage : localStorage;
+    const raw = store.getItem(_getSessionKey());
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (days > 0 && Date.now() - data.ts > days * 86400000) {
+      localStorage.removeItem(_getSessionKey());
+      return null;
+    }
+    return data.member || null;
+  } catch(e) { return null; }
+}
+
+function setCurrentMember(member) {
+  const days = CFG.sessionDays ?? 7;
+  const store = days === 0 ? sessionStorage : localStorage;
+  store.setItem(_getSessionKey(), JSON.stringify({ member, ts: Date.now() }));
+}
+
+function clearCurrentMember() {
+  localStorage.removeItem(_getSessionKey());
+  sessionStorage.removeItem(_getSessionKey());
+}
+
+function getMemberRole() {
+  const m = getCurrentMember();
+  return m ? (m.role || 'member') : 'guest';
+}
+
+function pageAccessLevel(pageKey) {
+  return (CFG.pageAccess || {})[pageKey] || 'public';
+}
+
+function canAccessPage(pageKey) {
+  const required = pageAccessLevel(pageKey);
+  if (required === 'public') return true;
+  const role = getMemberRole();
+  if (role === 'commissioner') return true;
+  if (required === 'members' && role === 'member') return true;
+  return false;
+}
+
+function initPinOverlay() {
+  const overlay = document.getElementById('pinOverlay');
+  const pin = CFG.pinPad || {};
+  const theme = pin.theme || 'dark';
+  overlay.className = `pin-overlay theme-${theme}`;
+
+  // Site label: siteName · subtext
+  const siteName = CFG.firmName || CFG.siteName || '';
+  const subtext = pin.subtext || 'Restricted Access';
+  document.getElementById('pinSiteLabel').textContent =
+    siteName ? siteName.toUpperCase() + ' · ' + subtext.toUpperCase() : subtext.toUpperCase();
+
+  document.getElementById('pinHeadline').textContent = pin.headline || 'Members Only';
+  _pinEntry = '';
+  _wrongAttempts = 0;
+  updatePinDots();
+  document.getElementById('pinWrong').textContent = '';
+  // Back button
+  const backBtn = document.getElementById('pinBackBtn');
+  if (backBtn) backBtn.textContent = pin.backLabel || '← Back to Home';
+  // Show pad, hide moments
+  document.getElementById('pinBox').style.display = '';
+  document.getElementById('pinWelcome').style.display = 'none';
+  document.getElementById('pinImposter').style.display = 'none';
+}
+
+function updatePinDots() {
+  for (let i = 0; i < 4; i++) {
+    const dot = document.getElementById('pd' + i);
+    if (dot) dot.classList.toggle('filled', i < _pinEntry.length);
+  }
+}
+
+function pinPress(digit) {
+  if (_pinEntry.length >= 8) return;
+  _pinEntry += digit;
+  updatePinDots();
+  const members = CFG.members || [];
+  // Auto-submit when entered PIN matches any member PIN exactly
+  const match = members.find(m => m.pin && m.pin === _pinEntry);
+  if (match) { setTimeout(pinSubmit, 120); return; }
+  // Trigger wrong PIN if entry is longer than all member PINs
+  const maxLen = members.reduce((max, m) => Math.max(max, (m.pin||'').length), 0);
+  if (_pinEntry.length >= maxLen && maxLen > 0) {
+    setTimeout(pinSubmit, 120);
+  }
+}
+
+function pinClear() {
+  if (_pinEntry.length) {
+    _pinEntry = _pinEntry.slice(0, -1);
+    updatePinDots();
+    document.getElementById('pinWrong').textContent = '';
+  }
+}
+
+function pinReset() {
+  _pinEntry = '';
+  updatePinDots();
+  document.getElementById('pinWrong').textContent = '';
+}
+
+function pinSubmit() {
+  const members = CFG.members || [];
+  const pin = CFG.pinPad || {};
+  const match = members.find(m => m.pin && m.pin === _pinEntry);
+  if (match) {
+    _wrongAttempts = 0;
+    setCurrentMember(match);
+    // Show welcome screen
+    const welcomeMsg = (pin.welcomeMsg || 'Welcome back, {name}').replace('{name}', match.name || '');
+    const subMsg = match.role === 'commissioner'
+      ? (pin.commissionerMsg || 'Commissioner Access Granted')
+      : '';
+    document.getElementById('pinWelcomeEmoji').textContent = match.emoji || '👤';
+    document.getElementById('pinWelcomeHeadline').textContent = welcomeMsg;
+    document.getElementById('pinWelcomeSub').textContent = subMsg;
+    document.getElementById('pinBox').style.display = 'none';
+    document.getElementById('pinWelcome').style.display = '';
+    document.getElementById('pinImposter').style.display = 'none';
+    const duration = (pin.welcomeDuration || 2) * 1000;
+    setTimeout(() => {
+      closePinOverlay(true);
+      updateNavForMember();
+      buildNav();
+      if (_pinPendingPage) {
+        const pending = _pinPendingPage;
+        _pinPendingPage = null;
+        showPage(pending);
+      }
+    }, duration);
+  } else {
+    _wrongAttempts++;
+    const maxAttempts = pin.maxAttempts || 3;
+    if (pin.showImposter !== false && _wrongAttempts >= maxAttempts) {
+      showImposterScreen();
+    } else {
+      document.getElementById('pinWrong').textContent = pin.wrongMsg || 'Incorrect PIN. Try again.';
+      const box = document.querySelector('.pin-box');
+      box.classList.remove('shake');
+      void box.offsetWidth;
+      box.classList.add('shake');
+      _pinEntry = '';
+      updatePinDots();
+    }
+  }
+}
+
+function showImposterScreen() {
+  const pin = CFG.pinPad || {};
+  document.getElementById('pinImposterHeadline').textContent = pin.imposterHeadline || 'ACCESS DENIED';
+  document.getElementById('pinImposterSub').textContent = pin.imposterMsg || 'This attempt has been logged.';
+  document.getElementById('pinBox').style.display = 'none';
+  document.getElementById('pinWelcome').style.display = 'none';
+  document.getElementById('pinImposter').style.display = '';
+  // Countdown
+  const duration = pin.imposterDuration || 3;
+  let remaining = Math.ceil(duration);
+  const countEl = document.getElementById('pinImposterCountdown');
+  countEl.textContent = remaining;
+  const tick = setInterval(() => {
+    remaining--;
+    countEl.textContent = remaining > 0 ? remaining : '';
+    if (remaining <= 0) clearInterval(tick);
+  }, 1000);
+  setTimeout(() => {
+    closePinOverlay(false);
+    showPage('home');
+  }, duration * 1000);
+}
+
+function pinBack() {
+  const pin = CFG.pinPad || {};
+  if (pin.showImposter !== false) {
+    showImposterScreen();
+  } else {
+    closePinOverlay(false);
+    showPage('home');
+  }
+}
+
+function openPinOverlay(pendingPage) {
+  _pinPendingPage = pendingPage || null;
+  initPinOverlay();
+  document.getElementById('pinOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePinOverlay(success) {
+  const overlay = document.getElementById('pinOverlay');
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function updateNavForMember() {
+  const role = getMemberRole();
+  const lockEmoji = (CFG.pinPad || {}).lockEmoji || '🔒';
+  document.querySelectorAll('[data-page-key]').forEach(el => {
+    // Remove any existing lock icon
+    const existing = el.querySelector('.nav-lock-icon');
+    if (existing) existing.remove();
+    const key = el.dataset.pageKey;
+    const required = pageAccessLevel(key);
+    if (required === 'public') return;
+    if (!canAccessPage(key)) {
+      const lock = document.createElement('span');
+      lock.className = 'nav-lock-icon';
+      lock.textContent = ' ' + lockEmoji;
+      lock.style.cssText = 'font-size:11px;opacity:0.7;';
+      el.appendChild(lock);
+    }
+  });
+}
+
+function initAuth() {
+  if (_authInitialized) return;
+  _authInitialized = true;
+
+  const siteAccess = CFG.siteAccess || 'public';
+
+  // Keyboard support for PIN
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('pinOverlay').classList.contains('open')) return;
+    if (e.key >= '0' && e.key <= '9') pinPress(e.key);
+    else if (e.key === 'Backspace') pinClear();
+    else if (e.key === 'Enter') pinSubmit();
+    else if (e.key === 'Escape') {
+      // Only close if site isn't fully locked
+      if (siteAccess !== 'pin') closePinOverlay(false);
+    }
+  });
+
+  // Scroll trigger — show PIN after scrolling 200px
+  if (siteAccess === 'pin' && !getCurrentMember()) {
+    let _scrollTriggered = false;
+    const onScroll = () => {
+      if (_scrollTriggered) return;
+      if (window.scrollY > 200) {
+        _scrollTriggered = true;
+        window.removeEventListener('scroll', onScroll);
+        openPinOverlay(null);
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  updateNavForMember();
+}
+
+function signOut() {
+  clearCurrentMember();
+  updateNavForMember();
+  showPage('home');
+}
 
 function initReveal() {
   const obs = new IntersectionObserver((entries) => {
@@ -6118,6 +6565,7 @@ document.addEventListener('DOMContentLoaded', () => {
   _run(buildCustomPages,  'buildCustomPages');
   _run(initReveal,           'initReveal');
   _run(initProcessObserver,  'initProcessObserver');
+  _run(initAuth,             'initAuth');
 
   // Seed initial history state and navigate to hash if present
   try {
@@ -6158,6 +6606,50 @@ if (CFG.googleAnalyticsId) {
     </div>
     <div id="searchSuggestions" class="search-suggestions"></div>
     <div id="searchResults" class="search-results"></div>
+  </div>
+</div>
+
+<!-- PIN PAD OVERLAY -->
+<div id="pinOverlay" class="pin-overlay">
+  <div class="pin-box" id="pinBox">
+    <div class="pin-site-label" id="pinSiteLabel"></div>
+    <div class="pin-headline" id="pinHeadline"></div>
+    <div class="pin-dots" id="pinDots">
+      <span class="pin-dot" id="pd0"></span>
+      <span class="pin-dot" id="pd1"></span>
+      <span class="pin-dot" id="pd2"></span>
+      <span class="pin-dot" id="pd3"></span>
+    </div>
+    <div class="pin-wrong" id="pinWrong"></div>
+    <div class="pin-pad" id="pinPad">
+      <button class="pin-btn" onclick="pinPress('1')">1</button>
+      <button class="pin-btn" onclick="pinPress('2')">2</button>
+      <button class="pin-btn" onclick="pinPress('3')">3</button>
+      <button class="pin-btn" onclick="pinPress('4')">4</button>
+      <button class="pin-btn" onclick="pinPress('5')">5</button>
+      <button class="pin-btn" onclick="pinPress('6')">6</button>
+      <button class="pin-btn" onclick="pinPress('7')">7</button>
+      <button class="pin-btn" onclick="pinPress('8')">8</button>
+      <button class="pin-btn" onclick="pinPress('9')">9</button>
+      <button class="pin-btn pin-btn-clear" onclick="pinReset()">CLEAR</button>
+      <button class="pin-btn" onclick="pinPress('0')">0</button>
+      <button class="pin-btn pin-btn-back" onclick="pinClear()">⌫</button>
+    </div>
+    <div class="pin-back-wrap"><span class="pin-back-btn" id="pinBackBtn" onclick="pinBack()"></span></div>
+  </div>
+
+  <!-- Welcome screen (shown in-place after correct PIN) -->
+  <div class="pin-moment" id="pinWelcome" style="display:none;">
+    <div class="pin-moment-emoji" id="pinWelcomeEmoji"></div>
+    <div class="pin-moment-headline" id="pinWelcomeHeadline"></div>
+    <div class="pin-moment-sub" id="pinWelcomeSub"></div>
+  </div>
+
+  <!-- Imposter screen (shown after too many wrong attempts or back button) -->
+  <div class="pin-moment pin-moment-denied" id="pinImposter" style="display:none;">
+    <div class="pin-moment-headline" id="pinImposterHeadline"></div>
+    <div class="pin-moment-sub" id="pinImposterSub"></div>
+    <div class="pin-moment-countdown" id="pinImposterCountdown"></div>
   </div>
 </div>
 

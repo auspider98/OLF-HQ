@@ -785,6 +785,9 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
       <div class="sidebar-link" onclick="showSection('seo')" data-section="seo">
         <span class="sidebar-link-icon">🔍</span> SEO &amp; Meta
       </div>
+      <div class="sidebar-link" onclick="showSection('members')" data-section="members">
+        <span class="sidebar-link-icon">🔐</span> Members &amp; Access
+      </div>
       <div class="sidebar-link" onclick="showSection('export')" data-section="export">
         <span class="sidebar-link-icon">📤</span> Export
       </div>
@@ -1413,6 +1416,137 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
     </div>
 
     <!-- EXPORT -->
+    <!-- MEMBERS & ACCESS -->
+    <div class="admin-section" id="section-members">
+      <div class="section-badge">🔐 Members &amp; Access</div>
+      <div class="page-section-title">Members &amp; Access</div>
+      <div class="page-section-sub">Manage PIN-based access for your site and individual pages.</div>
+
+      <!-- Site Access -->
+      <div class="panel open">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="panel-title-icon">🌐</span> Site Access</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="field-group">
+            <label>Site Lock Mode</label>
+            <select id="f_siteAccess">
+              <option value="public">Public — anyone can browse</option>
+              <option value="pin">PIN Required — lock on nav/scroll</option>
+            </select>
+            <div class="field-hint">When set to PIN Required, the PIN overlay appears when a visitor opens the menu or scrolls down.</div>
+          </div>
+          <div class="field-group">
+            <label>Session Duration (days)</label>
+            <input type="number" id="f_sessionDays" min="1" max="365" value="7" style="max-width:100px;"/>
+            <div class="field-hint">How long to remember a logged-in member. Set to 0 for session only (clears when browser closes).</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PIN Pad Settings -->
+      <div class="panel open">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="panel-title-icon">🔢</span> PIN Pad Appearance</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="field-group">
+            <label>Headline</label>
+            <input type="text" id="f_pinHeadline" placeholder="Members Only"/>
+          </div>
+          <div class="field-group">
+            <label>Subtext <span style="font-weight:400;color:var(--muted);">(shown next to site name in small caps)</span></label>
+            <input type="text" id="f_pinSubtext" placeholder="Restricted Access"/>
+          </div>
+          <div class="field-group">
+            <label>Wrong PIN Message</label>
+            <input type="text" id="f_pinWrongMsg" placeholder="Incorrect PIN. Try again."/>
+          </div>
+          <div class="form-row-2" style="margin-bottom:8px;">
+            <div class="field-group" style="margin:0;"><label>Max Wrong Attempts</label>
+              <input type="number" id="f_pinMaxAttempts" min="1" max="10" value="3" style="max-width:80px;"/>
+              <div class="field-hint">Before imposter screen shows.</div>
+            </div>
+            <div class="field-group" style="margin:0;"><label>Back Button Label</label>
+              <input type="text" id="f_pinBackLabel" placeholder="← Back to Home"/>
+            </div>
+          </div>
+          <div class="form-row-2" style="margin-bottom:8px;">
+            <div class="field-group" style="margin:0;"><label>Theme</label>
+              <select id="f_pinTheme">
+                <option value="dark">Dark</option>
+                <option value="gold">Gold</option>
+                <option value="light">Light</option>
+              </select>
+            </div>
+            <div class="field-group" style="margin:0;"><label>Nav Lock Icon</label>
+              <input type="text" id="f_pinLockEmoji" placeholder="🔒" style="max-width:80px;"/>
+              <div class="field-hint">Shown next to locked page names in nav.</div>
+            </div>
+          </div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin:16px 0 10px;">Welcome Screen</div>
+          <div class="form-row-2" style="margin-bottom:8px;">
+            <div class="field-group" style="margin:0;"><label>Welcome Message</label>
+              <input type="text" id="f_pinWelcomeMsg" placeholder="Welcome back, {name}"/>
+              <div class="field-hint">Use {name} for member name.</div>
+            </div>
+            <div class="field-group" style="margin:0;"><label>Commissioner Message</label>
+              <input type="text" id="f_pinCommissionerMsg" placeholder="Commissioner Access Granted"/>
+            </div>
+          </div>
+          <div class="field-group">
+            <label>Welcome Duration (seconds)</label>
+            <input type="number" id="f_pinWelcomeDuration" min="0.5" max="5" step="0.5" value="2" style="max-width:80px;"/>
+          </div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin:16px 0 10px;">Imposter Screen</div>
+          <div class="field-group">
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+              <input type="checkbox" id="f_pinShowImposter" checked/> Show imposter screen on failed access
+            </label>
+          </div>
+          <div class="form-row-2" style="margin-bottom:8px;">
+            <div class="field-group" style="margin:0;"><label>Imposter Headline</label>
+              <input type="text" id="f_pinImposterHeadline" placeholder="ACCESS DENIED"/>
+            </div>
+            <div class="field-group" style="margin:0;"><label>Imposter Message</label>
+              <input type="text" id="f_pinImposterMsg" placeholder="This attempt has been logged."/>
+            </div>
+          </div>
+          <div class="field-group">
+            <label>Imposter Duration (seconds)</label>
+            <input type="number" id="f_pinImposterDuration" min="1" max="10" step="0.5" value="3" style="max-width:80px;"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- Members List -->
+      <div class="panel open">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="panel-title-icon">👥</span> Members</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="field-hint" style="margin-bottom:12px;">Each member gets a unique PIN. The site identifies them by their PIN when they log in.</div>
+          <div id="members-list"></div>
+          <button class="btn-add" onclick="addMember()">+ Add Member</button>
+        </div>
+      </div>
+
+      <!-- Page Access -->
+      <div class="panel open">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="panel-title-icon">📄</span> Page Access</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="field-hint" style="margin-bottom:12px;">Set access level for each page. Locked pages show a 🔒 in the nav for guests.</div>
+          <div id="page-access-list"></div>
+        </div>
+      </div>
+    </div>
+
     <div class="admin-section" id="section-export">
       <div class="section-badge">📤 Export</div>
       <div class="page-section-title">Export Configuration</div>
@@ -1693,6 +1827,30 @@ function loadForm() {
   const rppEl = document.getElementById('f_searchResultsPerPage');
   if (rppEl) rppEl.value = srch.resultsPerPage || 5;
   buildSearchExcludedPages();
+  // Members & Access settings
+  const acc = DATA.siteAccess || 'public';
+  const saEl = document.getElementById('f_siteAccess');
+  if (saEl) saEl.value = acc;
+  setVal('f_sessionDays',  DATA.sessionDays  || 7);
+  const pin = DATA.pinPad || {};
+  setVal('f_pinHeadline',  pin.headline  || '');
+  setVal('f_pinSubtext',   pin.subtext   || '');
+  setVal('f_pinWrongMsg',  pin.wrongMsg  || '');
+  const ptEl = document.getElementById('f_pinTheme');
+  if (ptEl) ptEl.value = pin.theme || 'dark';
+  setVal('f_pinLockEmoji',        pin.lockEmoji        || '🔒');
+  setVal('f_pinBackLabel',        pin.backLabel        || '← Back to Home');
+  setVal('f_pinMaxAttempts',      pin.maxAttempts      || 3);
+  setVal('f_pinWelcomeMsg',       pin.welcomeMsg       || 'Welcome back, {name}');
+  setVal('f_pinCommissionerMsg',  pin.commissionerMsg  || 'Commissioner Access Granted');
+  setVal('f_pinWelcomeDuration',  pin.welcomeDuration  || 2);
+  const siEl = document.getElementById('f_pinShowImposter');
+  if (siEl) siEl.checked = pin.showImposter !== false;
+  setVal('f_pinImposterHeadline', pin.imposterHeadline || 'ACCESS DENIED');
+  setVal('f_pinImposterMsg',      pin.imposterMsg      || 'This attempt has been logged.');
+  setVal('f_pinImposterDuration', pin.imposterDuration || 3);
+  buildMembersList();
+  buildPageAccessList();
   if (!Array.isArray(DATA.contactForm)) DATA.contactForm = [];
   buildContactFormFields();
   const pt = DATA.pageTitles||{};
@@ -2097,6 +2255,27 @@ function collectData() {
     resultsPerPage:    parseInt(document.getElementById('f_searchResultsPerPage')?.value || '5', 10),
     excludedPages:     collectSearchExcludedPages(),
   };
+  // Members & Access settings
+  DATA.siteAccess  = document.getElementById('f_siteAccess')?.value || 'public';
+  DATA.sessionDays = parseInt(getVal('f_sessionDays') || '7', 10);
+  DATA.pinPad = {
+    headline:          getVal('f_pinHeadline')         || 'Members Only',
+    subtext:           getVal('f_pinSubtext')           || 'Restricted Access',
+    wrongMsg:          getVal('f_pinWrongMsg')          || 'Incorrect PIN. Try again.',
+    theme:             document.getElementById('f_pinTheme')?.value || 'dark',
+    lockEmoji:         getVal('f_pinLockEmoji')         || '🔒',
+    backLabel:         getVal('f_pinBackLabel')         || '← Back to Home',
+    maxAttempts:       parseInt(getVal('f_pinMaxAttempts') || '3', 10),
+    welcomeMsg:        getVal('f_pinWelcomeMsg')        || 'Welcome back, {name}',
+    commissionerMsg:   getVal('f_pinCommissionerMsg')   || 'Commissioner Access Granted',
+    welcomeDuration:   parseFloat(getVal('f_pinWelcomeDuration') || '2'),
+    showImposter:      document.getElementById('f_pinShowImposter')?.checked !== false,
+    imposterHeadline:  getVal('f_pinImposterHeadline')  || 'ACCESS DENIED',
+    imposterMsg:       getVal('f_pinImposterMsg')       || 'This attempt has been logged.',
+    imposterDuration:  parseFloat(getVal('f_pinImposterDuration') || '3'),
+  };
+  DATA.members    = collectMembers();
+  DATA.pageAccess = collectPageAccess();
   collectContactForm();
   DATA.pageTitles = {
     home:getVal('f_ptHome'), about:getVal('f_ptAbout'),
@@ -5887,6 +6066,109 @@ function ensureAnchorIds(sections) {
     used.add(candidate);
   });
   return sections;
+}
+
+function buildMembersList() {
+  const container = document.getElementById('members-list');
+  if (!container) return;
+  const members = DATA.members || [];
+  if (!members.length) { container.innerHTML = '<div style="color:var(--muted);font-size:13px;margin-bottom:12px;">No members yet.</div>'; return; }
+  container.innerHTML = members.map((m, i) => {
+    const label = m.name && m.name.trim() ? escHtml(m.name.trim()) : 'Member ' + (i + 1);
+    return `<div style="margin-bottom:8px;border:1px solid #e8e3d8;border-radius:6px;overflow:hidden;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:rgba(0,0,0,0.02);cursor:pointer;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'':'none';this.querySelector('.mem-chevron').textContent=this.nextElementSibling.style.display==='none'?'▸':'▾';">
+        <span style="font-size:13px;font-weight:600;color:var(--navy);">${label}</span>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <button class="btn-remove" onclick="event.stopPropagation();removeMember(${i})">×</button>
+          <span class="mem-chevron" style="font-size:11px;color:var(--muted);">▾</span>
+        </div>
+      </div>
+      <div style="padding:12px;">
+        <div class="form-row-2" style="margin-bottom:8px;">
+          <div class="field-group" style="margin:0;"><label>Name</label>
+            <input type="text" data-member="${i}" data-field="name" value="${escHtml(m.name||'')}" placeholder="Member name" oninput="updateMemberLabel(this,${i})"/></div>
+          <div class="field-group" style="margin:0;"><label>PIN</label>
+            <input type="text" data-member="${i}" data-field="pin" value="${escHtml(m.pin||'')}" placeholder="1234" maxlength="8" style="font-family:monospace;letter-spacing:0.2em;"/></div>
+        </div>
+        <div class="form-row-2">
+          <div class="field-group" style="margin:0;"><label>Emoji / Avatar</label>
+            <input type="text" data-member="${i}" data-field="emoji" value="${escHtml(m.emoji||'')}" placeholder="🏆" style="max-width:80px;"/></div>
+          <div class="field-group" style="margin:0;"><label>Role</label>
+            <select data-member="${i}" data-field="role">
+              <option value="member" ${(m.role||'member')==='member'?'selected':''}>Member</option>
+              <option value="commissioner" ${m.role==='commissioner'?'selected':''}>Commissioner</option>
+            </select></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updateMemberLabel(input, i) {
+  const header = input.closest('[style*="border:1px"]').querySelector('span[style*="font-weight:600"]');
+  if (header) header.textContent = input.value.trim() || 'Member ' + (i + 1);
+}
+
+function addMember() {
+  collectData();
+  if (!Array.isArray(DATA.members)) DATA.members = [];
+  DATA.members.push({ name: '', pin: '', emoji: '', role: 'member' });
+  buildMembersList();
+  autosave();
+}
+
+function removeMember(i) {
+  collectData();
+  DATA.members.splice(i, 1);
+  buildMembersList();
+  autosave();
+}
+
+function collectMembers() {
+  const members = [];
+  document.querySelectorAll('#members-list [data-member]').forEach(el => {
+    // Only process name fields to avoid duplicates — one entry per member
+    if (el.dataset.field !== 'name') return;
+    const i = el.dataset.member;
+    const g = (field) => document.querySelector(`#members-list [data-member="${i}"][data-field="${field}"]`)?.value?.trim() || '';
+    members.push({
+      name:  g('name'),
+      pin:   g('pin'),
+      emoji: g('emoji'),
+      role:  document.querySelector(`#members-list [data-member="${i}"][data-field="role"]`)?.value || 'member',
+    });
+  });
+  return members;
+}
+
+function buildPageAccessList() {
+  const container = document.getElementById('page-access-list');
+  if (!container) return;
+  const access = DATA.pageAccess || {};
+  const pages = [
+    { key: 'home',  label: '🏠 Home Page' },
+    { key: 'about', label: '👥 About Us' },
+    ...(DATA.customPages||[]).filter(p=>p.enabled!==false).map((p,i)=>({
+      key: 'cp-' + i, label: (p.emoji||'📄') + ' ' + (p.navLabel||p.slug||'Page '+i)
+    }))
+  ];
+  container.innerHTML = pages.map(p => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.06);">
+      <span style="font-size:13px;">${p.label}</span>
+      <select data-page-access="${p.key}" style="width:150px;">
+        <option value="public"      ${(access[p.key]||'public')==='public'      ?'selected':''}>🌐 Public</option>
+        <option value="members"     ${access[p.key]==='members'                 ?'selected':''}>🔐 Members</option>
+        <option value="commissioner"${access[p.key]==='commissioner'            ?'selected':''}>👑 Commissioner</option>
+      </select>
+    </div>`).join('');
+}
+
+function collectPageAccess() {
+  const access = {};
+  document.querySelectorAll('[data-page-access]').forEach(el => {
+    access[el.dataset.pageAccess] = el.value;
+  });
+  return access;
 }
 
 function getCopyToOptions(currentPi) {

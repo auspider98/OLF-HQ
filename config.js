@@ -4001,7 +4001,7 @@ const SITE_CONFIG = {
     }
   ],
   "footerBio": "Where Legends Are Made & Legacies Are Settled",
-  "_savedAt": 1777044316194,
+  "_savedAt": 1777065133740,
   "animateStats": true,
   "contactSubmitLabel": "Request Free Abuse",
   "contactSuccessMsg": "Ugh...you're so unworthy.",
@@ -4015,5 +4015,125 @@ const SITE_CONFIG = {
     "noResultsSubtext": "The Commissioner is removing your Search Permissions",
     "resultsPerPage": 5,
     "excludedPages": []
+  },
+  "siteAccess": "public",
+  "sessionDays": 0,
+  "pinPad": {
+    "headline": "Membership Pin Code",
+    "subtext": "Exclusive Access",
+    "wrongMsg": "LAST 4 DIGITS OF YOUR CELL",
+    "theme": "dark",
+    "lockEmoji": "🔒",
+    "backLabel": "← To Freedom",
+    "maxAttempts": 3,
+    "welcomeMsg": "Access Granted Welcome back, {name}",
+    "commissionerMsg": "Commissioner Access Granted",
+    "welcomeDuration": 3,
+    "showImposter": true,
+    "imposterHeadline": "ACCESS DENIED",
+    "imposterMsg": "YOUR IP ADDRESS HAS BEEN FLAGGED.",
+    "imposterDuration": 5
+  },
+  "members": [
+    {
+      "name": "spider",
+      "pin": "3590",
+      "emoji": "🕷",
+      "role": "commissioner"
+    },
+    {
+      "name": "Browns",
+      "pin": "3589",
+      "emoji": "👱🏻‍♀️",
+      "role": "member"
+    },
+    {
+      "name": "Sissy",
+      "pin": "7290",
+      "emoji": "👱🏻‍♀️",
+      "role": "member"
+    },
+    {
+      "name": "EE",
+      "pin": "4310",
+      "emoji": "🏹",
+      "role": "member"
+    },
+    {
+      "name": "Ozzy",
+      "pin": "7743",
+      "emoji": "🚂",
+      "role": "member"
+    },
+    {
+      "name": "Colonel",
+      "pin": "3741",
+      "emoji": "=★=",
+      "role": "member"
+    },
+    {
+      "name": "Gangan",
+      "pin": "6755",
+      "emoji": "👩🏼‍🦳",
+      "role": "member"
+    },
+    {
+      "name": "BR",
+      "pin": "7876",
+      "emoji": "👽",
+      "role": "member"
+    },
+    {
+      "name": "K-Dawg",
+      "pin": "8744",
+      "emoji": "👩🏻",
+      "role": "member"
+    },
+    {
+      "name": "Suki Monster",
+      "pin": "6899",
+      "emoji": "👩🏻",
+      "role": "member"
+    },
+    {
+      "name": "Bear",
+      "pin": "5147",
+      "emoji": "🧑🏻",
+      "role": "member"
+    },
+    {
+      "name": "Ladybug",
+      "pin": "9271",
+      "emoji": "🐞",
+      "role": "member"
+    },
+    {
+      "name": "Belle",
+      "pin": "9779",
+      "emoji": "👱🏻‍♀️",
+      "role": "member"
+    },
+    {
+      "name": "Aubie",
+      "pin": "8032",
+      "emoji": "👱🏻‍♀️",
+      "role": "member"
+    },
+    {
+      "name": "Chrish",
+      "pin": "3424",
+      "emoji": "🧑🏻",
+      "role": "member"
+    }
+  ],
+  "pageAccess": {
+    "home": "public",
+    "about": "public",
+    "cp-0": "public",
+    "cp-1": "public",
+    "cp-2": "public",
+    "cp-3": "members",
+    "cp-4": "public",
+    "cp-5": "public"
   }
 };
