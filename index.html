@@ -4326,8 +4326,16 @@ function buildNav() {
     parts.push(divider2);
     const badge = document.createElement('span');
     badge.className = 'nav-link';
-    badge.style.cssText = 'font-size:13px;opacity:0.7;cursor:default;';
-    badge.textContent = (m.emoji || '\u{1F464}') + ' ' + m.name;
+    badge.style.cssText = 'font-size:13px;opacity:0.7;cursor:default;display:flex;align-items:center;gap:8px;';
+    if (m.avatarPath) {
+      const img = document.createElement('img');
+      img.src = m.avatarPath;
+      img.style.cssText = 'width:24px;height:24px;border-radius:50%;object-fit:cover;';
+      badge.appendChild(img);
+    } else {
+      badge.appendChild(document.createTextNode(m.emoji || '👤'));
+    }
+    badge.appendChild(document.createTextNode(' ' + m.name));
     parts.push(badge);
     const signOutBtn = document.createElement('span');
     signOutBtn.className = 'nav-link';
@@ -5106,7 +5114,16 @@ function pinSubmit() {
     const subMsg = match.role === 'commissioner'
       ? (pin.commissionerMsg || 'Commissioner Access Granted')
       : '';
-    document.getElementById('pinWelcomeEmoji').textContent = match.emoji || '👤';
+    const emojiEl = document.getElementById('pinWelcomeEmoji');
+    if (match.avatarPath) {
+      emojiEl.style.cssText = 'font-size:0;margin-bottom:20px;';
+      emojiEl.innerHTML = `<img src="${match.avatarPath}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;display:block;"/>`;
+    } else if (match.emoji) {
+      emojiEl.style.cssText = '';
+      emojiEl.innerHTML = match.emoji;
+    } else {
+      emojiEl.style.display = 'none';
+    }
     document.getElementById('pinWelcomeHeadline').textContent = welcomeMsg;
     document.getElementById('pinWelcomeSub').textContent = subMsg;
     document.getElementById('pinBox').style.display = 'none';
@@ -5243,7 +5260,11 @@ function initAuth() {
 
 function signOut() {
   clearCurrentMember();
+  buildNav();
   updateNavForMember();
+  // Close nav drawer if open
+  const nav = document.getElementById('mobile-nav');
+  if (nav && nav.classList.contains('open')) toggleMobileNav();
   showPage('home');
 }
 

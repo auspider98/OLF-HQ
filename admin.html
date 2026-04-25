@@ -6090,7 +6090,7 @@ function buildMembersList() {
           <div class="field-group" style="margin:0;"><label>PIN</label>
             <input type="text" data-member="${i}" data-field="pin" value="${escHtml(m.pin||'')}" placeholder="1234" maxlength="8" style="font-family:monospace;letter-spacing:0.2em;"/></div>
         </div>
-        <div class="form-row-2">
+        <div class="form-row-2" style="margin-bottom:8px;">
           <div class="field-group" style="margin:0;"><label>Emoji / Avatar</label>
             <input type="text" data-member="${i}" data-field="emoji" value="${escHtml(m.emoji||'')}" placeholder="🏆" style="max-width:80px;"/></div>
           <div class="field-group" style="margin:0;"><label>Role</label>
@@ -6098,6 +6098,10 @@ function buildMembersList() {
               <option value="member" ${(m.role||'member')==='member'?'selected':''}>Member</option>
               <option value="commissioner" ${m.role==='commissioner'?'selected':''}>Commissioner</option>
             </select></div>
+        </div>
+        <div class="field-group" style="margin-bottom:4px;">
+          <label>Profile Image Path <span style="font-weight:400;color:var(--muted);">(optional — overrides emoji)</span></label>
+          <input type="text" data-member="${i}" data-field="avatarPath" value="${escHtml(m.avatarPath||'')}" placeholder="images/spider.jpg"/>
         </div>
       </div>
     </div>`;
@@ -6132,10 +6136,11 @@ function collectMembers() {
     const i = el.dataset.member;
     const g = (field) => document.querySelector(`#members-list [data-member="${i}"][data-field="${field}"]`)?.value?.trim() || '';
     members.push({
-      name:  g('name'),
-      pin:   g('pin'),
-      emoji: g('emoji'),
-      role:  document.querySelector(`#members-list [data-member="${i}"][data-field="role"]`)?.value || 'member',
+      name:       g('name'),
+      pin:        g('pin'),
+      emoji:      g('emoji'),
+      avatarPath: g('avatarPath'),
+      role:       document.querySelector(`#members-list [data-member="${i}"][data-field="role"]`)?.value || 'member',
     });
   });
   return members;

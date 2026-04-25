@@ -4001,7 +4001,7 @@ const SITE_CONFIG = {
     }
   ],
   "footerBio": "Where Legends Are Made & Legacies Are Settled",
-  "_savedAt": 1777065133740,
+  "_savedAt": 1777077107534,
   "animateStats": true,
   "contactSubmitLabel": "Request Free Abuse",
   "contactSuccessMsg": "Ugh...you're so unworthy.",
@@ -4017,7 +4017,7 @@ const SITE_CONFIG = {
     "excludedPages": []
   },
   "siteAccess": "public",
-  "sessionDays": 0,
+  "sessionDays": 7,
   "pinPad": {
     "headline": "Membership Pin Code",
     "subtext": "Exclusive Access",
@@ -4039,90 +4039,105 @@ const SITE_CONFIG = {
       "name": "spider",
       "pin": "3590",
       "emoji": "🕷",
+      "avatarPath": "logos/spiders.png",
       "role": "commissioner"
     },
     {
       "name": "Browns",
       "pin": "3589",
       "emoji": "👱🏻‍♀️",
+      "avatarPath": "https://auspider98.github.io/OFL/assets/mugs/browns.png",
       "role": "member"
     },
     {
       "name": "Sissy",
       "pin": "7290",
       "emoji": "👱🏻‍♀️",
+      "avatarPath": "https://auspider98.github.io/OFL/assets/mugs/sissy.png",
       "role": "member"
     },
     {
       "name": "EE",
       "pin": "4310",
       "emoji": "🏹",
+      "avatarPath": "logos/boknowsbest.png",
       "role": "member"
     },
     {
       "name": "Ozzy",
       "pin": "7743",
       "emoji": "🚂",
+      "avatarPath": "logos/ozzies.png",
       "role": "member"
     },
     {
       "name": "Colonel",
       "pin": "3741",
       "emoji": "=★=",
+      "avatarPath": "logos/flyingbubbas.png",
       "role": "member"
     },
     {
       "name": "Gangan",
       "pin": "6755",
       "emoji": "👩🏼‍🦳",
+      "avatarPath": "https://auspider98.github.io/OFL/assets/mugs/gangan.png",
       "role": "member"
     },
     {
       "name": "BR",
       "pin": "7876",
       "emoji": "👽",
+      "avatarPath": "logos/ATLiens.png",
       "role": "member"
     },
     {
       "name": "K-Dawg",
       "pin": "8744",
       "emoji": "👩🏻",
+      "avatarPath": "https://auspider98.github.io/OFL/assets/mugs/kdwag.png",
       "role": "member"
     },
     {
       "name": "Suki Monster",
       "pin": "6899",
       "emoji": "👩🏻",
+      "avatarPath": "https://auspider98.github.io/OFL/assets/mugs/emery.png",
       "role": "member"
     },
     {
       "name": "Bear",
       "pin": "5147",
       "emoji": "🧑🏻",
+      "avatarPath": "https://auspider98.github.io/OFL/assets/mugs/bear.png",
       "role": "member"
     },
     {
       "name": "Ladybug",
       "pin": "9271",
       "emoji": "🐞",
+      "avatarPath": "logos/mollydefenders.png",
       "role": "member"
     },
     {
       "name": "Belle",
       "pin": "9779",
       "emoji": "👱🏻‍♀️",
+      "avatarPath": "https://auspider98.github.io/OFL/assets/mugs/belle.png",
       "role": "member"
     },
     {
       "name": "Aubie",
       "pin": "8032",
       "emoji": "👱🏻‍♀️",
+      "avatarPath": "https://auspider98.github.io/OFL/assets/mugs/aubie.png",
       "role": "member"
     },
     {
       "name": "Chrish",
       "pin": "3424",
       "emoji": "🧑🏻",
+      "avatarPath": "https://auspider98.github.io/OFL/assets/mugs/chrish.png",
       "role": "member"
     }
   ],
