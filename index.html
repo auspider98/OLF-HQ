@@ -542,6 +542,61 @@ nav.main-nav { display: none !important; }
 .mobile-nav .nav-link .nav-arrow { font-size: 11px; opacity: 0.35; transition: opacity 0.2s, transform 0.2s; }
 .mobile-nav .nav-link:hover .nav-arrow { opacity: 1; transform: translateX(4px); }
 
+/* Sub-page nav group */
+.nav-group { border-bottom: 1px solid rgba(255,255,255,0.05); }
+.nav-group-toggle {
+  display: flex; align-items: center;
+  opacity: 0; transform: translateX(16px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+.mobile-nav.open .nav-group-toggle { opacity: 1; transform: translateX(0); }
+.nav-group-toggle.active .nav-group-label { color: #fff; }
+.nav-group-label {
+  flex: 1;
+  display: flex; align-items: center;
+  font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  padding: 15px 8px 15px 28px;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, padding-left 0.2s;
+}
+.nav-group-label:hover { color: #fff; background: rgba(255,255,255,0.04); padding-left: 36px; }
+.nav-group-chevron-btn {
+  flex-shrink: 0;
+  width: 44px; height: 100%;
+  min-height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: rgba(255,255,255,0.35);
+  font-size: 13px;
+  transition: color 0.2s, background 0.2s;
+  border-left: 1px solid rgba(255,255,255,0.05);
+}
+.nav-group-chevron-btn:hover { color: #fff; background: rgba(255,255,255,0.06); }
+.nav-group-chevron {
+  transition: transform 0.25s;
+  display: inline-block;
+}
+.nav-group.open .nav-group-chevron { transform: rotate(90deg); }
+.nav-group-children {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.4,0,0.2,1);
+  background: rgba(0,0,0,0.15);
+}
+.nav-group.open .nav-group-children { max-height: 400px; }
+.nav-child-link {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  padding: 12px 28px 12px 40px;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, padding-left 0.2s;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.nav-child-link:last-child { border-bottom: none; }
+.nav-child-link:hover { color: #fff; background: rgba(255,255,255,0.04); padding-left: 48px; }
+.nav-child-link.active { color: var(--gold); }
+
 .mobile-nav-divider { display: none; }
 
 /* CTA button at bottom */
@@ -3194,13 +3249,26 @@ footer {
 }
 
 .cps-tier-ribbon {
-  position: absolute; top: 16px; right: -28px;
-  background: var(--gold); color: var(--navy);
-  font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-  padding: 5px 36px; transform: rotate(45deg); white-space: nowrap; z-index: 2;
+  position: absolute;
+  top: 0; right: 0;
+  width: 120px; height: 120px;
+  overflow: hidden;
+  z-index: 2;
+  pointer-events: none;
 }
-.cps-tier-card--dark .cps-tier-ribbon { background: var(--gold-light); }
-.cps-tier-card--gold .cps-tier-ribbon { background: var(--navy); color: var(--gold); }
+.cps-tier-ribbon::before {
+  content: attr(data-label);
+  position: absolute;
+  top: 22px; right: -30px;
+  width: 130px;
+  background: var(--gold); color: var(--navy);
+  font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 5px 0; text-align: center; line-height: 1;
+  transform: rotate(45deg);
+  white-space: nowrap; overflow: hidden;
+}
+.cps-tier-card--dark .cps-tier-ribbon::before { background: var(--gold-light); }
+.cps-tier-card--gold .cps-tier-ribbon::before { background: var(--navy); color: var(--gold); }
 
 .cps-tier-img { width: 100%; display: block; object-fit: cover; }
 .cps-tier-img--sm { height: 120px; }
@@ -3210,8 +3278,8 @@ footer {
 .cps-tier-body { flex: 1; display: flex; flex-direction: column; padding: clamp(24px, 4vw, 36px); }
 .cps-tier-icon { font-size: 36px; margin-bottom: 16px; line-height: 1; }
 .cps-tier-name {
-  font-family: var(--font-display); font-size: 11px; font-weight: 600;
-  letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px;
+  font-family: var(--font-display); font-size: 14px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 8px;
 }
 .cps-tier-card--dark .cps-tier-name { color: var(--gold-light); }
 .cps-tier-card--gold .cps-tier-name { color: var(--navy); opacity: 0.7; }
@@ -3264,6 +3332,208 @@ footer {
 .cps-tier-card--gold .btn-primary:hover { background: var(--navy-light); }
 /* Tier card hover lift */
 .cps-tier-card:not(.cps-tier-card--featured):hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(15,35,64,0.12); }
+
+/* ── FLIP CARDS ─────────────────────────────────────────────── */
+.cps-flip-grid {
+  display: grid;
+  gap: var(--gutter);
+  margin: 48px auto 0;
+  align-items: stretch;
+  max-width: 880px;
+}
+@media (max-width: 560px) {
+  .cps-flip-grid { padding: 0 16px; }
+}
+.cps-flip-grid[data-cols="1"] { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
+.cps-flip-grid[data-cols="2"] { grid-template-columns: repeat(2, 1fr); }
+.cps-flip-grid[data-cols="3"] { grid-template-columns: repeat(3, 1fr); }
+.cps-flip-grid[data-cols="4"] { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1024px) { .cps-flip-grid[data-cols="4"] { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px) {
+  .cps-flip-grid[data-cols="3"],
+  .cps-flip-grid[data-cols="4"] { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .cps-flip-grid[data-cols="2"],
+  .cps-flip-grid[data-cols="3"],
+  .cps-flip-grid[data-cols="4"] { grid-template-columns: 1fr; }
+  .cps-flip-grid[data-cols="1"] { max-width: 100%; }
+}
+
+.cps-flip-scene {
+  perspective: 1000px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+.cps-flip-scene.visible { opacity: 1; transform: translateY(0); }
+.cps-flip-scene.visible:not(.flipped) .cps-flip-front { box-shadow: 0 4px 16px rgba(15,35,64,0.08); }
+.cps-flip-scene.visible:not(.flipped):hover .cps-flip-front { box-shadow: 0 16px 48px rgba(15,35,64,0.14); }
+
+/* Inner wraps front (flow) and positions back absolutely behind it */
+.cps-flip-inner {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+.cps-flip-scene.flipped .cps-flip-inner { transform: rotateY(180deg); }
+
+/* Front: normal flow so card height = image + body content */
+.cps-flip-front {
+  position: relative;
+  width: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Back: absolute, matches front height via inset:0, rotated */
+.cps-flip-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 6px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  transform: rotateY(180deg);
+  background: var(--navy);
+  color: #fff;
+  padding: clamp(20px, 4vw, 32px);
+}
+
+/* Card style variants — front */
+.cps-flip-front--light { background: var(--warm-white); }
+.cps-flip-front--alt   { border: 1px solid #ddd8cc; background: var(--cream); }
+.cps-flip-front--dark  { background: var(--navy); }
+.cps-flip-front--gold  { background: var(--gold); }
+
+/* Featured treatment — border-top on front face */
+.cps-flip-scene--featured .cps-flip-front { border-top: 3px solid var(--gold); box-shadow: 0 8px 32px rgba(201,168,76,0.2); }
+.cps-flip-scene--featured .cps-flip-front--dark { border-top-color: var(--gold-light); }
+.cps-flip-scene--featured .cps-flip-front--gold { border-top-color: var(--navy); }
+
+/* Featured pulse + shimmer */
+.cps-flip-scene--featured.cps-flip-pulse .cps-flip-front { animation: tierPulse 2.8s ease-in-out infinite; }
+.cps-flip-scene--featured .cps-flip-front::after {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 45%; height: 100%;
+  background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+  transform: translateX(-130%) skewX(-20deg);
+  animation: tierShimmer 3.5s ease-in-out infinite;
+  animation-delay: 1s;
+  pointer-events: none; z-index: 2;
+}
+
+/* Flip hint */
+.cps-flip-hint {
+  position: absolute; bottom: 10px; right: 12px;
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  opacity: 0.45; pointer-events: none; z-index: 2;
+  display: flex; align-items: center; gap: 4px;
+}
+.cps-flip-scene.flipped .cps-flip-hint { display: none; }
+.cps-flip-front--light .cps-flip-hint,
+.cps-flip-front--alt   .cps-flip-hint { color: var(--text-muted); }
+.cps-flip-front--dark  .cps-flip-hint,
+.cps-flip-front--gold  .cps-flip-hint { color: rgba(255,255,255,0.6); }
+
+/* Front layout */
+.cps-flip-media { width: 100%; display: block; object-fit: cover; flex-shrink: 0; }
+.cps-flip-media--sm { height: 160px; }
+.cps-flip-media--md { height: 220px; }
+.cps-flip-media--lg { height: 300px; }
+.cps-flip-media--sq { width: 100%; height: auto; aspect-ratio: 1/1; }
+.cps-flip-body { flex: 1; display: flex; flex-direction: column; padding: clamp(24px, 4vw, 36px); }
+.cps-flip-icon { font-size: 36px; margin-bottom: 16px; line-height: 1; text-align: center; }
+.cps-flip-name {
+  font-family: var(--font-display); font-size: 14px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 8px;
+}
+.cps-flip-front--dark .cps-flip-name { color: var(--gold-light); }
+.cps-flip-front--gold .cps-flip-name { color: var(--navy); opacity: 0.7; }
+.cps-flip-tagline { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5; }
+.cps-flip-front--dark .cps-flip-tagline { color: rgba(255,255,255,0.55); }
+.cps-flip-front--gold .cps-flip-tagline { color: rgba(15,35,64,0.65); }
+.cps-flip-price-wrap { display: flex; align-items: baseline; gap: 4px; margin-bottom: 4px; }
+.cps-flip-price {
+  font-family: var(--font-display); font-size: clamp(32px, 5vw, 48px);
+  font-weight: 600; color: var(--text-head); line-height: 1;
+}
+.cps-flip-front--dark .cps-flip-price { color: #fff; }
+.cps-flip-front--gold .cps-flip-price { color: var(--navy); }
+.cps-flip-period { font-size: 13px; color: var(--text-muted); }
+.cps-flip-front--dark .cps-flip-period { color: rgba(255,255,255,0.5); }
+.cps-flip-front--gold .cps-flip-period { color: rgba(15,35,64,0.6); }
+/* Corner ribbon — fixed width strip centered precisely over the top-right corner */
+.cps-flip-ribbon {
+  position: absolute;
+  top: 0; right: 0;
+  width: 120px; height: 120px;
+  overflow: hidden;
+  z-index: 2;
+  pointer-events: none;
+}
+.cps-flip-ribbon::before {
+  content: attr(data-label);
+  position: absolute;
+  top: 22px; right: -30px;
+  width: 130px;
+  background: var(--gold); color: var(--navy);
+  font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 5px 0; text-align: center; line-height: 1;
+  transform: rotate(45deg);
+  white-space: nowrap; overflow: hidden;
+}
+.cps-flip-front--dark .cps-flip-ribbon::before { background: var(--gold-light); }
+.cps-flip-front--gold .cps-flip-ribbon::before { background: var(--navy); color: var(--gold); }
+
+/* Back face content */
+.cps-flip-back-name {
+  font-family: var(--font-display); font-size: 16px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold-light); text-align: center;
+  margin-bottom: 14px; padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.cps-flip-details {
+  font-size: 13px; line-height: 1.65; color: rgba(255,255,255,0.7);
+  margin-bottom: 16px; white-space: pre-line;
+}
+.cps-flip-features { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; flex: 1; }
+.cps-flip-feature {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; line-height: 1.5; color: rgba(255,255,255,0.75);
+}
+.cps-flip-feature--excluded { opacity: 0.35; }
+.cps-flip-feature-icon {
+  flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; margin-top: 1px;
+}
+.cps-flip-feature-icon--yes     { background: rgba(45,200,130,0.15); color: #2dc882; }
+.cps-flip-feature-icon--no      { background: rgba(255,80,80,0.12);  color: #ff6b6b; }
+.cps-flip-feature-icon--partial { background: rgba(201,168,76,0.2);  color: var(--gold-light); }
+.cps-flip-group-header {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.08); margin-top: 4px;
+}
+.cps-flip-group-header:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+.cps-flip-cta { margin-top: auto; padding-top: 16px; }
+.cps-flip-cta button { width: 100%; }
+.cps-flip-note {
+  font-size: 11px; color: rgba(255,255,255,0.3);
+  text-align: center; margin-top: 10px; line-height: 1.6;
+}
+
 </style>
 </head>
 <body>
@@ -4272,12 +4542,10 @@ function buildFooter() {
    ============================================= */
 function buildNav() {
   const pt = CFG.pageToggles || {};
-  const navPages = [
-    { key: 'about', label: CFG.aboutNavLabel || CFG.pageHeaders?.about?.label || 'About' },
-  ];
   const nav = document.getElementById('drawer-links');
   if (!nav) return;
   const parts = [];
+
   // Home always shown
   const homeLink = document.createElement('span');
   homeLink.className = 'nav-link';
@@ -4285,31 +4553,81 @@ function buildNav() {
   homeLink.dataset.pageKey = 'home';
   homeLink.onclick = () => { showPage('home'); toggleMobileNav(); };
   parts.push(homeLink);
-  // Core pages
-  navPages.forEach(p => {
-    if (pt[p.toggleKey || p.key] === false) return;
+
+  // About
+  const aboutPt = pt['about'];
+  if (aboutPt !== false) {
     const link = document.createElement('span');
     link.className = 'nav-link';
-    link.textContent = p.label;
-    link.dataset.pageKey = p.key;
-    link.onclick = () => { showPage(p.key); toggleMobileNav(); };
+    link.textContent = CFG.aboutNavLabel || CFG.pageHeaders?.about?.label || 'About';
+    link.dataset.pageKey = 'about';
+    link.onclick = () => { showPage('about'); toggleMobileNav(); };
     parts.push(link);
+  }
+
+  // Custom pages — group by parent
+  const pages = CFG.customPages || [];
+  const topLevel = pages.filter(cp => !cp.parent && cp.enabled !== false && !cp.hiddenFromNav);
+  topLevel.forEach((cp, _) => {
+    const pi = pages.indexOf(cp);
+    const children = pages.filter(p => p.parent === cp.slug && p.enabled !== false && !p.hiddenFromNav);
+    if (children.length) {
+      // Render as expandable group — label navigates, chevron toggles
+      const group = document.createElement('div');
+      group.className = 'nav-group';
+      group.dataset.slug = cp.slug;
+
+      const toggle = document.createElement('div');
+      toggle.className = 'nav-group-toggle';
+      toggle.dataset.pageKey = 'cp-' + pi;
+
+      const label = document.createElement('div');
+      label.className = 'nav-group-label';
+      label.textContent = cp.navLabel || cp.slug;
+      label.onclick = () => { showPage(cp.slug); toggleMobileNav(); };
+
+      const chevronBtn = document.createElement('div');
+      chevronBtn.className = 'nav-group-chevron-btn';
+      chevronBtn.innerHTML = '<span class="nav-group-chevron">›</span>';
+      chevronBtn.setAttribute('aria-label', 'Expand ' + (cp.navLabel || cp.slug));
+      chevronBtn.onclick = () => { group.classList.toggle('open'); };
+
+      toggle.appendChild(label);
+      toggle.appendChild(chevronBtn);
+
+      const childWrap = document.createElement('div');
+      childWrap.className = 'nav-group-children';
+      // Sub-pages only — parent navigates via the label above
+      children.forEach(child => {
+        const ci = pages.indexOf(child);
+        const childLink = document.createElement('div');
+        childLink.className = 'nav-child-link';
+        childLink.dataset.pageKey = 'cp-' + ci;
+        childLink.dataset.slug = child.slug;
+        childLink.textContent = child.navLabel || child.slug;
+        childLink.onclick = () => { showPage(child.slug); toggleMobileNav(); };
+        childWrap.appendChild(childLink);
+      });
+      group.appendChild(toggle);
+      group.appendChild(childWrap);
+      parts.push(group);
+    } else {
+      // Regular top-level link
+      const link = document.createElement('span');
+      link.className = 'nav-link';
+      link.textContent = cp.navLabel || cp.header?.title || cp.slug;
+      link.dataset.slug = cp.slug;
+      link.dataset.pageKey = 'cp-' + pi;
+      link.onclick = () => { showPage(cp.slug); toggleMobileNav(); };
+      parts.push(link);
+    }
   });
-  // Custom pages
-  (CFG.customPages || []).forEach((cp, i) => {
-    if (cp.enabled === false) return;
-    const link = document.createElement('span');
-    link.className = 'nav-link';
-    link.textContent = cp.navLabel || cp.header?.title || cp.slug;
-    link.dataset.slug = cp.slug;
-    link.dataset.pageKey = 'cp-' + i;
-    link.onclick = () => { showPage(cp.slug); toggleMobileNav(); };
-    parts.push(link);
-  });
+
   // Divider
   const div = document.createElement('div');
   div.className = 'mobile-nav-divider';
   parts.push(div);
+
   // Contact CTA
   if (pt.contact !== false) {
     const btn = document.createElement('button');
@@ -4318,6 +4636,7 @@ function buildNav() {
     btn.onclick = () => { showPage('contact'); toggleMobileNav(); };
     parts.push(btn);
   }
+
   // Member badge / sign out
   const m = getCurrentMember();
   if (m) {
@@ -4344,12 +4663,9 @@ function buildNav() {
     signOutBtn.onclick = () => { signOut(); toggleMobileNav(); };
     parts.push(signOutBtn);
   }
+
   nav.innerHTML = '';
   parts.forEach(el => nav.appendChild(el));
-  // Update active state
-  document.getElementById('mobile-nav').querySelectorAll('.nav-link').forEach(l => {
-    l.classList.toggle('active', l.textContent.toLowerCase().includes(currentPage));
-  });
   updateNavForMember();
   buildFooterNav();
 }
@@ -4373,10 +4689,11 @@ function buildFooterNav() {
   });
   // Custom pages in footer
   (CFG.customPages || []).forEach(cp => {
-    if (cp.enabled === false) return;
+    if (cp.enabled === false || cp.hiddenFromNav) return;
     const a = document.createElement('a');
     a.textContent = cp.navLabel || cp.header?.title || cp.slug;
     a.style.cursor = 'pointer';
+    if (cp.parent) a.style.cssText = 'cursor:pointer;padding-left:1em;opacity:0.75;font-size:0.9em;';
     a.onclick = () => showPage(cp.slug);
     container.appendChild(a);
   });
@@ -4486,6 +4803,19 @@ function showPage(name, anchor) {
       : lText.includes(name);
     l.classList.toggle('active', isActive);
   });
+  // Handle group toggles and child links
+  document.querySelectorAll('.nav-group').forEach(group => {
+    const toggle = group.querySelector('.nav-group-toggle');
+    const childLinks = group.querySelectorAll('.nav-child-link');
+    let anyActive = false;
+    childLinks.forEach(cl => {
+      const active = cl.dataset.slug === name;
+      cl.classList.toggle('active', active);
+      if (active) anyActive = true;
+    });
+    if (toggle) toggle.classList.toggle('active', anyActive);
+    if (anyActive) group.classList.add('open');
+  });
 
   currentPage = name;
   if (anchor) {
@@ -4536,6 +4866,9 @@ function showPage(name, anchor) {
     activePage.querySelectorAll('.reveal.visible').forEach(el => el.classList.remove('visible'));
     activePage.querySelectorAll('.cps-tier-card.visible').forEach(el => {
       el.classList.remove('visible', 'cps-tier-pulse');
+    });
+    activePage.querySelectorAll('.cps-flip-scene.visible').forEach(el => {
+      el.classList.remove('visible', 'cps-flip-pulse', 'flipped');
     });
   }
   setTimeout(() => { initReveal(); initProcessObserver(); }, 100);
@@ -4636,7 +4969,7 @@ function buildSearchIndex() {
     if (!container) return;
     container.querySelectorAll(':scope > .section').forEach(sec => {
       const headingEl = sec.querySelector('h1,h2,h3,h4,.cps-heading,.section-label');
-      const bodyEls   = sec.querySelectorAll('p, li, .step-desc, .step-title, .cps-timeline-body p, .cps-timeline-body h4, .cps-rt-body, .section-subtitle, .service-title, .faq-question-text, .cps-fc-title, .cps-doc-category-title, .cps-jurisdiction-title, .cps-team-name, .cps-team-title, .cps-tier-name, .cps-acc-title, .cps-fee-amount, .checklist-item, .bullet-title, .cps-logo-caption');
+      const bodyEls   = sec.querySelectorAll('p, li, .step-desc, .step-title, .cps-timeline-body p, .cps-timeline-body h4, .cps-rt-body, .section-subtitle, .service-title, .faq-question-text, .cps-fc-title, .cps-doc-category-title, .cps-jurisdiction-title, .cps-team-name, .cps-team-title, .cps-tier-name, .cps-acc-title, .cps-fee-amount, .checklist-item, .bullet-title, .cps-logo-caption, .cps-flip-name, .cps-flip-back-name');
       const heading   = headingEl ? headingEl.textContent.trim() : '';
       const body      = Array.from(bodyEls).map(el => el.textContent.trim()).filter(Boolean).join(' ');
       const anchorId  = sec.id || '';
@@ -4750,7 +5083,7 @@ function renderSearchResults(query) {
     const pages = [
       { key:'home', label:'Home' },
       { key:'about', label:'About Us' },
-      ...(CFG.customPages||[]).filter(p=>p.enabled!==false).map((p,i)=>({ key:'cp-'+i, label: p.navLabel||p.slug||'Page '+i }))
+      ...(CFG.customPages||[]).filter(p=>p.enabled!==false && !p.hiddenFromNav).map((p,i)=>({ key:'cp-'+i, label: p.navLabel||p.slug||'Page '+i }))
     ];
     const excluded = (srchCfg.excludedPages || []);
     const chips = pages.filter(p => !excluded.includes(p.key)).map(p =>
@@ -5276,12 +5609,16 @@ function initReveal() {
         if (e.target.classList.contains('cps-tier-card--featured')) {
           setTimeout(() => e.target.classList.add('cps-tier-pulse'), 1100);
         }
+        if (e.target.classList.contains('cps-flip-scene--featured')) {
+          setTimeout(() => e.target.classList.add('cps-flip-pulse'), 1100);
+        }
         obs.unobserve(e.target);
       }
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal:not(.visible)').forEach(el => obs.observe(el));
   document.querySelectorAll('.cps-tier-card:not(.visible)').forEach(el => obs.observe(el));
+  document.querySelectorAll('.cps-flip-scene:not(.visible)').forEach(el => obs.observe(el));
 }
 
 /* =============================================
@@ -6088,7 +6425,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
 
         // Ribbon
         const ribbonHtml = card.ribbon
-          ? '<div class="cps-tier-ribbon">' + card.ribbon + '</div>'
+          ? '<div class="cps-tier-ribbon" data-label="' + escAttr(card.ribbon) + '"></div>'
           : '';
 
         // Image or icon
@@ -6163,6 +6500,112 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
         (sec.heading  ? '<' + headTag + ' class="' + headClass + ' cps-heading reveal">' + sec.heading + '</' + headTag + '>' : '') +
         (sec.subtitle ? '<p class="section-subtitle reveal reveal-delay-1" style="' + subtitleStyle + '">' + sec.subtitle + '</p>' : '') +
         '<div class="cps-tier-grid" data-cols="' + cols + '">' + cardHtml + '</div>' +
+      '</div>';
+      break;
+    }
+
+    // ── FLIP CARDS ───────────────────────────────────────────────
+    case 'flip-cards': {
+      const flipCards = sec.items || [];
+
+      const flipCardHtml = flipCards.map((card, ci) => {
+        const style = card.cardStyle || 'light';
+        const isFeatured = card.featured === true;
+        const styleClass = ' cps-flip-front--' + style;
+        const featClass = isFeatured ? ' cps-flip-scene--featured' : '';
+        const delay = ci < 4 ? (ci * 0.1) + 's' : '0.4s';
+
+        // Ribbon
+        const ribbonHtml = card.ribbon
+          ? '<div class="cps-flip-ribbon" data-label="' + escAttr(card.ribbon) + '"></div>'
+          : '';
+
+        // Price
+        const priceHtml = card.price
+          ? '<div class="cps-flip-price-wrap"><span class="cps-flip-price">' + card.price + '</span>' +
+            (card.period ? '<span class="cps-flip-period">' + card.period + '</span>' : '') +
+            '</div>'
+          : '';
+
+        // ── FRONT FACE ──
+        // Image sits above the body; icon sits inside body (centered)
+        const frontImageHtml = card.imagePath
+          ? '<img class="cps-flip-media cps-flip-media--' + (card.imageSize || 'md') + '" src="' + card.imagePath + '" alt="' + escAttr(card.alt || card.name || '') + '" loading="lazy"/>'
+          : '';
+        const frontIconHtml = (!card.imagePath && card.icon)
+          ? '<div class="cps-flip-icon">' + card.icon + '</div>'
+          : '';
+
+        const frontHtml =
+          '<div class="cps-flip-front' + styleClass + '">' +
+            ribbonHtml +
+            frontImageHtml +
+            '<div class="cps-flip-body">' +
+              frontIconHtml +
+              (card.name    ? '<div class="cps-flip-name">'    + card.name    + '</div>' : '') +
+              (card.tagline ? '<div class="cps-flip-tagline">' + card.tagline + '</div>' : '') +
+              priceHtml +
+            '</div>' +
+            '<div class="cps-flip-hint">↩ tap to flip</div>' +
+          '</div>';
+
+        // ── BACK FACE ──
+        // Features
+        let featuresHtml = '';
+        if (card.features && card.features.length) {
+          const featureItems = card.features.map(f => {
+            const status = f.status || '';
+            const iconMap = { yes: '✓', no: '✗', partial: '~' };
+            const excludedClass = status === 'no' ? ' cps-flip-feature--excluded' : '';
+            if (f.isGroup) {
+              return '<div class="cps-flip-group-header">' + (f.label || '') + '</div>';
+            }
+            const showIcon = status !== '';
+            return '<div class="cps-flip-feature' + excludedClass + '">' +
+              (showIcon ? '<div class="cps-flip-feature-icon cps-flip-feature-icon--' + status + '">' + (iconMap[status]||'') + '</div>' : '') +
+              '<span>' + (f.label || '') + '</span>' +
+            '</div>';
+          }).join('');
+          featuresHtml = '<div class="cps-flip-features">' + featureItems + '</div>';
+        }
+
+        // CTA button — stopPropagation so click doesn't re-flip
+        const hasLink = card.cta_linkType && card.cta_linkType !== 'none' && card.cta_linkUrl && card.cta_linkLabel;
+        const ctaClick = hasLink
+          ? (card.cta_linkType === 'internal'
+              ? 'onclick="event.stopPropagation();showPage(\'' + escAttr(card.cta_linkUrl) + '\',\'' + escAttr(card.cta_anchorId || '') + '\')"'
+              : 'onclick="event.stopPropagation();openSmartLink(\'' + escAttr(card.cta_linkType) + '\',\'' + escAttr(card.cta_linkUrl) + '\')"')
+          : '';
+        const ctaHtml = hasLink
+          ? '<div class="cps-flip-cta"><button class="btn-primary" style="width:100%;" ' + ctaClick + '>' + card.cta_linkLabel + ' →</button></div>'
+          : '';
+
+        const noteHtml = card.note ? '<div class="cps-flip-note">' + card.note + '</div>' : '';
+        const detailsHtml = card.details ? '<div class="cps-flip-details">' + card.details + '</div>' : '';
+
+        const backHtml =
+          '<div class="cps-flip-back">' +
+            (card.name ? '<div class="cps-flip-back-name">' + card.name + '</div>' : '') +
+            detailsHtml +
+            featuresHtml +
+            ctaHtml +
+            noteHtml +
+          '</div>';
+
+        return '<div class="cps-flip-scene' + featClass + '" style="transition-delay:' + delay + ';" onclick="this.classList.toggle(\'flipped\')">' +
+          '<div class="cps-flip-inner">' +
+            frontHtml +
+            backHtml +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      const flipCols = Math.min(Math.max(flipCards.length, 1), 4);
+      wrapper.innerHTML = '<div class="container">' +
+        labelHTML +
+        (sec.heading  ? '<' + headTag + ' class="' + headClass + ' cps-heading reveal">' + sec.heading + '</' + headTag + '>' : '') +
+        (sec.subtitle ? '<p class="section-subtitle reveal reveal-delay-1" style="' + subtitleStyle + '">' + sec.subtitle + '</p>' : '') +
+        '<div class="cps-flip-grid" data-cols="' + flipCols + '">' + flipCardHtml + '</div>' +
       '</div>';
       break;
     }
