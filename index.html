@@ -77,6 +77,7 @@ img { display: block; max-width: 100%; }
 #preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 .preloader-inner {
   text-align: center;
+  width: min(480px, 80vw);
 }
 .preloader-wordmark {
   font-family: var(--font-display);
@@ -111,6 +112,32 @@ img { display: block; max-width: 100%; }
 @keyframes wordReveal { to { transform: translateY(0); } }
 @keyframes barFill { to { width: 100%; } }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Logo images */
+#header-logo {
+  display: none;
+  height: var(--header-logo-h, 40px);
+  width: auto;
+  object-fit: contain;
+}
+#footer-logo {
+  display: none;
+  height: var(--footer-logo-h, 40px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+#splash-logo {
+  display: none;
+  height: var(--splash-logo-h, 80px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  opacity: 0;
+  animation: fadeUp 0.6s var(--ease-out) 0.2s forwards;
+  margin: 0 auto 18px;
+}
 
 /* =============================================
    HEADER / NAV — hamburger-only, scroll-fade bg
@@ -1031,6 +1058,14 @@ h2.section-title {
   gap: 0;
   border: 1px solid #e8e3d8;
 }
+.cps-fc-grid[data-cols="2"] { grid-template-columns: repeat(2, 1fr); }
+.cps-fc-grid[data-cols="2"] .cps-fc-card:nth-child(2n)   { border-right: none; }
+.cps-fc-grid[data-cols="3"] { grid-template-columns: repeat(3, 1fr); }
+.cps-fc-grid[data-cols="3"] .cps-fc-card:nth-child(3n)   { border-right: none; }
+.cps-fc-grid[data-cols="3"] .cps-fc-card:nth-child(2n)   { border-right: 1px solid #e8e3d8; }
+.cps-fc-grid[data-cols="4"] { grid-template-columns: repeat(4, 1fr); }
+.cps-fc-grid[data-cols="4"] .cps-fc-card:nth-child(4n)   { border-right: none; }
+.cps-fc-grid[data-cols="4"] .cps-fc-card:nth-child(2n)   { border-right: 1px solid #e8e3d8; }
 .cps-fc-card {
   padding: clamp(36px, 5vw, 56px);
   border-right: 1px solid #e8e3d8;
@@ -1061,6 +1096,9 @@ h2.section-title {
   transition: color 0.3s;
 }
 .cps-fc-card:hover .cps-fc-num { color: rgba(201,168,76,0.2); }
+.cps-fc-img--thumb { width: 48px; height: 48px; object-fit: cover; border-radius: 6px; margin-bottom: 16px; display: block; }
+.cps-fc-img--sm    { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; margin-bottom: 16px; display: block; }
+.cps-fc-img--full  { width: calc(100% + 48px); margin-left: -24px; margin-right: -24px; height: 160px; object-fit: cover; margin-bottom: 20px; display: block; margin-top: -24px; }
 .cps-fc-card h3 {
   font-family: var(--font-display);
   font-size: 20px;
@@ -1079,7 +1117,7 @@ h2.section-title {
   margin-top: 14px;
   font-size: 13px;
   font-weight: 500;
-  color: var(--gold);
+  color: var(--gold-light);
   letter-spacing: 0.04em;
   cursor: pointer;
   transition: color 0.2s;
@@ -1097,7 +1135,7 @@ h2.section-title {
 .cps-section-dark .cps-fc-card:hover .cps-fc-num { color: rgba(201,168,76,0.2); }
 .cps-section-dark .cps-fc-card h3 { color: #fff; }
 .cps-section-dark .cps-fc-card p { color: rgba(255,255,255,0.65); }
-.cps-section-dark .cps-fc-link { color: var(--gold-light); }
+.cps-section-dark .cps-fc-link { color: var(--gold); }
 .cps-section-dark .cps-fc-link:hover { color: #fff; }
 .cps-section-alt .cps-fc-grid { border-color: #ddd8cc; }
 .cps-section-alt .cps-fc-card { border-color: #ddd8cc; }
@@ -1121,6 +1159,7 @@ h2.section-title {
 .services-grid[data-cols="1"] .service-card { flex: 1 1 100%; }
 .services-grid[data-cols="2"] .service-card { flex: 1 1 calc(50% - 2px); }
 .services-grid[data-cols="3"] .service-card { flex: 1 1 calc(33.333% - 2px); }
+.services-grid[data-cols="4"] .service-card { flex: 1 1 calc(25% - 2px); }
 .service-card {
   background: var(--warm-white);
   padding: clamp(28px, 4vw, 44px);
@@ -1146,6 +1185,11 @@ h2.section-title {
   display: inline-block;
 }
 .service-card:hover .service-icon { transform: scale(1.1); }
+.service-img--thumb { width: 48px; height: 48px; object-fit: cover; border-radius: 6px; margin-bottom: 18px; display: block; }
+.service-img--sm    { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; margin-bottom: 18px; display: block; }
+.service-img--full  { width: 100%; height: 160px; object-fit: cover; border-radius: 6px 6px 0 0; margin-bottom: 0; display: block; }
+.service-card.has-full-img { padding-top: 0; overflow: hidden; }
+.service-card.has-full-img .service-card-body { padding: 20px; }
 .service-title {
   font-family: var(--font-display);
   font-size: 18px;
@@ -1168,12 +1212,14 @@ h2.section-title {
   font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--gold-light);
   font-weight: 600;
   transition: gap 0.2s;
 }
 .service-card:hover .service-more { gap: 10px; }
-.service-card:hover .service-more { color: var(--gold-light); }
+.service-card:hover .service-more { color: var(--gold); }
+.cps-section-dark .service-more { color: var(--gold); }
+.cps-section-dark .service-card:hover .service-more { color: var(--gold-light); }
 
 /* Service modal */
 .modal-overlay {
@@ -1326,6 +1372,9 @@ h2.section-title {
   color: var(--text-muted);
   letter-spacing: 0.05em;
   margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 .about-credentials {
   display: flex; flex-direction: row; flex-wrap: wrap; gap: 8px;
@@ -1365,15 +1414,7 @@ h2.section-title {
   flex-direction: column;
   gap: 0;
 }
-/* Vertical line runs through the CENTER of the circles (left:28px = half of 56px circle) */
-.process-timeline::before {
-  content: '';
-  position: absolute;
-  left: 28px; top: 28px; bottom: 28px; /* start/end at circle centres */
-  width: 1px;
-  background: linear-gradient(to bottom, var(--gold) 0%, rgba(201,168,76,0.15) 100%);
-  z-index: 0;
-}
+/* No global ::before line — each step has its own fading segment */
 .process-step {
   display: flex; gap: 40px;
   padding: 28px 0;
@@ -1391,6 +1432,26 @@ h2.section-title {
   position: relative; z-index: 1;
   transition: background 0.5s var(--ease-out), border-color 0.5s var(--ease-out);
 }
+.step-img--thumb { width: 80px; height: 80px; object-fit: cover; border-radius: 50%; flex-shrink: 0; position: relative; z-index: 1; border: 2px solid rgba(201,168,76,0.35); }
+.step-img--sm    { width: 200px; height: 200px; object-fit: cover; border-radius: 50%; flex-shrink: 0; position: relative; z-index: 1; border: 2px solid rgba(201,168,76,0.35); }
+.step-img--full  { width: 100%; height: 180px; object-fit: cover; border-radius: 6px; margin-bottom: 0; display: block; flex-shrink: 0; }
+/* Per-step vertical line — fades out toward the bottom of each step */
+.step-line {
+  position: absolute;
+  left: 28px; top: 84px; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, rgba(201,168,76,0.5) 0%, rgba(201,168,76,0.05) 100%);
+  z-index: 0;
+}
+.process-step:last-child .step-line { display: none; }
+/* Mobile: shrink sm image so text has room */
+@media (max-width: 580px) {
+  .step-img--sm { width: 100px; height: 100px; }
+  .step-line { left: 40px; top: 128px; }
+}
+/* Full-width image step: stack vertically */
+.process-step.has-full-img { flex-direction: column; gap: 0; }
+.process-step.has-full-img .step-body { padding-top: 16px; padding-left: 56px; }
 /* Active state — filled gold circle */
 .process-step.step-active .step-num-wrap {
   background: var(--gold);
@@ -1414,12 +1475,12 @@ h2.section-title {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--gold);
+  color: var(--gold-light);
   cursor: pointer;
   transition: opacity 0.2s;
 }
 .step-link:hover { opacity: 0.75; }
-.cps-section-dark .step-link { color: var(--gold-light); }
+.cps-section-dark .step-link { color: var(--gold); }
 .step-title {
   font-family: var(--font-display);
   font-size: 20px;
@@ -1563,6 +1624,8 @@ h2.section-title {
   font-size: 14px; line-height: 1.85;
   color: var(--text-muted);
 }
+.faq-answer-inner p { margin: 0 0 0.6em; }
+.faq-answer-inner p:last-child { margin-bottom: 0; }
 .faq-answer-inner.has-faq-link { padding-bottom: 0; }
 .faq-item-link {
   display: block;
@@ -1572,12 +1635,12 @@ h2.section-title {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--gold);
+  color: var(--gold-light);
   cursor: pointer;
   transition: opacity 0.2s;
 }
 .faq-item-link:hover { opacity: 0.75; }
-.cps-section-dark .faq-item-link { color: var(--gold-light); }
+.cps-section-dark .faq-item-link { color: var(--gold); }
 .faq-item.open .faq-answer { max-height: 2000px; }
 
 /* FAQ dark/alt section theming */
@@ -1732,6 +1795,14 @@ h2.section-title {
   align-items: start;
 }
 .contact-info { color: rgba(255,255,255,0.7); }
+.contact-location { margin-bottom: 32px; }
+.contact-location:last-child { margin-bottom: 0; }
+.contact-location-name {
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 12px;
+}
 .contact-info h3 {
   font-family: var(--font-display);
   font-size: 22px;
@@ -1902,6 +1973,23 @@ footer {
   cursor: pointer;
 }
 .footer-links a:hover { color: rgba(255,255,255,0.85); }
+.footer-nav-group { display: flex; flex-direction: column; gap: 0; }
+.footer-nav-group-row { display: flex; align-items: center; gap: 4px; }
+.footer-nav-group-row a { flex: 0 0 auto; }
+.footer-nav-chev {
+  background: none; border: none; padding: 0 2px;
+  color: rgba(255,255,255,0.3); font-size: 10px;
+  cursor: pointer; line-height: 1;
+  transition: color 0.2s;
+}
+.footer-nav-chev:hover { color: rgba(255,255,255,0.7); }
+.footer-nav-children {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 0 2px 12px;
+}
+.footer-nav-children.open { display: flex; }
 .footer-bottom {
   display: flex; justify-content: space-between; align-items: center;
   font-size: 12px;
@@ -1926,7 +2014,8 @@ footer {
    RESPONSIVE
    ============================================= */
 @media (max-width: 1024px) {
-  .services-grid[data-cols="3"] .service-card { flex: 1 1 calc(50% - 2px); }
+  .services-grid[data-cols="3"] .service-card,
+  .services-grid[data-cols="4"] .service-card { flex: 1 1 calc(50% - 2px); }
   .about-top-grid { grid-template-columns: 1fr 1.5fr; gap: 40px; }
   .contact-grid { grid-template-columns: 1fr; gap: 48px; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
@@ -1966,14 +2055,15 @@ footer {
   .cps-fc-badge { display: none; }
   .services-grid .service-card,
   .services-grid[data-cols="2"] .service-card,
-  .services-grid[data-cols="3"] .service-card { flex: 1 1 100%; }
+  .services-grid[data-cols="3"] .service-card,
+  .services-grid[data-cols="4"] .service-card { flex: 1 1 100%; }
   .testimonials-track { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
   .stat-cell { width: 50%; min-width: 120px; }
   .footer-grid { grid-template-columns: 1fr; }
   .why-badge-wrap { flex-direction: column; }
-  .process-timeline::before { left: 27px; }
+  .process-timeline::before { display: none; }
 }
 @media (max-width: 480px) {
   .stat-cell { width: 50%; min-width: 0; }
@@ -2014,29 +2104,17 @@ footer {
 
 /* Two Column */
 .cps-two-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
   gap: clamp(40px, 6vw, 80px);
   align-items: start;
 }
-.cps-two-col.image-right { }
-.cps-two-col.image-left { }
-.cps-two-col-text .cps-heading {
-  font-family: var(--font-display);
-  font-size: clamp(22px, 2.8vw, 34px);
-  font-weight: 500;
-  color: var(--text-head);
-  margin-bottom: 16px;
-  line-height: 1.25;
-}
-.cps-two-col-text .cps-body {
-  font-size: 15px;
-  line-height: 1.85;
-  color: var(--text-body);
-}
-.cps-two-col-text .cps-body p { margin-bottom: 14px; }
+.cps-two-col.image-right { flex-direction: row-reverse; }
+.cps-two-col.image-left  { flex-direction: row; }
 .cps-two-col-img {
-  width: 100%;
+  flex: 0 0 var(--tc-img-w, 45%);
+  width: var(--tc-img-w, 45%);
+  max-width: 100%;
   border-radius: 2px;
   overflow: hidden;
   position: relative;
@@ -2057,8 +2135,29 @@ footer {
   color: rgba(255,255,255,0.2);
   font-size: 48px;
 }
+.cps-two-col-text {
+  flex: 1 1 300px;
+  min-width: 0;
+}
+.cps-two-col-text .cps-heading {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.8vw, 34px);
+  font-weight: 500;
+  color: var(--text-head);
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+.cps-two-col-text .cps-body {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--text-body);
+}
+.cps-two-col-text .cps-body p { margin-bottom: 14px; }
+/* Heading sits above flex row — space below before image/text columns */
+.cps-two-col-heading { margin-bottom: 28px; }
 @media (max-width: 768px) {
-  .cps-two-col { grid-template-columns: 1fr; }
+  .cps-two-col-img,
+  .cps-two-col-text { flex: 0 0 100%; max-width: 100%; }
 }
 
 /* Stats Bar (custom) */
@@ -2298,12 +2397,12 @@ footer {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--gold);
+  color: var(--gold-light);
   cursor: pointer;
   transition: opacity 0.2s;
 }
 .cps-timeline-link:hover { opacity: 0.75; }
-.cps-section-dark .cps-timeline-link { color: var(--gold-light); }
+.cps-section-dark .cps-timeline-link { color: var(--gold); }
 .cps-timeline-body h4 {
   font-family: var(--font-display);
   font-size: 19px;
@@ -2369,6 +2468,212 @@ footer {
   white-space: nowrap;
 }
 .cps-fee-note { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+/* Table section */
+.cps-tbl-wrap { overflow-x: auto; }
+.cps-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 32px;
+  font-size: 14px;
+}
+.cps-tbl thead tr {
+  background: var(--navy);
+  color: var(--gold);
+}
+.cps-tbl th {
+  padding: 14px 20px;
+  text-align: left;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-family: var(--font-body);
+}
+.cps-tbl td {
+  padding: 14px 20px;
+  border-bottom: 1px solid #e8e3d8;
+  color: var(--text-body);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.cps-tbl tbody tr:last-child td { border-bottom: none; }
+.cps-tbl tbody tr:hover td { background: var(--gold-pale); }
+.cps-tbl td.col-row-hdr { font-weight: 700; color: var(--navy); }
+.cps-tbl td.style-bold { font-weight: 700; }
+.cps-tbl td.style-large { font-size: 1.05rem; }
+.cps-tbl td.style-bold-large { font-weight: 700; font-size: 1.05rem; }
+.cps-section-dark .cps-tbl thead tr { background: rgba(255,255,255,0.07); }
+.cps-section-dark .cps-tbl td { border-bottom-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75); }
+.cps-section-dark .cps-tbl td.col-row-hdr { color: #fff; }
+.cps-section-dark .cps-tbl tbody tr:hover td { background: rgba(255,255,255,0.05); }
+.cps-section-alt .cps-tbl td { border-bottom-color: var(--border); }
+@media (max-width: 580px) {
+  .cps-tbl th, .cps-tbl td { padding: 10px 12px; }
+}
+
+/* =============================================
+   ROTATING CARDS SECTION
+   ============================================= */
+.cps-rc-outer {
+  position: relative;
+  margin-top: 40px;
+}
+.cps-rc-track-wrap {
+  overflow: hidden;
+  cursor: grab;
+  width: 100%;
+}
+.cps-rc-track-wrap:active { cursor: grabbing; }
+.cps-rc-track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+  will-change: transform;
+}
+.cps-rc-card {
+  flex-shrink: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-right: var(--rc-gap, 16px);
+  position: relative;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 24px rgba(var(--navy-rgb),0.08);
+}
+.cps-rc-card.full-bleed {
+  background: var(--navy);
+}
+.cps-rc-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.cps-rc-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+  z-index: 1;
+}
+/* Standard (non-full-bleed) image — takes remaining space above body */
+.cps-rc-card-img-std {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  object-fit: cover;
+  display: block;
+  position: relative;
+  z-index: 0;
+}
+.cps-rc-card-body {
+  padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 2;
+  min-height: fit-content;
+}
+/* Full-bleed: body overlays entire card at bottom */
+.cps-rc-card.full-bleed .cps-rc-card-body {
+  justify-content: flex-end;
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+/* Standard cards no longer need ::after pseudo gradient */
+.cps-rc-card-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+.cps-rc-card-body.text-dark .cps-rc-card-title { color: var(--navy); }
+.cps-rc-card-body.text-light .cps-rc-card-title { color: #fff; }
+.cps-rc-card-body:not(.text-dark):not(.text-light) .cps-rc-card-title { color: var(--navy); }
+.cps-rc-card-text {
+  font-size: 0.97rem;
+  line-height: 1.65;
+  margin: 0;
+}
+.cps-rc-card-body.text-dark .cps-rc-card-text { color: var(--text-body); }
+.cps-rc-card-body.text-light .cps-rc-card-text { color: rgba(255,255,255,0.85); }
+.cps-rc-card-body:not(.text-dark):not(.text-light) .cps-rc-card-text { color: var(--text-body); }
+.cps-rc-card-btn {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 10px 22px;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s, transform 0.2s;
+  align-self: flex-start;
+}
+.cps-rc-card-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+.cps-rc-card-body.text-light .cps-rc-card-btn { background: #fff; color: var(--navy); }
+.cps-rc-card-body.text-dark .cps-rc-card-btn { background: var(--navy); color: #fff; }
+.cps-rc-card-body:not(.text-dark):not(.text-light) .cps-rc-card-btn { background: var(--navy); color: #fff; }
+
+/* Arrows */
+.cps-rc-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1.5px solid rgba(var(--navy-rgb),0.12);
+  box-shadow: 0 2px 12px rgba(var(--navy-rgb),0.12);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--navy);
+  transition: background 0.2s, color 0.2s;
+  user-select: none;
+}
+.cps-rc-arrow:hover { background: var(--navy); color: #fff; }
+.cps-rc-arrow-prev { left: -22px; }
+.cps-rc-arrow-next { right: -22px; }
+.cps-section-dark .cps-rc-arrow { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); color: #fff; }
+.cps-section-dark .cps-rc-arrow:hover { background: var(--gold); color: var(--navy); }
+
+/* Dots */
+.cps-rc-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+.cps-rc-dot {
+  height: 3px;
+  width: 32px;
+  border-radius: 2px;
+  background: rgba(var(--navy-rgb),0.18);
+  transition: background 0.3s, width 0.3s;
+  cursor: pointer;
+}
+.cps-rc-dot.active {
+  background: var(--navy);
+  width: 48px;
+}
+.cps-section-dark .cps-rc-dot { background: rgba(255,255,255,0.25); }
+.cps-section-dark .cps-rc-dot.active { background: #fff; }
+
+@media (max-width: 768px) {
+  .cps-rc-arrow-prev { left: -16px; }
+  .cps-rc-arrow-next { right: -16px; }
+  .cps-rc-arrow { width: 36px; height: 36px; font-size: 15px; }
+}
 .cps-fee-link {
   display: block;
   margin-top: 6px;
@@ -2377,12 +2682,12 @@ footer {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--gold);
+  color: var(--gold-light);
   cursor: pointer;
   transition: opacity 0.2s;
 }
 .cps-fee-link:hover { opacity: 0.75; }
-.cps-section-dark .cps-fee-link { color: var(--gold-light); }
+.cps-section-dark .cps-fee-link { color: var(--gold); }
 
 /* Fee table dark/alt section theming */
 .cps-section-dark .cps-fee-table thead tr { background: rgba(255,255,255,0.07); }
@@ -2415,9 +2720,14 @@ footer {
     text-transform: uppercase;
     color: var(--gold);
     font-weight: 600;
-    margin-bottom: 4px;
     font-family: var(--font-body);
+    background: var(--navy);
+    margin: -14px -20px 12px -20px;
+    padding: 10px 20px;
   }
+  .cps-section-dark .cps-fee-table td::before { background: rgba(255,255,255,0.07); color: var(--gold); }
+  .cps-section-light .cps-fee-table td::before,
+  .cps-section-alt   .cps-fee-table td::before { background: var(--navy); }
   .cps-fee-table tbody tr:hover td { background: var(--gold-pale); }
   .cps-section-dark .cps-fee-table tbody tr:hover td { background: rgba(255,255,255,0.05); }
   .cps-fee-amount { white-space: normal; }
@@ -2474,7 +2784,20 @@ footer {
   gap: 24px;
   margin-top: 40px;
 }
-.cps-team-card {
+.cps-team-grid[data-cols="2"] { grid-template-columns: repeat(2, 1fr); }
+.cps-team-grid[data-cols="3"] { grid-template-columns: repeat(3, 1fr); }
+.cps-team-grid[data-cols="4"] { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 900px) {
+  .cps-team-grid,
+  .cps-team-grid[data-cols="3"],
+  .cps-team-grid[data-cols="4"] { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 580px) {
+  .cps-team-grid,
+  .cps-team-grid[data-cols="2"],
+  .cps-team-grid[data-cols="3"],
+  .cps-team-grid[data-cols="4"] { grid-template-columns: 1fr; }
+}.cps-team-card {
   border: 1px solid #e8e3d8;
   border-radius: 2px;
   overflow: hidden;
@@ -2509,8 +2832,7 @@ footer {
 }
 .cps-team-title { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
 .cps-team-bio { font-size: 13.5px; line-height: 1.7; color: var(--text-muted); }
-@media (max-width: 900px) { .cps-team-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 580px) { .cps-team-grid { grid-template-columns: 1fr; } }
+
 
 /* Team dark/alt section theming */
 .cps-section-dark .cps-team-card { border-color: rgba(255,255,255,0.12); }
@@ -2557,6 +2879,10 @@ footer {
 .btn-outline-dark:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.06); }
 /* Link + Button appendage sections — inherit prior section background, moderate continuation padding */
 .cps-appendage { padding: 8px 0 32px; }
+/* Sections that inherit background from their predecessor */
+.cps-inherit-bg { padding-top: 0; padding-bottom: calc(var(--section-pad) / 2); }
+/* Sections with no label/heading/subtitle — flow tight to prior section */
+.section.cps-no-header { padding-top: 0; }
 
 /* ── RICH TEXT SECTION ─────────────────────────────────────── */
 .cps-rt-wrap { max-width: 860px; }
@@ -2939,7 +3265,7 @@ footer {
 }
 .cps-mq-logo-item img {
   display: block;
-  height: 48px;
+  height: var(--mq-logo-h, 48px);
   width: auto;
   object-fit: contain;
 }
@@ -3087,7 +3413,182 @@ footer {
   .cps-gallery-grid[data-cols="6"] { grid-template-columns: 1fr; }
 }
 
-/* Lightbox */
+/* =============================================
+   LOCATIONS SECTION
+   ============================================= */
+.cps-section-locations {}
+
+/* --- Cards mode --- */
+.cps-loc-grid {
+  display: grid;
+  gap: 28px;
+  grid-template-columns: repeat(var(--loc-cols, 2), 1fr);
+}
+.cps-loc-card {
+  background: var(--warm-white);
+  border: 1px solid rgba(var(--navy-rgb), 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(var(--navy-rgb), 0.07);
+  display: flex;
+  flex-direction: column;
+}
+.cps-loc-card--side {
+  flex-direction: row;
+}
+.cps-loc-card-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+}
+.cps-loc-card--side .cps-loc-card-img {
+  width: 220px;
+  aspect-ratio: unset;
+  height: auto;
+  align-self: stretch;
+  object-fit: cover;
+}
+.cps-loc-card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.cps-loc-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 4px;
+}
+.cps-loc-detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: inherit;
+  line-height: 1.5;
+}
+.cps-loc-detail-icon { flex-shrink: 0; font-size: 1rem; margin-top: 1px; }
+.cps-loc-detail a { color: var(--gold); text-decoration: none; }
+.cps-loc-detail a:hover { text-decoration: underline; }
+.cps-loc-hours {
+  margin-top: 4px;
+  border-top: 1px solid rgba(var(--navy-rgb), 0.08);
+  padding-top: 10px;
+}
+.cps-loc-hours-label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.cps-loc-hours-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  padding: 2px 0;
+  opacity: 0.8;
+}
+.cps-loc-map-wrap {
+  margin-top: auto;
+  padding: 16px 24px 24px;
+}
+.cps-loc-map-wrap iframe {
+  width: 100%;
+  height: 200px;
+  border: 0;
+  border-radius: 6px;
+  display: block;
+}
+.cps-loc-map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  background: transparent;
+  border: 1.5px solid var(--gold);
+  border-radius: 6px;
+  color: var(--gold);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  width: 100%;
+  justify-content: center;
+}
+.cps-loc-map-btn:hover { background: var(--gold); color: var(--navy); }
+.cps-section-dark .cps-loc-card { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+.cps-section-dark .cps-loc-name { color: #fff; }
+.cps-section-dark .cps-loc-detail { color: rgba(255,255,255,0.85); }
+.cps-section-dark .cps-loc-detail a { color: var(--gold-light); }
+.cps-section-dark .cps-loc-hours { border-top-color: rgba(255,255,255,0.1); }
+.cps-section-dark .cps-loc-hours-label { color: var(--gold-light); }
+.cps-section-dark .cps-loc-hours-row { color: rgba(255,255,255,0.75); }
+.cps-section-dark .cps-loc-map-btn { border-color: var(--gold-light); color: var(--gold-light); }
+.cps-section-dark .cps-loc-map-btn:hover { background: var(--gold-light); color: var(--navy); }
+
+/* --- Feature mode (cardless) --- */
+.cps-loc-feature-list { display: flex; flex-direction: column; gap: 64px; }
+.cps-loc-feature-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.cps-loc-feature-row.reverse { direction: rtl; }
+.cps-loc-feature-row.reverse > * { direction: ltr; }
+.cps-loc-feature-media { display: flex; flex-direction: column; gap: 0; }
+.cps-loc-feature-media .cps-loc-card-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 10px;
+}
+.cps-loc-feature-media iframe {
+  width: 100%;
+  height: 260px;
+  border: 0;
+  border-radius: 10px;
+  display: block;
+  margin-top: 0;
+}
+.cps-loc-feature-media .cps-loc-card-img + iframe {
+  border-radius: 0 0 10px 10px;
+  margin-top: -6px;
+}
+.cps-loc-feature-media .cps-loc-card-img:has(+ iframe) { border-radius: 10px 10px 0 0; }
+.cps-loc-feature-info { display: flex; flex-direction: column; gap: 12px; padding-top: 8px; }
+.cps-loc-feature-name {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 8px;
+}
+.cps-section-dark .cps-loc-feature-name { color: #fff; }
+.cps-section-dark .cps-loc-feature-info .cps-loc-detail { color: rgba(255,255,255,0.85); }
+.cps-section-dark .cps-loc-feature-info .cps-loc-detail a { color: var(--gold-light); }
+.cps-section-dark .cps-loc-feature-info .cps-loc-hours { border-top-color: rgba(255,255,255,0.1); }
+.cps-section-dark .cps-loc-feature-info .cps-loc-hours-label { color: var(--gold-light); }
+.cps-section-dark .cps-loc-feature-info .cps-loc-hours-row { color: rgba(255,255,255,0.75); }
+.cps-section-dark .cps-loc-map-btn { border-color: var(--gold-light); color: var(--gold-light); }
+.cps-section-dark .cps-loc-map-btn:hover { background: var(--gold-light); color: var(--navy); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .cps-loc-grid { grid-template-columns: 1fr !important; }
+  .cps-loc-card--side { flex-direction: column; }
+  .cps-loc-card--side .cps-loc-card-img { width: 100%; height: 200px; }
+  .cps-loc-feature-row { grid-template-columns: 1fr; direction: ltr !important; gap: 24px; }
+  .cps-loc-feature-row.reverse { direction: ltr; }
+  .cps-loc-feature-media iframe { height: 200px; }
+}
 .cps-lightbox {
   position: fixed;
   inset: 0;
@@ -3347,8 +3848,8 @@ footer {
 .cps-flip-grid[data-cols="1"] { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
 .cps-flip-grid[data-cols="2"] { grid-template-columns: repeat(2, 1fr); }
 .cps-flip-grid[data-cols="3"] { grid-template-columns: repeat(3, 1fr); }
-.cps-flip-grid[data-cols="4"] { grid-template-columns: repeat(4, 1fr); }
-@media (max-width: 1024px) { .cps-flip-grid[data-cols="4"] { grid-template-columns: repeat(2, 1fr); } }
+.cps-flip-grid[data-cols="4"] { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 1024px) { .cps-flip-grid[data-cols="4"] { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 768px) {
   .cps-flip-grid[data-cols="3"],
   .cps-flip-grid[data-cols="4"] { grid-template-columns: repeat(2, 1fr); }
@@ -3541,6 +4042,7 @@ footer {
 <!-- Preloader -->
 <div id="preloader">
   <div class="preloader-inner">
+    <img id="splash-logo" alt="Logo"/>
     <div class="preloader-wordmark">
       <span id="preload-firm"></span>
     </div>
@@ -3554,6 +4056,7 @@ footer {
   <div class="container">
     <div class="header-inner">
       <div class="site-logo" onclick="showPage('home')">
+        <img id="header-logo" alt="Logo"/>
         <div class="logo-name" id="header-firm-name"></div>
         <div class="logo-tagline" id="header-tagline"></div>
       </div>
@@ -3650,38 +4153,7 @@ footer {
     <div class="container">
       <p class="section-subtitle reveal" style="color:rgba(255,255,255,0.6);margin-bottom:48px;" id="contact-subline"></p>
       <div class="contact-grid reveal reveal-delay-1">
-        <div class="contact-info">
-          <h3 id="contact-info-firm"></h3>
-          <div class="contact-detail">
-            <div class="contact-detail-icon">📞</div>
-            <div class="contact-detail-text">
-              <strong>Phone</strong>
-              <a id="contact-phone-link" href="" style="color:var(--gold)"></a>
-            </div>
-          </div>
-          <div class="contact-detail">
-            <div class="contact-detail-icon">📠</div>
-            <div class="contact-detail-text">
-              <strong>Fax</strong>
-              <span id="contact-fax"></span>
-            </div>
-          </div>
-          <div class="contact-detail">
-            <div class="contact-detail-icon">✉️</div>
-            <div class="contact-detail-text">
-              <strong>Email</strong>
-              <a id="contact-email-link" href="" style="color:var(--gold)"></a>
-            </div>
-          </div>
-          <div class="contact-detail">
-            <div class="contact-detail-icon">📍</div>
-            <div class="contact-detail-text">
-              <strong>Address</strong>
-              <span id="contact-address"></span>
-            </div>
-          </div>
-          <div class="contact-hours" id="contact-hours"></div>
-        </div>
+        <div id="contact-locations-wrap"></div>
         <div class="contact-form" id="contact-form-wrap"></div>
       </div>
     </div>
@@ -3752,6 +4224,7 @@ footer {
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
+        <img id="footer-logo" alt="Logo" style="display:none;"/>
         <div class="logo-name" id="footer-firm-name"></div>
         <div class="logo-tagline" id="footer-tagline-foot" style="margin-top:4px;"></div>
         <div id="footer-social-icons" style="margin-top:16px;"></div>
@@ -3917,6 +4390,26 @@ if (!Array.isArray(CFG.customPages)) CFG.customPages = [];
   try {
     const sub = document.getElementById('preloader-sub');
     if (sub) sub.textContent = CFG.preloaderTagline || '';
+    // Apply splash logo early if configured
+    const splashChoice = CFG.logoSplashChoice || 'none';
+    const splashSrc = splashChoice === 'primary' ? (CFG.logoPrimary || '')
+                    : splashChoice === 'alternate' ? (CFG.logoAlternate || '') : '';
+    if (splashSrc) {
+      const splashLogoEl = document.getElementById('splash-logo');
+      if (splashLogoEl) { splashLogoEl.src = splashSrc; splashLogoEl.style.display = 'block'; }
+      const splashLogoH = CFG.logoSplashHeight || 80;
+      document.documentElement.style.setProperty('--splash-logo-h', splashLogoH + 'px');
+      const mode = CFG.logoSplashMode || 'logo-name-tagline';
+      const wm  = document.querySelector('.preloader-wordmark');
+      const bar = document.querySelector('.preloader-bar');
+      if (mode === 'logo-only') {
+        if (wm)  wm.style.display  = 'none';
+        if (bar) bar.style.display = 'none';
+        if (sub) sub.style.display = 'none';
+      } else if (mode === 'logo-tagline') {
+        if (wm)  wm.style.display  = 'none';
+      }
+    }
     // Apply critical color vars immediately so preloader uses correct palette
     const c = CFG.colors || {};
     const r = document.documentElement;
@@ -3931,14 +4424,16 @@ if (!Array.isArray(CFG.customPages)) CFG.customPages = [];
    FONT LOADER
    ============================================= */
 function loadFonts() {
-  const fd = (CFG.fontDisplay||'Playfair Display').replace(/ /g,'+');
-  const fb = (CFG.fontBody||'DM Sans').replace(/ /g,'+');
+  const fdName = (CFG.fontDisplayCustom && CFG.fontDisplayCustom.trim()) ? CFG.fontDisplayCustom.trim() : (CFG.fontDisplay||'Playfair Display');
+  const fbName = (CFG.fontBodyCustom    && CFG.fontBodyCustom.trim())    ? CFG.fontBodyCustom.trim()    : (CFG.fontBody||'DM Sans');
+  const fd = fdName.replace(/ /g,'+');
+  const fb = fbName.replace(/ /g,'+');
   const link = document.getElementById('googleFontLink');
   if (link) {
     link.href = `https://fonts.googleapis.com/css2?family=${fd}:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=${fb}:wght@300;400;500;600&display=swap`;
   }
-  document.documentElement.style.setProperty('--font-display', `'${CFG.fontDisplay}', Georgia, serif`);
-  document.documentElement.style.setProperty('--font-body', `'${CFG.fontBody}', system-ui, sans-serif`);
+  document.documentElement.style.setProperty('--font-display', `'${fdName}', Georgia, serif`);
+  document.documentElement.style.setProperty('--font-body', `'${fbName}', system-ui, sans-serif`);
 }
 
 /* =============================================
@@ -4388,7 +4883,10 @@ function buildAbout() {
         </div>
         <div class="about-right-col">
           <h2 class="about-attorney-name">${a.name||''}</h2>
-          <div class="about-attorney-degree">${a.degree||''}</div>
+          <div class="about-attorney-degree">${
+            (a.education && a.education.length ? a.education : (a.degree ? [a.degree] : []))
+              .map(e => `<div>${e}</div>`).join('')
+          }</div>
           <div class="about-bio-full">${bios}</div>
         </div>
         <div class="about-social-btn-col">
@@ -4420,21 +4918,44 @@ function buildContact() {
   const hl = document.getElementById('contact-headline');
   if (hl) hl.textContent = CFG.contactHeadline;
   document.getElementById('contact-subline').textContent = CFG.contactSubline;
-  document.getElementById('contact-info-firm').textContent = CFG.firmName;
-  const pl = document.getElementById('contact-phone-link');
-  pl.href = `tel:${CFG.phoneRaw}`; pl.textContent = CFG.phone;
-  document.getElementById('contact-fax').textContent = CFG.fax;
-  const el = document.getElementById('contact-email-link');
-  el.href = `mailto:${CFG.email}`; el.textContent = CFG.email;
-  document.getElementById('contact-address').textContent = `${CFG.address}, ${CFG.city}, ${CFG.stateAbbr} ${CFG.zip}`;
-  const hours = document.getElementById('contact-hours');
-  hours.innerHTML = `<div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Office Hours</div>` +
-    (CFG.hours||[]).map(h => `<div class="hours-row"><span class="hours-days">${h.days}</span><span class="hours-time">${h.hours}</span></div>`).join('');
-  document.getElementById('privacy-email').textContent = CFG.email;
+
+  // Resolve locations — use CFG.locations[] if present, else fall back to flat fields
+  const locs = (CFG.locations && CFG.locations.length)
+    ? CFG.locations
+    : [{ name:'', phone:CFG.phone||'', phoneRaw:CFG.phoneRaw||'', fax:CFG.fax||'',
+         email:CFG.email||'', address:CFG.address||'', city:CFG.city||'',
+         state:CFG.state||'', stateAbbr:CFG.stateAbbr||'', zip:CFG.zip||'',
+         hours:CFG.hours||[] }];
+
+  const wrap = document.getElementById('contact-locations-wrap');
+  if (wrap) {
+    wrap.innerHTML = locs.map(loc => {
+      const addrParts = [loc.address, [loc.city, loc.stateAbbr, loc.zip].filter(Boolean).join(', ')].filter(Boolean);
+      const hoursHtml = (loc.hours||[]).length
+        ? `<div class="contact-hours">
+            <div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Office Hours</div>
+            ${loc.hours.map(h => `<div class="hours-row"><span class="hours-days">${h.days}</span><span class="hours-time">${h.hours}</span></div>`).join('')}
+           </div>`
+        : '';
+      return `<div class="contact-info contact-location">
+        ${loc.name ? `<div class="contact-location-name">${loc.name}</div>` : `<h3>${CFG.firmName}</h3>`}
+        ${loc.phone ? `<div class="contact-detail"><div class="contact-detail-icon">📞</div><div class="contact-detail-text"><strong>Phone</strong><a href="tel:${loc.phoneRaw||loc.phone}" style="color:var(--gold)">${loc.phone}</a></div></div>` : ''}
+        ${loc.fax   ? `<div class="contact-detail"><div class="contact-detail-icon">📠</div><div class="contact-detail-text"><strong>Fax</strong><span>${loc.fax}</span></div></div>` : ''}
+        ${loc.email ? `<div class="contact-detail"><div class="contact-detail-icon">✉️</div><div class="contact-detail-text"><strong>Email</strong><a href="mailto:${loc.email}" style="color:var(--gold)">${loc.email}</a></div></div>` : ''}
+        ${addrParts.length ? `<div class="contact-detail"><div class="contact-detail-icon">📍</div><div class="contact-detail-text"><strong>Address</strong><span>${addrParts.join('<br>')}</span></div></div>` : ''}
+        ${hoursHtml}
+      </div>`;
+    }).join('');
+  }
+
+  // Update privacy page email — use first location's email
+  const firstEmail = locs[0]?.email || CFG.email || '';
+  const privEl = document.getElementById('privacy-email');
+  if (privEl) privEl.textContent = firstEmail;
 
   // Build dynamic contact form
-  const wrap = document.getElementById('contact-form-wrap');
-  if (!wrap) return;
+  const formWrap = document.getElementById('contact-form-wrap');
+  if (!formWrap) return;
   const formId = 'contact-main-form';
   const fields = CFG.contactForm || [];
   const endpoint = CFG.formEndpoint || '';
@@ -4465,9 +4986,16 @@ function buildContact() {
         input = `<div class="cps-form-radio-group">${opts}</div>`;
         break;
       }
-      case 'checkbox':
-        input = `<div class="cps-form-checkbox-wrap"><label><input type="checkbox" name="${escAttr(f.label)}" ${reqAttr}/>${f.label||''}</label></div>`;
+      case 'checkbox': {
+        const cxOpts = f.options && f.options.length ? f.options : null;
+        if (cxOpts) {
+          const cxItems = cxOpts.map(o => `<label><input type="checkbox" name="${escAttr(f.label)}" value="${escAttr(o)}"/>${o}</label>`).join('');
+          input = `<div class="cps-form-radio-group">${cxItems}</div>`;
+        } else {
+          input = `<div class="cps-form-checkbox-wrap"><label><input type="checkbox" name="${escAttr(f.label)}" ${reqAttr}/>${f.label||''}</label></div>`;
+        }
         break;
+      }
       default:
         input = `<input type="text" id="${fieldId}" name="${escAttr(f.label)}" ${ph} ${reqAttr}/>`;
     }
@@ -4487,7 +5015,7 @@ function buildContact() {
     }
   }
 
-  wrap.innerHTML = `
+  formWrap.innerHTML = `
     ${heading ? `<h3>${heading}</h3>` : ''}
     ${intro   ? `<p>${intro}</p>`    : ''}
     <form id="${formId}" onsubmit="submitCpsForm(event,'${formId}','${escAttr(endpoint)}','${escAttr(successMsg)}')">
@@ -4505,7 +5033,25 @@ function buildContact() {
    FOOTER
    ============================================= */
 function buildFooter() {
-  document.getElementById('footer-firm-name').textContent = CFG.firmName;
+  // Footer logo
+  const primaryLogo   = CFG.logoPrimary   || '';
+  const alternateLogo = CFG.logoAlternate || '';
+  const footerChoice  = CFG.logoFooterChoice || 'none';
+  const footerLogoH   = CFG.logoFooterHeight || 40;
+  document.documentElement.style.setProperty('--footer-logo-h', footerLogoH + 'px');
+  const footerLogoEl  = document.getElementById('footer-logo');
+  const footerNameEl  = document.getElementById('footer-firm-name');
+  const footerLogoSrc = footerChoice === 'primary'   ? primaryLogo
+                      : footerChoice === 'alternate' ? alternateLogo : '';
+  if (footerLogoEl && footerLogoSrc) {
+    footerLogoEl.src = footerLogoSrc;
+    footerLogoEl.style.display = 'block';
+    if (footerNameEl) footerNameEl.style.display = 'none';
+  } else {
+    if (footerLogoEl) footerLogoEl.style.display = 'none';
+    if (footerNameEl) { footerNameEl.style.display = ''; footerNameEl.textContent = CFG.firmName; }
+  }
+
   document.getElementById('footer-tagline-foot').textContent = CFG.tagline;
   document.getElementById('footer-bio').textContent = CFG.footerBio || (CFG.aboutBio1 ? CFG.aboutBio1.substring(0,120)+'…' : '');
 
@@ -4527,11 +5073,18 @@ function buildFooter() {
     }</div>` : '';
   }
   document.getElementById('footer-copyright').textContent = `© ${new Date().getFullYear()} ${CFG.firmName}. All rights reserved.`;
-  document.getElementById('footer-contact-links').innerHTML = `
-    <a href="tel:${CFG.phoneRaw}">${CFG.phone}</a>
-    <a href="mailto:${CFG.email}">${CFG.email}</a>
-    <a>${CFG.address}</a>
-    <a>${CFG.city}, ${CFG.state} ${CFG.zip}</a>`;
+  const locs = (CFG.locations && CFG.locations.length)
+    ? CFG.locations
+    : [{ name:'', phone:CFG.phone||'', phoneRaw:CFG.phoneRaw||'', email:CFG.email||'',
+         address:CFG.address||'', city:CFG.city||'', state:CFG.state||'', zip:CFG.zip||'' }];
+  document.getElementById('footer-contact-links').innerHTML = locs.map(loc => {
+    const addrLine = [loc.city, loc.state, loc.zip].filter(Boolean).join(', ');
+    return (loc.name ? `<span style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-top:12px;display:block;">${loc.name}</span>` : '') +
+      (loc.phone   ? `<a href="tel:${loc.phoneRaw||loc.phone}">${loc.phone}</a>` : '') +
+      (loc.email   ? `<a href="mailto:${loc.email}">${loc.email}</a>` : '') +
+      (loc.address ? `<a>${loc.address}</a>` : '') +
+      (addrLine    ? `<a>${addrLine}</a>` : '');
+  }).join('');
 }
 
 /* =============================================
@@ -4679,24 +5232,63 @@ function buildFooterNav() {
   const container = document.getElementById('footer-nav-links');
   if (!container) return;
   container.innerHTML = '';
+
+  // Helper: create a plain footer link
+  function makeLink(label, slug) {
+    const a = document.createElement('a');
+    a.textContent = label;
+    a.style.cursor = 'pointer';
+    a.onclick = () => showPage(slug);
+    return a;
+  }
+
+  // Hardcoded pages (home, about) — no children
   footerPages.forEach(p => {
     if (p.key !== 'home' && pt[p.toggleKey || p.key] === false) return;
-    const a = document.createElement('a');
-    a.textContent = p.label;
-    a.style.cursor = 'pointer';
-    a.onclick = () => showPage(p.key);
-    container.appendChild(a);
+    container.appendChild(makeLink(p.label, p.key));
   });
-  // Custom pages in footer
-  (CFG.customPages || []).forEach(cp => {
-    if (cp.enabled === false || cp.hiddenFromNav) return;
-    const a = document.createElement('a');
-    a.textContent = cp.navLabel || cp.header?.title || cp.slug;
-    a.style.cursor = 'pointer';
-    if (cp.parent) a.style.cssText = 'cursor:pointer;padding-left:1em;opacity:0.75;font-size:0.9em;';
-    a.onclick = () => showPage(cp.slug);
-    container.appendChild(a);
+
+  // Custom pages — group children under their parent
+  const customPages = (CFG.customPages || []).filter(cp => cp.enabled !== false && !cp.hiddenFromNav);
+  const topLevel    = customPages.filter(cp => !cp.parent);
+
+  topLevel.forEach(cp => {
+    const children = customPages.filter(c => c.parent === cp.slug);
+    if (!children.length) {
+      container.appendChild(makeLink(cp.navLabel || cp.slug, cp.slug));
+      return;
+    }
+    // Parent with children — build collapsible group
+    const group = document.createElement('div');
+    group.className = 'footer-nav-group';
+
+    const row = document.createElement('div');
+    row.className = 'footer-nav-group-row';
+
+    const parentLink = makeLink(cp.navLabel || cp.slug, cp.slug);
+    row.appendChild(parentLink);
+
+    const chev = document.createElement('button');
+    chev.className = 'footer-nav-chev';
+    chev.textContent = '▸';
+    chev.setAttribute('aria-label', 'Expand ' + (cp.navLabel || cp.slug));
+    chev.onclick = () => {
+      const childList = group.querySelector('.footer-nav-children');
+      const isOpen = childList.classList.toggle('open');
+      chev.textContent = isOpen ? '▾' : '▸';
+    };
+    row.appendChild(chev);
+    group.appendChild(row);
+
+    const childList = document.createElement('div');
+    childList.className = 'footer-nav-children';
+    children.forEach(child => {
+      childList.appendChild(makeLink(child.navLabel || child.slug, child.slug));
+    });
+    group.appendChild(childList);
+    container.appendChild(group);
   });
+
   // Contact CTA button
   const ctaWrap = document.getElementById('footer-cta-wrap');
   if (ctaWrap) ctaWrap.style.display = pt.contact === false ? 'none' : '';
@@ -4732,10 +5324,63 @@ function buildPageHeaders() {
 }
 
 function buildHeader() {
-  document.getElementById('header-firm-name').textContent = CFG.firmName;
-  document.getElementById('header-tagline').textContent = CFG.tagline;
+  // Resolve logo paths
+  const primaryLogo = CFG.logoPrimary || '';
+  const alternateLogo = CFG.logoAlternate || '';
+  const headerChoice = CFG.logoHeaderChoice || 'none';
+  const splashChoice = CFG.logoSplashChoice || 'none';
+  const splashMode  = CFG.logoSplashMode  || 'logo-tagline';
+  const headerLogoH = CFG.logoHeaderHeight || 40;
+  const splashLogoH = CFG.logoSplashHeight || 80;
+
+  // Set CSS custom properties for logo sizes
+  document.documentElement.style.setProperty('--header-logo-h', headerLogoH + 'px');
+  document.documentElement.style.setProperty('--splash-logo-h', splashLogoH + 'px');
+
+  // ── Header logo ──
+  const headerLogoEl = document.getElementById('header-logo');
+  const headerNameEl = document.getElementById('header-firm-name');
+  const headerTagEl  = document.getElementById('header-tagline');
+  const headerLogoSrc = headerChoice === 'primary' ? primaryLogo
+                      : headerChoice === 'alternate' ? alternateLogo : '';
+  if (headerLogoSrc) {
+    headerLogoEl.src = headerLogoSrc;
+    headerLogoEl.style.display = 'block';
+    headerNameEl.style.display = 'none';
+    headerTagEl.style.display  = 'none';
+  } else {
+    headerLogoEl.style.display = 'none';
+    headerNameEl.style.display = '';
+    headerTagEl.style.display  = '';
+    headerNameEl.textContent = CFG.firmName;
+    headerTagEl.textContent  = CFG.tagline;
+  }
+
+  // ── Splash logo ──
+  const splashLogoEl   = document.getElementById('splash-logo');
+  const splashWordmark = document.querySelector('.preloader-wordmark');
+  const splashBar      = document.querySelector('.preloader-bar');
+  const splashSub      = document.getElementById('preloader-sub');
+  const splashLogoSrc  = splashChoice === 'primary' ? primaryLogo
+                       : splashChoice === 'alternate' ? alternateLogo : '';
+  if (splashLogoSrc) {
+    splashLogoEl.src = splashLogoSrc;
+    splashLogoEl.style.display = 'block';
+    const showName    = splashMode === 'logo-name-tagline';
+    const showTagline = splashMode !== 'logo-only';
+    if (splashWordmark) splashWordmark.style.display = showName    ? '' : 'none';
+    if (splashBar)      splashBar.style.display      = showTagline ? '' : 'none';
+    if (splashSub)      splashSub.style.display      = showTagline ? '' : 'none';
+  } else {
+    splashLogoEl.style.display = 'none';
+    if (splashWordmark) splashWordmark.style.display = '';
+    if (splashBar)      splashBar.style.display = '';
+    if (splashSub)      splashSub.style.display = '';
+  }
+
+  // Always set text fallback content
   document.getElementById('preload-firm').textContent = CFG.firmName;
-  document.getElementById('preloader-sub').textContent = CFG.preloaderTagline || '';
+  if (splashSub) splashSub.textContent = CFG.preloaderTagline || '';
   document.getElementById('metaDesc').content = CFG.metaDescription;
   document.getElementById('metaKeys').content = CFG.metaKeywords;
 }
@@ -5656,15 +6301,22 @@ function buildCustomPages() {
   });
 }
 
-// For link/button sections, inherit background from the nearest preceding non-appendage section.
+// For link/button/richtext sections, inherit background from the nearest preceding non-inheriting section.
 function getInheritedBg(sections, idx) {
   for (let i = idx - 1; i >= 0; i--) {
-    const t = sections[i].type;
-    if (t !== 'link' && t !== 'button' && !(t === 'richtext' && sections[i].background === 'inherit')) {
-      return sections[i].background || 'light';
-    }
+    const s = sections[i];
+    const t = s.type;
+    const isAppendage = t === 'link' || t === 'button';
+    const inherits = (s.background === 'inherit') || isAppendage;
+    if (!inherits) return s.background || 'light';
   }
   return 'light';
+}
+
+function bgToClass(bg) {
+  return bg === 'dark' ? 'cps-section-dark section-dark'
+       : bg === 'alt'  ? 'cps-section-alt section-alt'
+       : 'cps-section-light';
 }
 
 const CPS_NO_ZONE_TYPES = new Set(['link','button','cta','stats','two-col','feature-cards','video']);
@@ -5750,13 +6402,19 @@ function buildVideoEmbed(url, mp4) {
 function renderCustomSection(sec, idx, isFirst, allSections) {
   if (!sec || !sec.type) return null;
 
-  const isDark = sec.background === 'dark';
-  const bgClass = isDark ? 'cps-section-dark section-dark'
-                : sec.background === 'alt'  ? 'cps-section-alt section-alt'
-                : 'cps-section-light';
+  // Resolve background — 'inherit' looks back to nearest non-inheriting section
+  const isAppendageType = sec.type === 'link' || sec.type === 'button';
+  const isInheritBg = sec.background === 'inherit' && !isAppendageType;
+  const secBg = isInheritBg
+    ? getInheritedBg(allSections || [], idx)
+    : (sec.background || 'light');
+
+  const isDark = secBg === 'dark';
+  const bgClass = bgToClass(secBg);
 
   const wrapper = document.createElement('section');
   wrapper.className = `section ${bgClass}`;
+  if (isInheritBg) wrapper.classList.add('cps-inherit-bg');
   if (sec.anchorId) wrapper.id = sec.anchorId;
 
   // First section: replaces the page banner — clear fixed header, use banner typography
@@ -5769,6 +6427,10 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
       <div class="section-label-line"></div>
       <span class="section-label-text">${sec.label}</span>
     </div>` : '';
+
+  // If no label, heading, or subtitle — reduce top padding so headerless sections flow together
+  const hasHeader = !!(sec.label || sec.heading || sec.subtitle);
+  if (!hasHeader && !isFirst) wrapper.classList.add('cps-no-header');
 
   // For first section, headings use page-banner-title scale and the h1 tag
   const headTag = isFirst ? 'h1' : 'h2';
@@ -5794,12 +6456,12 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
     // ── TWO COLUMN ──────────────────────────────────────────────
     case 'two-col': {
       const imgSide = sec.imagePosition === 'left' ? 'image-left' : 'image-right';
+      const imgW = sec.imageMaxWidth ? `${sec.imageMaxWidth}px` : '45%';
+      const imgVarStyle = `style="--tc-img-w:${imgW};"`;
       const imgHTML = sec.imagePath
-        ? `<div class="cps-two-col-img" style="${labelHTML ? 'padding-top:34px;' : ''}"><img src="${sec.imagePath}" alt="${sec.heading||''}" loading="lazy"/></div>`
-        : `<div class="cps-two-col-img" style="${labelHTML ? 'padding-top:34px;' : ''}"><div class="cps-two-col-img-placeholder">🏛️</div></div>`;
+        ? `<div class="cps-two-col-img"><img src="${sec.imagePath}" alt="${sec.heading||''}" loading="lazy"/></div>`
+        : `<div class="cps-two-col-img"><div class="cps-two-col-img-placeholder">🏛️</div></div>`;
       const textHTML = `<div class="cps-two-col-text">
-        ${labelHTML}
-        ${sec.heading ? `<${headTag} class="${headClass} cps-heading">${sec.heading}</${headTag}>` : ''}
         <div class="cps-body">${formatBody(sec.body)}</div>
         ${(sec.cta_linkLabel || sec.ctaLabel) ? `<div style="margin-top:28px;"><button class="btn-primary" ${
           sec.cta_linkType === 'internal' ? `onclick="showPage('${escAttr(sec.cta_linkUrl || 'contact')}','${escAttr(sec.cta_anchorId||'')}')"` :
@@ -5808,8 +6470,10 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
         }>${sec.cta_linkLabel || sec.ctaLabel} →</button></div>` : ''}
       </div>`;
       wrapper.innerHTML = `<div class="container">
-        <div class="cps-two-col ${imgSide} reveal">
-          ${sec.imagePosition === 'left' ? imgHTML + textHTML : textHTML + imgHTML}
+        ${labelHTML}
+        ${sec.heading ? `<${headTag} class="${headClass} cps-heading cps-two-col-heading">${sec.heading}</${headTag}>` : ''}
+        <div class="cps-two-col ${imgSide} reveal" ${imgVarStyle}>
+          ${imgHTML}${textHTML}
         </div>
       </div>`;
       break;
@@ -5846,9 +6510,13 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
           ? '<span class="cps-fc-link" onclick="' + linkOnclick + '">' + (card.linkLabel || '') + ' \u2192</span>'
           : '';
         const cardNum = card.num || String(i + 1).padStart(2, '0');
+        const fcImgSize = card.imageSize || 'thumb';
+        const fcLeadHtml = card.imagePath
+          ? `<img class="cps-fc-img--${fcImgSize}" src="${card.imagePath}" alt="${escAttr(card.title||'')}" loading="lazy"/>`
+          : `<div class="cps-fc-num">${cardNum}</div>`;
         return `
         <div class="cps-fc-card reveal reveal-delay-${(i % 4) + 1}">
-          <div class="cps-fc-num">${cardNum}</div>
+          ${fcLeadHtml}
           <h3>${card.title || ''}</h3>
           <p>${card.body || ''}</p>
           ${linkHtml}
@@ -5871,7 +6539,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
         </div>` : labelHTML;
       wrapper.innerHTML = `<div class="container">
         ${headerHtml}
-        <div class="cps-fc-grid${sec.fullWidth ? ' cps-fc-grid--full' : ''}">${fcCards}</div>
+        <div class="cps-fc-grid${sec.fullWidth ? ' cps-fc-grid--full' : ''}" data-cols="${Math.min(fcCards.length || 1, sec.maxCols || 2)}">${fcCards}</div>
       </div>`;
       break;
     }
@@ -5908,9 +6576,18 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
     case 'services': {
       const svcItems = sec.items || [];
       const svcCount = svcItems.length;
-      const svcCols = svcCount <= 1 ? 1 : svcCount === 2 ? 2 : 3;
-      const items = svcItems.map((s, i) => `
-        <div class="service-card reveal reveal-delay-${(i%3)+1}"
+      const svcMaxCols = sec.maxCols || 3;
+      const svcCols = svcCount <= 1 ? 1 : svcCount === 2 ? Math.min(2, svcMaxCols) : svcMaxCols;
+      const items = svcItems.map((s, i) => {
+        const svcImgSize = s.imageSize || 'thumb';
+        const svcFullImg = s.imagePath && svcImgSize === 'full';
+        const svcLeadHtml = s.imagePath
+          ? `<img class="service-img--${svcImgSize}" src="${s.imagePath}" alt="${escAttr(s.title||'')}" loading="lazy"/>`
+          : `<div class="service-icon">${s.icon || '⚖️'}</div>`;
+        const svcBodyOpen  = svcFullImg ? '<div class="service-card-body">' : '';
+        const svcBodyClose = svcFullImg ? '</div>' : '';
+        return `
+        <div class="service-card reveal reveal-delay-${(i%3)+1}${svcFullImg ? ' has-full-img' : ''}"
           ${s.detail ? `onclick="openCpsModalFromCard(this)"
             data-svc-title="${escAttr(s.title)}"
             data-svc-icon="${escAttr(s.icon||'⚖️')}"
@@ -5919,11 +6596,14 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
             data-svc-btn-type="${escAttr(s.btnLinkType||'internal')}"
             data-svc-btn-url="${escAttr(s.btnLinkUrl||'contact')}"
             data-svc-btn-anchor="${escAttr(s.btnAnchorId||'')}"` : ''}>
-          <div class="service-icon">${s.icon || '⚖️'}</div>
+          ${svcLeadHtml}
+          ${svcBodyOpen}
           <h3 class="service-title">${s.title}</h3>
           <p class="service-desc">${s.desc}</p>
           ${s.detail ? `<div class="service-more">Learn More <span>→</span></div>` : ''}
-        </div>`).join('');
+          ${svcBodyClose}
+        </div>`;
+      }).join('');
       wrapper.innerHTML = `<div class="container">
         ${labelHTML}
         ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
@@ -5940,9 +6620,13 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
         const linkHtml = hasLink ? `<div class="step-link" onclick="${
           s.linkType === 'internal' ? `showPage('${escAttr(s.linkUrl)}','${escAttr(s.anchorId||'')}')` : `openSmartLink('${escAttr(s.linkType)}','${escAttr(s.linkUrl)}')`
         }">${escAttr(s.linkLabel)} →</div>` : '';
+        const stepFullImg = s.imagePath && s.imageSize === 'full';
         return `
-        <div class="process-step${i===0?' step-active':''}" data-step="${i+1}">
-          <div class="step-num-wrap"><span class="step-num">${i+1}</span></div>
+        <div class="process-step${i===0?' step-active':''}${stepFullImg?' has-full-img':''}" data-step="${i+1}">
+          <div class="step-line"></div>
+          ${s.imagePath
+            ? `<img class="step-img--${s.imageSize||'thumb'}" src="${s.imagePath}" alt="${escAttr(s.title||'')}" loading="lazy"/>`
+            : `<div class="step-num-wrap"><span class="step-num">${i+1}</span></div>`}
           <div class="step-body${hasLink?' has-step-link':''}">
             <h3 class="step-title">${s.title}</h3>
             <p class="step-desc">${s.body || s.desc || ''}</p>
@@ -5973,7 +6657,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
             <span class="faq-question-text">${f.q}</span>
             <div class="faq-toggle"><span class="faq-toggle-icon">+</span></div>
           </div>
-          <div class="faq-answer"><div class="faq-answer-inner${hasLink?' has-faq-link':''}">${f.a}</div>${linkHtml}</div>
+          <div class="faq-answer"><div class="faq-answer-inner${hasLink?' has-faq-link':''}">${(f.a||'').replace(/\r\n/g,'\n').replace(/\n{2,}/g,'</p><p>').replace(/\n/g,'<br>')}</div>${linkHtml}</div>
         </div>`;
       }).join('');
       wrapper.innerHTML = `<div class="container">
@@ -6158,6 +6842,314 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
     }
 
     // ── TEAM BLOCK ───────────────────────────────────────────────
+    case 'table': {
+      const cols        = parseInt(sec.cols) || 2;
+      const col1Label   = sec.col1Label || 'Column 1';
+      const col2Label   = sec.col2Label || 'Column 2';
+      const col3Label   = sec.col3Label || 'Column 3';
+      const col1Style   = sec.col1Style || 'normal';
+      const col2Style   = sec.col2Style || 'normal';
+      const col3Style   = sec.col3Style || 'normal';
+      const firstColHdr = sec.firstColHeader === true;
+      const items       = sec.items || [];
+      if (!items.length) break;
+
+      wrapper.classList.add('cps-section-table');
+
+      function styleClass(s) {
+        if (s === 'bold') return ' style-bold';
+        if (s === 'large') return ' style-large';
+        if (s === 'bold-large') return ' style-bold-large';
+        return '';
+      }
+
+      const col3th = cols >= 3 ? `<th>${col3Label}</th>` : '';
+      const thead = `<thead><tr><th>${col1Label}</th><th>${col2Label}</th>${col3th}</tr></thead>`;
+
+      const tbodyRows = items.map(it => {
+        const c1Class = (firstColHdr ? ' col-row-hdr' : '') + styleClass(col1Style);
+        const c2Class = styleClass(col2Style);
+        const c3Class = styleClass(col3Style);
+        const c3td = cols >= 3 ? `<td class="${c3Class}">${it.cell3||''}</td>` : '';
+        return `<tr><td class="${c1Class}">${it.cell1||''}</td><td class="${c2Class}">${it.cell2||''}</td>${c3td}</tr>`;
+      }).join('');
+
+      wrapper.innerHTML =
+        '<div class="container">' +
+          labelHTML +
+          (sec.heading  ? '<' + headTag + ' class="' + headClass + ' cps-heading reveal">' + sec.heading + '</' + headTag + '>' : '') +
+          (sec.subtitle ? '<p class="section-subtitle reveal reveal-delay-1" style="' + subtitleStyle + '">' + sec.subtitle + '</p>' : '') +
+          '<div class="reveal reveal-delay-2 cps-tbl-wrap"><table class="cps-tbl">' + thead + '<tbody>' + tbodyRows + '</tbody></table></div>' +
+        '</div>';
+      break;
+    }
+
+    case 'rotating-cards': {
+      const items        = sec.items || [];
+      if (!items.length) break;
+      const visibleCards = parseInt(sec.visibleCards) || 1;
+      const cardHeight   = parseInt(sec.cardHeight) || 420;
+      const showDots     = sec.showDots !== false;
+      const showArrows   = sec.showArrows !== false;
+      const autoplay     = sec.autoplay === true;
+      const autoplaySpd  = (parseInt(sec.autoplaySpeed) || 4) * 1000;
+      const gap          = 16; // px between cards
+      const peek         = 48; // px of next card showing
+      const isMulti      = items.length > 1;
+
+      wrapper.classList.add('cps-section-rc');
+
+      // Unique ID for this carousel instance
+      const rcId = 'rc-' + Math.random().toString(36).slice(2,8);
+
+      // Build card HTML (we'll clone first/last for infinite loop)
+      const cardHtml = (it) => {
+        const isFullBleed = it.fullBleed === true || it.fullBleed === 'true' || it.fullBleed === 'on';
+        const tc = it.textColor || 'dark';
+        const bodyClass = 'cps-rc-card-body text-' + tc;
+        const imgTag = it.imagePath
+          ? (isFullBleed
+              ? '<img class="cps-rc-card-img" src="' + it.imagePath + '" alt="' + (it.title||'') + '" loading="lazy"/><div class="cps-rc-card-overlay"></div>'
+              : '<img class="cps-rc-card-img-std" src="' + it.imagePath + '" alt="' + (it.title||'') + '" loading="lazy"/>')
+          : '';
+        const btnOnclick = it.btnLinkType === 'internal'
+          ? 'showPage(\'' + escAttr(it.btnLinkUrl) + '\',\'' + escAttr(it.btnAnchorId||'') + '\')'
+          : 'openSmartLink(\'' + escAttr(it.btnLinkType) + '\',\'' + escAttr(it.btnLinkUrl) + '\')';
+        const btnHtml = (it.btnLabel && it.btnLinkType && it.btnLinkType !== 'none')
+          ? '<button class="cps-rc-card-btn" onclick="' + btnOnclick + '">' + it.btnLabel + '</button>'
+          : '';
+        const bgStyle = (!it.imagePath && it.bgColor) ? ' style="background:' + escAttr(it.bgColor) + ';"' : '';
+        return '<div class="cps-rc-card' + (isFullBleed ? ' full-bleed' : '') + '"' + bgStyle + '>'
+          + imgTag
+          + '<div class="' + bodyClass + '">'
+          + (it.title ? '<div class="cps-rc-card-title">' + it.title + '</div>' : '')
+          + (it.body  ? '<p class="cps-rc-card-text">' + it.body + '</p>' : '')
+          + btnHtml
+          + '</div></div>';
+      };
+
+      // Build track with enough clones to fill the visible window on snap-back
+      // Clone count = visibleCards so the viewport is never empty during a snap
+      const cloneCount = Math.min(visibleCards, items.length);
+      const leadClones = isMulti
+        ? items.slice(-cloneCount).map(cardHtml).join('')   // last N cards at front
+        : '';
+      const trailClones = isMulti
+        ? items.slice(0, cloneCount).map(cardHtml).join('') // first N cards at end
+        : '';
+      const trackInner = isMulti
+        ? leadClones + items.map(cardHtml).join('') + trailClones
+        : items.map(cardHtml).join('');
+
+      const dotsHtml = (showDots && isMulti)
+        ? '<div class="cps-rc-dots" id="' + rcId + '-dots">'
+          + items.map((_,i) => '<div class="cps-rc-dot' + (i===0?' active':'') + '" data-rcid="' + rcId + '" data-idx="' + i + '" onclick="rcDotClick(this)"></div>').join('')
+          + '</div>'
+        : '';
+
+      const arrowsHtml = (showArrows && isMulti)
+        ? '<div class="cps-rc-arrow cps-rc-arrow-prev" data-rcid="' + rcId + '" onclick="rcArrowClick(this,-1)">&#8592;</div>'
+          + '<div class="cps-rc-arrow cps-rc-arrow-next" data-rcid="' + rcId + '" onclick="rcArrowClick(this,1)">&#8594;</div>'
+        : '';
+
+      wrapper.innerHTML =
+        '<div class="container">'
+          + labelHTML
+          + (sec.heading  ? '<' + headTag + ' class="' + headClass + ' cps-heading reveal">' + sec.heading + '</' + headTag + '>' : '')
+          + (sec.subtitle ? '<p class="section-subtitle reveal reveal-delay-1" style="' + subtitleStyle + '">' + sec.subtitle + '</p>' : '')
+          + '<div class="cps-rc-outer" style="--rc-gap:' + gap + 'px;--rc-peek:' + peek + 'px;">'
+            + arrowsHtml
+            + '<div class="cps-rc-track-wrap" id="' + rcId + '-wrap">'
+              + '<div class="cps-rc-track" id="' + rcId + '-track">' + trackInner + '</div>'
+            + '</div>'
+          + '</div>'
+          + dotsHtml
+        + '</div>';
+
+      // Init carousel — retry until the outer element has a real width
+      function _rcInit() {
+        const totalCards = items.length;
+        let current = 0;
+        let isDragging = false, dragStartX = 0, dragDelta = 0;
+        let autoTimer = null;
+
+        const outer  = wrapper.querySelector('.cps-rc-outer');
+        const wrap   = document.getElementById(rcId + '-wrap');
+        const track  = document.getElementById(rcId + '-track');
+        const dots   = document.getElementById(rcId + '-dots');
+
+        function getContainerW() {
+          return outer.offsetWidth || wrap.offsetWidth || wrapper.offsetWidth || 800;
+        }
+
+        function getEffectiveVisible() {
+          const w = window.innerWidth;
+          if (w < 580) return 1;
+          if (w < 900) return Math.min(visibleCards, 2);
+          return visibleCards;
+        }
+
+        function getCardW() {
+          const ow = getContainerW();
+          const ev = getEffectiveVisible();
+          const effectivePeek = (isMulti && items.length > ev) ? peek : 0;
+          return Math.floor((ow - (ev - 1) * gap - effectivePeek) / ev);
+        }
+
+        function setCardSizes() {
+          const cw = getCardW();
+          const ow = getContainerW();
+          track.querySelectorAll('.cps-rc-card').forEach(c => {
+            c.style.width = cw + 'px';
+            c.style.flexBasis = cw + 'px';
+            c.style.flexShrink = '0';
+            c.style.height = cardHeight + 'px';
+            c.style.marginRight = gap + 'px';
+          });
+        }
+
+        const cloneCount = Math.min(visibleCards, totalCards);
+
+        function getOffset(idx) {
+          const cw = getCardW();
+          return isMulti ? (idx + cloneCount) * (cw + gap) : idx * (cw + gap);
+        }
+
+        function goTo(idx, animate) {
+          if (animate === false) {
+            track.style.transition = 'none';
+            track.style.transform = 'translateX(-' + getOffset(idx) + 'px)';
+            track.offsetHeight;
+            track.style.transition = '';
+          } else {
+            track.style.transition = '';
+            track.style.transform = 'translateX(-' + getOffset(idx) + 'px)';
+          }
+          current = idx;
+          updateDots();
+        }
+
+        function updateDots() {
+          if (!dots) return;
+          dots.querySelectorAll('.cps-rc-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === current);
+          });
+        }
+
+        let isSnapping = false;
+        const TRANS_MS = 450;
+
+        function next() {
+          if (isSnapping) return;
+          if (current >= totalCards - 1) {
+            // Slide to trail clone of card0 (position totalCards in real-card space)
+            isSnapping = true;
+            goTo(totalCards, true);
+            setTimeout(() => {
+              goTo(0, false);
+              isSnapping = false;
+            }, TRANS_MS);
+          } else {
+            goTo(current + 1, true);
+          }
+        }
+
+        function prev() {
+          if (isSnapping) return;
+          if (current <= 0) {
+            // Slide to lead clone of last card (position -1 in real-card space)
+            isSnapping = true;
+            goTo(-1, true);
+            setTimeout(() => {
+              goTo(totalCards - 1, false);
+              isSnapping = false;
+            }, TRANS_MS);
+          } else {
+            goTo(current - 1, true);
+          }
+        }
+
+        // Single card — size, show, responsive — no navigation
+        if (!isMulti) {
+          setCardSizes();
+          goTo(0, false);
+          if (!window._rcRegistry) window._rcRegistry = {};
+          window._rcRegistry[rcId] = { outer, refresh: () => { setCardSizes(); goTo(0, false); } };
+          window.addEventListener('resize', () => { setCardSizes(); goTo(0, false); });
+          return;
+        }
+
+        // Register in global registry
+        if (!window._rcRegistry) window._rcRegistry = {};
+        window._rcRegistry[rcId] = { next, prev, goTo, outer, refresh: () => { setCardSizes(); goTo(current, false); } };
+        if (!window.rcDotClick) {
+          window.rcDotClick = function(el) {
+            const id = el.dataset.rcid, i = parseInt(el.dataset.idx);
+            if (window._rcRegistry[id]) window._rcRegistry[id].goTo(i, true);
+          };
+        }
+        if (!window.rcArrowClick) {
+          window.rcArrowClick = function(el, dir) {
+            const id = el.dataset.rcid;
+            if (window._rcRegistry[id]) { if (dir < 0) window._rcRegistry[id].prev(); else window._rcRegistry[id].next(); }
+          };
+        }
+
+        // Drag/swipe
+        wrap.addEventListener('mousedown', e => { if (isSnapping) return; isDragging = true; dragStartX = e.clientX; track.style.transition = 'none'; });
+        window.addEventListener('mousemove', e => {
+          if (!isDragging) return;
+          dragDelta = e.clientX - dragStartX;
+          track.style.transform = 'translateX(' + (-getOffset(current) + dragDelta) + 'px)';
+        });
+        window.addEventListener('mouseup', () => {
+          if (!isDragging) return;
+          isDragging = false;
+          if (dragDelta < -50) next();
+          else if (dragDelta > 50) prev();
+          else goTo(current, true);
+          dragDelta = 0;
+        });
+        wrap.addEventListener('touchstart', e => { if (isSnapping) return; dragStartX = e.touches[0].clientX; track.style.transition = 'none'; }, { passive: true });
+        wrap.addEventListener('touchmove', e => {
+          dragDelta = e.touches[0].clientX - dragStartX;
+          track.style.transform = 'translateX(' + (-getOffset(current) + dragDelta) + 'px)';
+        }, { passive: true });
+        wrap.addEventListener('touchend', () => {
+          if (dragDelta < -50) next();
+          else if (dragDelta > 50) prev();
+          else goTo(current, true);
+          dragDelta = 0;
+        });
+
+        // Autoplay
+        function startAuto() {
+          if (!autoplay) return;
+          autoTimer = setInterval(next, autoplaySpd);
+        }
+        function stopAuto() { clearInterval(autoTimer); }
+        wrap.addEventListener('mouseenter', stopAuto);
+        wrap.addEventListener('mouseleave', startAuto);
+
+        // Init
+        setCardSizes();
+        goTo(0, false);
+        startAuto();
+        window.addEventListener('resize', () => { setCardSizes(); goTo(current, false); });
+      }
+      // Retry loop — keeps trying until outer has a real width
+      function _rcTry() {
+        const o = wrapper.querySelector('.cps-rc-outer');
+        if (o && o.offsetWidth > 0) {
+          _rcInit();
+        } else {
+          requestAnimationFrame(_rcTry);
+        }
+      }
+      requestAnimationFrame(_rcTry);
+      break;
+    }
+
     case 'team': {
       // Use configured attorneys or custom items
       const members = sec.useAttorneys !== false
@@ -6171,7 +7163,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
           ${photoHTML}
           <div class="cps-team-info">
             <div class="cps-team-name">${m.name||''}</div>
-            ${m.degree ? `<div class="cps-team-title">${m.degree}</div>` : ''}
+            ${m.degree || (m.education && m.education.length) ? `<div class="cps-team-title">${(m.education && m.education.length ? m.education : [m.degree]).join(' · ')}</div>` : ''}
             ${m.bio ? `<p class="cps-team-bio">${m.bio.substring(0,140)}…</p>` : ''}
           </div>
         </div>`;
@@ -6179,7 +7171,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
       wrapper.innerHTML = `<div class="container">
         ${labelHTML}
         ${sec.heading ? `<${headTag} class="${headClass} reveal">${sec.heading}</${headTag}>` : ''}
-        <div class="cps-team-grid">${cards}</div>
+        <div class="cps-team-grid" data-cols="${sec.maxCols || 3}">${cards}</div>
       </div>`;
       break;
     }
@@ -6216,10 +7208,18 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
             input = `<div class="cps-form-radio-group">${opts}</div>`;
             break;
           }
-          case 'checkbox':
-            input = `<div class="cps-form-checkbox-wrap">
+          case 'checkbox': {
+            const cxOpts = f.options && f.options.length ? f.options : null;
+            if (cxOpts) {
+              const cxItems = cxOpts.map(o => `<label><input type="checkbox" name="${escAttr(f.label)}" value="${escAttr(o)}"/>${o}</label>`).join('');
+              input = `<div class="cps-form-radio-group">${cxItems}</div>`;
+            } else {
+              input = `<div class="cps-form-checkbox-wrap">
               <label><input type="checkbox" name="${escAttr(f.label)}" ${reqAttr}/>${f.label || ''}</label>
             </div>`;
+            }
+            break;
+          }
             break;
           default:
             input = `<input type="text" id="${fieldId}" name="${escAttr(f.label)}" ${ph} ${reqAttr}/>`;
@@ -6296,23 +7296,11 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
 
     // ── RICH TEXT ─────────────────────────────────────────────────
     case 'richtext': {
-      const rtBg = sec.background || 'inherit';
-      let rtBgClass, rtIsInherit;
-      if (rtBg === 'inherit') {
-        const inherited = getInheritedBg(allSections || [], idx);
-        rtBgClass = inherited === 'dark' ? 'cps-section-dark section-dark'
-                  : inherited === 'alt'  ? 'cps-section-alt section-alt'
-                  : 'cps-section-light';
-        rtIsInherit = true;
-      } else {
-        rtBgClass = rtBg === 'dark' ? 'cps-section-dark section-dark'
-                  : rtBg === 'alt'  ? 'cps-section-alt section-alt'
-                  : 'cps-section-light';
-        rtIsInherit = false;
-      }
-      wrapper.className = `section ${rtBgClass}${rtIsInherit ? ' cps-rt-inherit' : ''}`;
+      // bgClass, isDark, isInheritBg already resolved at top of renderCustomSection.
+      // Richtext inheriting bg gets tighter continuation padding via cps-rt-inherit.
+      if (isInheritBg) wrapper.classList.add('cps-rt-inherit');
 
-      const rtIsDark = rtBgClass.includes('section-dark');
+      const rtIsDark = isDark;
       const rtHtml = sec.richContent || '';
       const imgPath = sec.imagePath || '';
       const imgPos  = sec.imagePos  || 'none';
@@ -6494,7 +7482,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
         '</div>';
       }).join('');
 
-      const cols = Math.min(Math.max(cards.length, 1), 4);
+      const cols = Math.min(Math.max(cards.length, 1), sec.maxCols || 4);
       wrapper.innerHTML = '<div class="container">' +
         labelHTML +
         (sec.heading  ? '<' + headTag + ' class="' + headClass + ' cps-heading reveal">' + sec.heading + '</' + headTag + '>' : '') +
@@ -6600,7 +7588,7 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
         '</div>';
       }).join('');
 
-      const flipCols = Math.min(Math.max(flipCards.length, 1), 4);
+      const flipCols = Math.min(Math.max(flipCards.length, 1), sec.maxCols || 3);
       wrapper.innerHTML = '<div class="container">' +
         labelHTML +
         (sec.heading  ? '<' + headTag + ' class="' + headClass + ' cps-heading reveal">' + sec.heading + '</' + headTag + '>' : '') +
@@ -6700,6 +7688,8 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
       const mqSep = sec.mqSeparator || '·';
       const speedMap = { slow: '50s', medium: '30s', fast: '15s' };
       const dur = speedMap[mqSpeed] || '30s';
+      const logoSizeMap = { sm: '32px', md: '48px', lg: '64px', xl: '96px' };
+      const mqLogoH = logoSizeMap[sec.mqLogoSize] || '48px';
       let trackInner = '';
       if (mqMode === 'text') {
         const text = sec.mqText || '';
@@ -6723,9 +7713,101 @@ function renderCustomSection(sec, idx, isFirst, allSections) {
         (sec.heading ? '<' + headTag + ' class="' + headClass + ' cps-heading reveal">' + sec.heading + '</' + headTag + '>' : '') +
         (sec.subtitle ? '<p class="section-subtitle reveal reveal-delay-1" style="' + subtitleStyle + '">' + sec.subtitle + '</p>' : '') +
       '</div>' +
-      '<div class="cps-marquee-outer ' + dirClass + pauseClass + '" style="--marquee-dur:' + dur + ';margin-top:' + (hasHeader ? '32px' : '0') + ';">' +
+      '<div class="cps-marquee-outer ' + dirClass + pauseClass + '" style="--marquee-dur:' + dur + ';--mq-logo-h:' + mqLogoH + ';margin-top:' + (hasHeader ? '32px' : '0') + ';">' +
         '<div class="cps-marquee-track">' + trackInner + '</div>' +
       '</div>';
+      break;
+    }
+
+    case 'locations': {
+      const locs = CFG.locations && CFG.locations.length ? CFG.locations : [];
+      const apiKey      = CFG.mapsApiKey || '';
+      const dispMode    = sec.displayMode  || 'cards';
+      const layoutMode  = sec.layoutMode   || 'top';
+      const featureSide = sec.featureSide  || 'left';
+      const mapMode     = sec.mapMode      || 'linkout';
+      const maxCols     = parseInt(sec.maxCols) || 2;
+      const showHours   = sec.showHours !== false;
+      const items       = sec.items || [];
+      if (!items.length) break;
+
+      wrapper.classList.add('cps-section-locations');
+
+      const locDetails = (loc) => {
+        const addrParts = [loc.address, [loc.city, loc.stateAbbr, loc.zip].filter(Boolean).join(', ')].filter(Boolean);
+        const phone  = loc.phone  ? '<div class="cps-loc-detail"><span class="cps-loc-detail-icon">📞</span><span><a href="tel:' + (loc.phoneRaw||loc.phone) + '">' + loc.phone + '</a></span></div>' : '';
+        const fax    = loc.fax    ? '<div class="cps-loc-detail"><span class="cps-loc-detail-icon">📠</span><span>' + loc.fax + '</span></div>' : '';
+        const email  = loc.email  ? '<div class="cps-loc-detail"><span class="cps-loc-detail-icon">✉️</span><span><a href="mailto:' + loc.email + '">' + loc.email + '</a></span></div>' : '';
+        const addr   = addrParts.length ? '<div class="cps-loc-detail"><span class="cps-loc-detail-icon">📍</span><span>' + addrParts.join('<br>') + '</span></div>' : '';
+        let hoursHtml = '';
+        if (showHours && (loc.hours||[]).length) {
+          const rows = loc.hours.map(h => '<div class="cps-loc-hours-row"><span>' + h.days + '</span><span>' + h.hours + '</span></div>').join('');
+          hoursHtml = '<div class="cps-loc-hours"><div class="cps-loc-hours-label">Office Hours</div>' + rows + '</div>';
+        }
+        return phone + fax + email + addr + hoursHtml;
+      }
+
+      const locMap = (loc) => {
+        if (mapMode === 'none') return '';
+        const addrParts = [loc.address, [loc.city, loc.stateAbbr, loc.zip].filter(Boolean).join(', ')].filter(Boolean);
+        const addrEncoded = encodeURIComponent(addrParts.join(', '));
+        const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=' + addrEncoded;
+        if (mapMode === 'interactive' && apiKey && addrParts.length) {
+          const embedSrc = 'https://www.google.com/maps/embed/v1/place?key=' + encodeURIComponent(apiKey) + '&q=' + addrEncoded;
+          return '<iframe src="' + embedSrc + '" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
+        }
+        if (!addrParts.length) return '';
+        return '<a class="cps-loc-map-btn" href="' + mapsUrl + '" target="_blank" rel="noopener">📍 View on Google Maps →</a>';
+      }
+
+      let innerHtml = '';
+
+      if (dispMode === 'cards') {
+        const sideClass = layoutMode === 'side' ? ' cps-loc-card--side' : '';
+        const cards = items.map(item => {
+          const locIdx = parseInt(item.locationIndex) || 0;
+          const loc = locs[locIdx];
+          if (!loc) return '';
+          const imgHtml = item.imagePath ? '<img class="cps-loc-card-img" src="' + item.imagePath + '" alt="' + (loc.name || '') + '" loading="lazy"/>' : '';
+          const mapHtml = locMap(loc);
+          const mapWrap = mapHtml ? '<div class="cps-loc-map-wrap">' + mapHtml + '</div>' : '';
+          return '<div class="cps-loc-card' + sideClass + ' reveal">' +
+            imgHtml +
+            '<div class="cps-loc-card-body">' +
+              (loc.name ? '<div class="cps-loc-name">' + loc.name + '</div>' : '') +
+              locDetails(loc) +
+            '</div>' +
+            mapWrap +
+          '</div>';
+        }).join('');
+        innerHtml = '<div class="cps-loc-grid" style="--loc-cols:' + maxCols + ';">' + cards + '</div>';
+
+      } else {
+        const rows = items.map((item, ii) => {
+          const locIdx = parseInt(item.locationIndex) || 0;
+          const loc = locs[locIdx];
+          if (!loc) return '';
+          const imgHtml = item.imagePath ? '<img class="cps-loc-card-img" src="' + item.imagePath + '" alt="' + (loc.name || '') + '" loading="lazy"/>' : '';
+          const mapHtml = locMap(loc);
+          const reverseClass = featureSide === 'right' ? ' reverse' : '';
+          return '<div class="cps-loc-feature-row' + reverseClass + ' reveal">' +
+            '<div class="cps-loc-feature-media">' + imgHtml + mapHtml + '</div>' +
+            '<div class="cps-loc-feature-info">' +
+              (loc.name ? '<div class="cps-loc-feature-name">' + loc.name + '</div>' : '') +
+              locDetails(loc) +
+            '</div>' +
+          '</div>';
+        }).join('');
+        innerHtml = '<div class="cps-loc-feature-list">' + rows + '</div>';
+      }
+
+      wrapper.innerHTML =
+        '<div class="container">' +
+          labelHTML +
+          (sec.heading  ? '<' + headTag + ' class="' + headClass + ' cps-heading reveal">' + sec.heading + '</' + headTag + '>' : '') +
+          (sec.subtitle ? '<p class="section-subtitle reveal reveal-delay-1" style="' + subtitleStyle + '">' + sec.subtitle + '</p>' : '') +
+          innerHtml +
+        '</div>';
       break;
     }
 
@@ -6926,6 +8008,27 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight')  lightboxNav(1);
 });
 
+// Touch swipe support for lightbox
+let _lbTouchStartX = 0;
+let _lbTouchStartY = 0;
+(function() {
+  const lb = document.getElementById('cpsLightbox');
+  if (!lb) return;
+  lb.addEventListener('touchstart', e => {
+    _lbTouchStartX = e.touches[0].clientX;
+    _lbTouchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  lb.addEventListener('touchend', e => {
+    if (!lb.classList.contains('open')) return;
+    const dx = e.changedTouches[0].clientX - _lbTouchStartX;
+    const dy = e.changedTouches[0].clientY - _lbTouchStartY;
+    // Only trigger if horizontal swipe dominates and exceeds threshold
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+      lightboxNav(dx < 0 ? 1 : -1);
+    }
+  }, { passive: true });
+})();
+
 function closeServiceModal() {
   const m = document.getElementById('serviceModal');
   if (m) m.classList.remove('open');
@@ -7030,6 +8133,23 @@ document.addEventListener('DOMContentLoaded', () => {
   _run(initReveal,           'initReveal');
   _run(initProcessObserver,  'initProcessObserver');
   _run(initAuth,             'initAuth');
+
+  // Restore carousels on bfcache back-navigation
+  window.addEventListener('pageshow', e => {
+    if (e.persisted && window._rcRegistry) {
+      Object.values(window._rcRegistry).forEach(rc => {
+        if (!rc.refresh) return;
+        function tryRefresh() {
+          if (rc.outer && rc.outer.offsetWidth > 0) {
+            rc.refresh();
+          } else {
+            requestAnimationFrame(tryRefresh);
+          }
+        }
+        requestAnimationFrame(tryRefresh);
+      });
+    }
+  });
 
   // Seed initial history state and navigate to hash if present
   try {

@@ -838,12 +838,17 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
       <div class="section-badge">🏛️ Business Details</div>
       <div class="page-section-title">Business Information</div>
       <div class="page-section-sub">Core firm details used throughout the site.</div>
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">🏛️</span> Business Identity</div>
           <span class="panel-chevron">▼</span>
         </div>
         <div class="panel-body">
+          <div class="field-group">
+            <label>Google Maps API Key</label>
+            <input type="text" id="f_mapsApiKey" placeholder="AIza…"/>
+            <div class="field-hint">Used by Location sections for interactive map embeds. <a href="https://console.cloud.google.com" target="_blank" style="color:var(--gold);">Get a key →</a> Enable the Maps Embed API. Leave blank to use link-out mode instead.</div>
+          </div>
           <div class="form-row-2">
             <div class="field-group">
               <label>Business Name</label>
@@ -866,7 +871,81 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
           </div>
         </div>
       </div>
-      <div class="panel open">
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="panel-title-icon">🖼️</span> Branding & Logo</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="form-row-2">
+            <div class="field-group">
+              <label>Primary Logo Path</label>
+              <input type="text" id="f_logoPrimary" placeholder="images/logo.png"/>
+              <div class="field-hint">Used in header and/or splash screen.</div>
+            </div>
+            <div class="field-group">
+              <label>Alternate Logo Path</label>
+              <input type="text" id="f_logoAlternate" placeholder="images/logo-alt.png"/>
+              <div class="field-hint">Optional — e.g. light version for dark backgrounds.</div>
+            </div>
+          </div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px;">Header Logo</div>
+          <div class="form-row-2">
+            <div class="field-group" style="margin:0;">
+              <label>Logo to Use</label>
+              <select id="f_logoHeaderChoice">
+                <option value="none">None (use text name)</option>
+                <option value="primary">Primary Logo</option>
+                <option value="alternate">Alternate Logo</option>
+              </select>
+            </div>
+            <div class="field-group" style="margin:0;">
+              <label>Logo Height (px)</label>
+              <input type="number" id="f_logoHeaderHeight" placeholder="40" min="16" max="120" style="width:100px;"/>
+            </div>
+          </div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px;">Splash Screen Logo</div>
+          <div class="form-row-2">
+            <div class="field-group" style="margin:0;">
+              <label>Logo to Use</label>
+              <select id="f_logoSplashChoice">
+                <option value="none">None (use text name)</option>
+                <option value="primary">Primary Logo</option>
+                <option value="alternate">Alternate Logo</option>
+              </select>
+            </div>
+            <div class="field-group" style="margin:0;">
+              <label>Logo Height (px)</label>
+              <input type="number" id="f_logoSplashHeight" placeholder="80" min="20" max="300" style="width:100px;"/>
+            </div>
+          </div>
+          <div class="field-group" style="margin-top:12px;">
+            <label>Splash Display Mode</label>
+            <select id="f_logoSplashMode">
+              <option value="logo-name-tagline">Logo + name / line / tagline</option>
+              <option value="logo-tagline">Logo + line / tagline</option>
+              <option value="logo-only">Logo only</option>
+            </select>
+            <div class="field-hint">Logo + line / tagline hides the site name. Logo only hides everything else.</div>
+          </div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px;">Footer Logo</div>
+          <div class="form-row-2">
+            <div class="field-group" style="margin:0;">
+              <label>Logo to Use</label>
+              <select id="f_logoFooterChoice">
+                <option value="none">None (use text name)</option>
+                <option value="primary">Primary Logo</option>
+                <option value="alternate">Alternate Logo</option>
+              </select>
+            </div>
+            <div class="field-group" style="margin:0;">
+              <label>Logo Height (px)</label>
+              <input type="number" id="f_logoFooterHeight" placeholder="40" min="16" max="120" style="width:100px;"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">📊</span> Stats Bar</div>
           <div style="display:flex;align-items:center;gap:10px;margin-left:auto;margin-right:12px;" onclick="event.stopPropagation()">
@@ -898,7 +977,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
         <label class="switch"><input type="checkbox" id="toggle_page_contact" onchange="onPageToggle(this)"/><span class="switch-slider"></span></label>
       </div>
       <div class="section-panels-wrap" id="toggle_page_contact_wrap">
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">🏷️</span> Page Header</div>
           <span class="panel-chevron">▼</span>
@@ -910,75 +989,10 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
           <div class="field-group"><label>CTA Button Label</label><input type="text" id="f_ctaLabel" placeholder="Free Consultation"/><div class="field-hint">Text used on the nav and footer call-to-action button.</div></div>
         </div>
       </div>
-      <div class="panel open">
-        <div class="panel-header" onclick="togglePanel(this)">
-          <div class="panel-title"><span class="panel-title-icon">📞</span> Phone &amp; Email</div>
-          <span class="panel-chevron">▼</span>
-        </div>
-        <div class="panel-body">
-          <div class="form-row-2">
-            <div class="field-group">
-              <label>Phone (Display)</label>
-              <input type="tel" id="f_phone" placeholder="(555) 000-0000"/>
-            </div>
-            <div class="field-group">
-              <label>Phone (Raw, for tel: link)</label>
-              <input type="text" id="f_phoneRaw" placeholder="+15550000000"/>
-            </div>
-          </div>
-          <div class="form-row-2">
-            <div class="field-group">
-              <label>Fax</label>
-              <input type="tel" id="f_fax"/>
-            </div>
-            <div class="field-group">
-              <label>Email Address</label>
-              <input type="email" id="f_email"/>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="panel open">
-        <div class="panel-header" onclick="togglePanel(this)">
-          <div class="panel-title"><span class="panel-title-icon">📍</span> Address</div>
-          <span class="panel-chevron">▼</span>
-        </div>
-        <div class="panel-body">
-          <div class="field-group">
-            <label>Street Address</label>
-            <input type="text" id="f_address"/>
-          </div>
-          <div class="form-row-3">
-            <div class="field-group">
-              <label>City</label>
-              <input type="text" id="f_city"/>
-            </div>
-            <div class="field-group">
-              <label>State</label>
-              <input type="text" id="f_state"/>
-            </div>
-            <div class="field-group">
-              <label>State Abbreviation</label>
-              <input type="text" id="f_stateAbbr" maxlength="2"/>
-            </div>
-          </div>
-          <div class="field-group" style="max-width:180px;">
-            <label>ZIP Code</label>
-            <input type="text" id="f_zip"/>
-          </div>
-        </div>
-      </div>
-      <div class="panel open">
-        <div class="panel-header" onclick="togglePanel(this)">
-          <div class="panel-title"><span class="panel-title-icon">🕐</span> Office Hours</div>
-          <span class="panel-chevron">▼</span>
-        </div>
-        <div class="panel-body">
-          <div id="hours-list" class="array-list"></div>
-          <button class="btn-add" onclick="addHour()">+ Add Hour Row</button>
-        </div>
-      </div>
-      <div class="panel open">
+      <!-- Locations list -->
+      <div id="locations-list"></div>
+      <button class="btn-add" style="margin-bottom:16px;" onclick="addLocation()">+ Add Location</button>
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">📬</span> Contact Form</div>
           <span class="panel-chevron">▼</span>
@@ -996,7 +1010,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
           <button class="btn-add" onclick="addContactFormField()">+ Add Field</button>
         </div>
       </div>
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">🔗</span> Social Media</div>
           <span class="panel-chevron">▼</span>
@@ -1015,7 +1029,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
       <div class="page-section-title">Site Search</div>
       <div class="page-section-sub">Configure the full-screen search experience for your visitors.</div>
 
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">⚙️</span> Search Settings</div>
           <span class="panel-chevron">▼</span>
@@ -1046,7 +1060,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
         </div>
       </div>
 
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">🚫</span> Excluded Pages</div>
           <span class="panel-chevron">▼</span>
@@ -1070,7 +1084,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
         <label class="switch"><input type="checkbox" id="toggle_page_about" onchange="onPageToggle(this)"/><span class="switch-slider"></span></label>
       </div>
       <div class="section-panels-wrap" id="toggle_page_about_wrap">
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">🏷️</span> Page Header</div>
           <span class="panel-chevron">▼</span>
@@ -1111,7 +1125,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
       <div class="page-section-sub">Hero banner and page section builder.</div>
       <div class="section-badge" style="margin-top:4px;">🖼️ Hero Section</div>
       <p class="page-section-sub" style="margin-bottom:12px;">The large full-screen banner at the top of the homepage.</p>
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">✍️</span> Headline &amp; Text</div>
           <span class="panel-chevron">▼</span>
@@ -1181,7 +1195,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
           </div>
         </div>
       </div>
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">🌅</span> Background</div>
           <span class="panel-chevron">▼</span>
@@ -1337,7 +1351,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
       <div class="section-badge">🎨 Design</div>
       <div class="page-section-title">Colors &amp; Typography</div>
       <div class="page-section-sub">Control the visual identity of the entire site.</div>
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">🎨</span> Color Palette</div>
           <span class="panel-chevron">▼</span>
@@ -1364,7 +1378,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
           </div>
         </div>
       </div>
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">🔤</span> Typography</div>
           <span class="panel-chevron">▼</span>
@@ -1402,6 +1416,18 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
               </select>
             </div>
           </div>
+          <div class="form-row-2" style="margin-top:10px;">
+            <div class="field-group" style="margin:0;">
+              <label>Custom Display Font <span style="font-weight:400;font-size:11px;">(overrides dropdown)</span></label>
+              <input type="text" id="f_fontDisplayCustom" placeholder="e.g. Cormorant Garamond" oninput="updateFontPreview()"/>
+              <div class="field-hint"><a href="https://fonts.google.com" target="_blank" style="color:var(--gold);">Browse Google Fonts →</a> Enter the name exactly as shown.</div>
+            </div>
+            <div class="field-group" style="margin:0;">
+              <label>Custom Body Font <span style="font-weight:400;font-size:11px;">(overrides dropdown)</span></label>
+              <input type="text" id="f_fontBodyCustom" placeholder="e.g. Nunito Sans" oninput="updateFontPreview()"/>
+              <div class="field-hint">Name must match Google Fonts exactly, including spaces and capitalisation.</div>
+            </div>
+          </div>
           <div class="font-preview-box" id="fontPreviewBox">
             <div class="font-preview-display" id="fontPreviewDisplay">The Quick Brown Fox Jumps Over the Lazy Dog.</div>
             <div class="font-preview-body" id="fontPreviewBody">We guide families through every step of the adoption process — clearly, compassionately, and with deep legal expertise.</div>
@@ -1416,7 +1442,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
       <div class="page-section-title">SEO &amp; Meta Tags</div>
       <div class="page-section-sub">Help your site get found in search engines.</div>
 
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">🔍</span> Meta Tags</div>
           <span class="panel-chevron">▼</span>
@@ -1427,7 +1453,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
           <div class="field-group"><label>Google Analytics ID</label><input type="text" id="f_gaId" placeholder="G-XXXXXXXXXX"/></div>
         </div>
       </div>
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">📄</span> Page Titles</div>
           <span class="panel-chevron">▼</span>
@@ -1449,7 +1475,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
       <div class="page-section-sub">Manage PIN-based access for your site and individual pages.</div>
 
       <!-- Site Access -->
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">🌐</span> Site Access</div>
           <span class="panel-chevron">▼</span>
@@ -1472,7 +1498,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
       </div>
 
       <!-- PIN Pad Settings -->
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">🔢</span> PIN Pad Appearance</div>
           <span class="panel-chevron">▼</span>
@@ -1548,7 +1574,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
       </div>
 
       <!-- Members List -->
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">👥</span> Members</div>
           <span class="panel-chevron">▼</span>
@@ -1561,7 +1587,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
       </div>
 
       <!-- Page Access -->
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">📄</span> Page Access</div>
           <span class="panel-chevron">▼</span>
@@ -1577,7 +1603,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
       <div class="section-badge">📤 Export</div>
       <div class="page-section-title">Export Configuration</div>
       <div class="page-section-sub">Download your config.js file to deploy alongside your website.</div>
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">📤</span> config.js Preview</div>
           <span class="panel-chevron">▼</span>
@@ -1590,7 +1616,7 @@ html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; backgr
           <div class="code-block" id="codePreview">Click "Refresh Preview" to see your config.js</div>
         </div>
       </div>
-      <div class="panel open">
+      <div class="panel">
         <div class="panel-header" onclick="togglePanel(this)">
           <div class="panel-title"><span class="panel-title-icon">📂</span> Deployment Instructions</div>
           <span class="panel-chevron">▼</span>
@@ -1638,6 +1664,10 @@ const LS_FAB     = () => window._SITE_KEY + '_adminFabPos';
    ============================================= */
 let DATA = {
   firmName:"", tagline:"", preloaderTagline:"",
+  logoPrimary:"", logoAlternate:"",
+  logoHeaderChoice:"none", logoHeaderHeight:40,
+  logoSplashChoice:"none", logoSplashHeight:80, logoSplashMode:"logo-name-tagline",
+  logoFooterChoice:"none", logoFooterHeight:40,
   pageHeaders:{
     about:        {label:"About Us",   title:"About Us", subtitle:""},
     contact:      {label:"Get in Touch"},
@@ -1651,6 +1681,7 @@ let DATA = {
   phone:"", phoneRaw:"",
   fax:"", email:"",
   address:"", city:"", state:"", stateAbbr:"", zip:"",
+  locations:[],
   hours:[],
   socialLinks:[],
   stats:[],
@@ -1805,27 +1836,42 @@ function applyAdminColors() {
    LOAD DATA INTO FORM
    ============================================= */
 function loadForm() {
+  setVal('f_mapsApiKey', DATA.mapsApiKey || '');
   setVal('f_firmName', DATA.firmName);
   setVal('f_tagline', DATA.tagline);
   setVal('f_footerBio', DATA.footerBio||'');
   const animEl = document.getElementById('f_animateStats');
   if (animEl) animEl.checked = DATA.animateStats === true;
   setVal('f_preloaderTagline', DATA.preloaderTagline||'');
+  setVal('f_logoPrimary',      DATA.logoPrimary      || '');
+  setVal('f_logoAlternate',    DATA.logoAlternate    || '');
+  setVal('f_logoHeaderHeight', DATA.logoHeaderHeight || 40);
+  setVal('f_logoSplashHeight', DATA.logoSplashHeight || 80);
+  const lhc = document.getElementById('f_logoHeaderChoice');
+  if (lhc) lhc.value = DATA.logoHeaderChoice || 'none';
+  const lsc = document.getElementById('f_logoSplashChoice');
+  if (lsc) lsc.value = DATA.logoSplashChoice || 'none';
+  const lsm = document.getElementById('f_logoSplashMode');
+  if (lsm) lsm.value = DATA.logoSplashMode || 'logo-name-tagline';
+  const lfc = document.getElementById('f_logoFooterChoice');
+  if (lfc) lfc.value = DATA.logoFooterChoice || 'none';
+  setVal('f_logoFooterHeight', DATA.logoFooterHeight || 40);
   // Page Headers
   const ph = DATA.pageHeaders || {};
   const pages = ['about'];
   const fields = ['label','title','subtitle'];
   pages.forEach(p => fields.forEach(f => { const el = document.getElementById('ph_'+p+'_'+f); if(el) el.value = (ph[p]&&ph[p][f]) ? ph[p][f] : ''; }));
   const contactLbl = document.getElementById('ph_contact_label'); if(contactLbl) contactLbl.value = (ph.contact&&ph.contact.label) ? ph.contact.label : '';
-  setVal('f_phone', DATA.phone);
-  setVal('f_phoneRaw', DATA.phoneRaw);
-  setVal('f_fax', DATA.fax);
-  setVal('f_email', DATA.email);
-  setVal('f_address', DATA.address);
-  setVal('f_city', DATA.city);
-  setVal('f_state', DATA.state);
-  setVal('f_stateAbbr', DATA.stateAbbr);
-  setVal('f_zip', DATA.zip);
+  // Seed locations from flat fields if not present
+  if (!DATA.locations || DATA.locations.length === 0) {
+    DATA.locations = [{
+      name: '', phone: DATA.phone||'', phoneRaw: DATA.phoneRaw||'', fax: DATA.fax||'',
+      email: DATA.email||'', address: DATA.address||'', city: DATA.city||'',
+      state: DATA.state||'', stateAbbr: DATA.stateAbbr||'', zip: DATA.zip||'',
+      hours: (DATA.hours||[]).slice()
+    }];
+  }
+  buildLocationsList();
   setVal('f_heroHeadline', DATA.heroHeadline);
   setVal('f_heroSubline', DATA.heroSubline);
   setVal('f_heroTrustBullets', (DATA.heroTrustBullets||[]).join('\n'));
@@ -1895,6 +1941,8 @@ function loadForm() {
   setColor('f_fcBody','f_fcBodyHex', DATA.fontColors.body);
   setSelectVal('f_fontDisplay', DATA.fontDisplay);
   setSelectVal('f_fontBody', DATA.fontBody);
+  setVal('f_fontDisplayCustom', DATA.fontDisplayCustom || '');
+  setVal('f_fontBodyCustom', DATA.fontBodyCustom || '');
   const hb = DATA.heroBg;
   document.querySelectorAll('input[name="heroBgType"]').forEach(r => { if(r.value===hb.type) r.checked=true; });
   updateHeroBgUI();
@@ -1942,7 +1990,6 @@ function loadForm() {
   buildHeroVideoClipsList();
   updateVideoLoopUI();
   buildStatsList();
-  buildHoursList();
   buildSocialList();
   buildHeroSlidesList();
   // Seed attorneys array from legacy flat fields on first load
@@ -1950,6 +1997,7 @@ function loadForm() {
     DATA.attorneys = [{
       name: DATA.attorneyName||'',
       degree: DATA.attorneyDegree||'',
+      education: DATA.attorneyDegree ? [DATA.attorneyDegree] : [],
       photo: DATA.attorneyPhoto||'',
       credentials: (DATA.attorneyCredentials||[]).slice(),
       bio1: DATA.aboutBio1||'',
@@ -1961,13 +2009,17 @@ function loadForm() {
   updateAboutNavLabel({ value: DATA.aboutNavLabel || 'About Us' });
   updateFontPreview();
   loadToggles();
-  // Custom pages
-  if (!Array.isArray(DATA.homeSections)) DATA.homeSections = [];
-  buildHomeSectionsList();
-  if (!Array.isArray(DATA.aboutSections)) DATA.aboutSections = [];
-  buildAboutSectionsList();
+  // Custom pages must be initialised first so getInternalPageOptions works in home/about section builders
   if (!Array.isArray(DATA.customPages)) DATA.customPages = [];
+  // Ensure all pages and home/about sections have anchor IDs before any getAnchorOptions calls
+  DATA.customPages.forEach(pg => { if (Array.isArray(pg.sections)) ensureAnchorIds(pg.sections); });
+  if (!Array.isArray(DATA.homeSections)) DATA.homeSections = [];
+  ensureAnchorIds(DATA.homeSections);
+  if (!Array.isArray(DATA.aboutSections)) DATA.aboutSections = [];
+  ensureAnchorIds(DATA.aboutSections);
   buildCustomPagesList();
+  buildHomeSectionsList();
+  buildAboutSectionsList();
   // Apply site color scheme to admin UI
   applyAdminColors();
 }
@@ -2146,7 +2198,7 @@ function addTierFeature(pi, si, ci) {
   card.features.push({ label: '', status: 'yes', isGroup: false });
   if (pi === 'h') buildHomeSectionsList();
   else if (pi === 'a') buildAboutSectionsList();
-  else buildCustomPagesList();
+  else rebuildAfterMutation(pi);
   autosave();
 }
 
@@ -2159,7 +2211,7 @@ function removeTierFeature(pi, si, ci, fi) {
   card.features.splice(fi, 1);
   if (pi === 'h') buildHomeSectionsList();
   else if (pi === 'a') buildAboutSectionsList();
-  else buildCustomPagesList();
+  else rebuildAfterMutation(pi);
   autosave();
 }
 
@@ -2176,7 +2228,7 @@ function moveTierFeature(pi, si, ci, fi, dir) {
   card.features[fi2] = tmp;
   if (pi === 'h') buildHomeSectionsList();
   else if (pi === 'a') buildAboutSectionsList();
-  else buildCustomPagesList();
+  else rebuildAfterMutation(pi);
   autosave();
 }
 
@@ -2190,7 +2242,7 @@ function addFlipFeature(pi, si, ci) {
   card.features.push({ label: '', status: '', isGroup: false });
   if (pi === 'h') buildHomeSectionsList();
   else if (pi === 'a') buildAboutSectionsList();
-  else buildCustomPagesList();
+  else rebuildAfterMutation(pi);
   autosave();
 }
 
@@ -2203,7 +2255,7 @@ function removeFlipFeature(pi, si, ci, fi) {
   card.features.splice(fi, 1);
   if (pi === 'h') buildHomeSectionsList();
   else if (pi === 'a') buildAboutSectionsList();
-  else buildCustomPagesList();
+  else rebuildAfterMutation(pi);
   autosave();
 }
 
@@ -2220,7 +2272,7 @@ function moveFlipFeature(pi, si, ci, fi, dir) {
   card.features[fi2] = tmp;
   if (pi === 'h') buildHomeSectionsList();
   else if (pi === 'a') buildAboutSectionsList();
-  else buildCustomPagesList();
+  else rebuildAfterMutation(pi);
   autosave();
 }
 
@@ -2268,12 +2320,22 @@ function persistToLocalStorage() {
 }
 
 function collectData() {
+  DATA.mapsApiKey = getVal('f_mapsApiKey');
   DATA.firmName = getVal('f_firmName');
   DATA.tagline = getVal('f_tagline');
   DATA.footerBio = getVal('f_footerBio');
   const _animEl = document.getElementById('f_animateStats');
   DATA.animateStats = _animEl ? _animEl.checked : false;
   DATA.preloaderTagline = getVal('f_preloaderTagline');
+  DATA.logoPrimary       = getVal('f_logoPrimary');
+  DATA.logoAlternate     = getVal('f_logoAlternate');
+  DATA.logoHeaderChoice  = getVal('f_logoHeaderChoice')  || 'none';
+  DATA.logoHeaderHeight  = parseInt(getVal('f_logoHeaderHeight'))  || 40;
+  DATA.logoSplashChoice  = getVal('f_logoSplashChoice')  || 'none';
+  DATA.logoSplashHeight  = parseInt(getVal('f_logoSplashHeight'))  || 80;
+  DATA.logoSplashMode    = getVal('f_logoSplashMode')    || 'logo-tagline';
+  DATA.logoFooterChoice  = getVal('f_logoFooterChoice')  || 'none';
+  DATA.logoFooterHeight  = parseInt(getVal('f_logoFooterHeight'))  || 40;
   // Page Headers
   const phPages = ['about'];
   const phFields = ['label','title','subtitle'];
@@ -2283,15 +2345,19 @@ function collectData() {
     phFields.forEach(f => { const el = document.getElementById('ph_'+p+'_'+f); DATA.pageHeaders[p][f] = el ? el.value.trim() : ''; });
   });
   DATA.pageHeaders.contact = { label: (document.getElementById('ph_contact_label')||{value:''}).value.trim() };
-  DATA.phone = getVal('f_phone');
-  DATA.phoneRaw = getVal('f_phoneRaw');
-  DATA.fax = getVal('f_fax');
-  DATA.email = getVal('f_email');
-  DATA.address = getVal('f_address');
-  DATA.city = getVal('f_city');
-  DATA.state = getVal('f_state');
-  DATA.stateAbbr = getVal('f_stateAbbr');
-  DATA.zip = getVal('f_zip');
+  DATA.locations = collectLocations();
+  // Mirror first location into legacy flat fields for backwards compat
+  const loc0 = (DATA.locations && DATA.locations[0]) || {};
+  DATA.phone     = loc0.phone     || '';
+  DATA.phoneRaw  = loc0.phoneRaw  || '';
+  DATA.fax       = loc0.fax       || '';
+  DATA.email     = loc0.email     || '';
+  DATA.address   = loc0.address   || '';
+  DATA.city      = loc0.city      || '';
+  DATA.state     = loc0.state     || '';
+  DATA.stateAbbr = loc0.stateAbbr || '';
+  DATA.zip       = loc0.zip       || '';
+  DATA.hours     = loc0.hours     || [];
   DATA.heroHeadline = getVal('f_heroHeadline');
   DATA.heroSubline = getVal('f_heroSubline');
   DATA.heroTrustBullets = getVal('f_heroTrustBullets').split('\n').map(s=>s.trim()).filter(Boolean);
@@ -2359,6 +2425,8 @@ function collectData() {
   DATA.fontColors = {heading:getVal('f_fcHeadingHex'),body:getVal('f_fcBodyHex'),onDark:'#ffffff',onDarkMuted:'#f3f8fb'};
   DATA.fontDisplay = getVal('f_fontDisplay');
   DATA.fontBody = getVal('f_fontBody');
+  DATA.fontDisplayCustom = getVal('f_fontDisplayCustom').trim();
+  DATA.fontBodyCustom = getVal('f_fontBodyCustom').trim();
   const hbType = document.querySelector('input[name="heroBgType"]:checked');
   DATA.heroBg.type = hbType ? hbType.value : 'color';
   DATA.heroBg.bgColor = getVal('f_heroBgColorHex');
@@ -2379,7 +2447,7 @@ function collectData() {
   DATA.heroBg.videoHold = parseInt(document.getElementById('f_heroVideoHold')?.value) || 4;
   collectHeroVideoClips();
   DATA.stats = collectArray('stats-list', ['num','label','animate']);
-  DATA.hours = collectArray('hours-list', ['days','hours']);
+  // hours now collected inside collectLocations() → mirrored to DATA.hours via loc0
   DATA.socialLinks = collectArray('social-list', ['platform','url']);
   DATA.heroBg.slides = collectArray('hero-slides-list', ['imagePath','position']);
   DATA.attorneys = collectAttorneys();
@@ -2436,6 +2504,36 @@ function updateAttorneyLabel(input) {
   const panel = input.closest('.attorney-accordion');
   if (panel) { const lbl = panel.querySelector('.attorney-label'); if (lbl) lbl.textContent = input.value || 'Team Member'; }
 }
+
+function addAttorneyEducation(ai) {
+  const list = document.querySelector(`.attorney-education-list[data-a="${ai}"]`);
+  if (!list) return;
+  const ei = list.querySelectorAll('[data-edu-idx]').length;
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex;gap:6px;align-items:center;margin-bottom:6px;';
+  row.dataset.eduIdx = ei;
+  row.innerHTML = `<input type="text" data-a="${ai}" data-field="education" data-ei="${ei}" value="" placeholder="e.g. J.D., Harvard Law" style="flex:1;min-width:0;"/>` +
+    `<button class="btn-remove" onclick="removeAttorneyEducation(${ai},${ei})" style="flex-shrink:0;">×</button>`;
+  list.appendChild(row);
+  row.querySelector('input').focus();
+  autosave();
+}
+
+function removeAttorneyEducation(ai, ei) {
+  const list = document.querySelector(`.attorney-education-list[data-a="${ai}"]`);
+  if (!list) return;
+  const row = list.querySelector(`[data-edu-idx="${ei}"]`);
+  if (row) row.remove();
+  // Re-index remaining rows
+  list.querySelectorAll('[data-edu-idx]').forEach((r, newEi) => {
+    r.dataset.eduIdx = newEi;
+    const inp = r.querySelector('input');
+    if (inp) { inp.dataset.ei = newEi; }
+    const btn = r.querySelector('button');
+    if (btn) btn.setAttribute('onclick', `removeAttorneyEducation(${ai},${newEi})`);
+  });
+  autosave();
+}
 function updateAboutNavLabel(input) {
   const val = (typeof input === 'string' ? input : input.value) || 'About Us';
   const sidebarLbl = document.getElementById('sidebar-about-label');
@@ -2487,7 +2585,14 @@ function buildAttorneyAccordions() {
           </div>
           <div class="field-group">
             <label>Degree / Education</label>
-            <input type="text" data-a="${i}" data-field="degree" value="${escHtml(a.degree||'')}"/>
+            <div class="attorney-education-list" data-a="${i}">
+              ${(a.education && a.education.length ? a.education : (a.degree ? [a.degree] : [''])).map((edu, ei) => `
+                <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px;" data-edu-idx="${ei}">
+                  <input type="text" data-a="${i}" data-field="education" data-ei="${ei}" value="${escHtml(edu)}" placeholder="e.g. J.D., Harvard Law" style="flex:1;min-width:0;"/>
+                  <button class="btn-remove" onclick="removeAttorneyEducation(${i},${ei})" style="flex-shrink:0;">×</button>
+                </div>`).join('')}
+            </div>
+            <button class="btn-add" style="margin-top:4px;font-size:11px;padding:4px 10px;" onclick="addAttorneyEducation(${i})">+ Add Degree</button>
           </div>
         </div>
         <div class="field-group">
@@ -2628,7 +2733,8 @@ function collectAttorneys() {
       : (panel.querySelector(`[data-a="${i}"][data-field="btnLinkUrl-url"]`)?.value.trim() || '');
     return {
       name:        get('name'),
-      degree:      get('degree'),
+      degree:      panel.querySelector(`[data-a="${i}"][data-field="education"][data-ei="0"]`)?.value.trim() || get('degree') || '',
+      education:   Array.from(panel.querySelectorAll(`[data-a="${i}"][data-field="education"]`)).map(el => el.value.trim()).filter(Boolean),
       photo:       get('photo'),
       credentials: get('credentials-text').split('\n').map(s=>s.trim()).filter(Boolean),
       bio1:        get('bio1'),
@@ -2785,11 +2891,178 @@ function buildStatsList() {
 function addStat() { collectData(); DATA.stats.push({num:'',label:''}); buildStatsList(); autosave(); }
 
 
-function buildHoursList() {
-  const list = document.getElementById('hours-list');
-  list.innerHTML = (DATA.hours||[]).map((h,i) => arrayItemHtml(i,[{key:'days',label:'Days'},{key:'hours',label:'Hours'}],h,'hours-list')).join('');
+function buildLocationsList() {
+  const container = document.getElementById('locations-list');
+  if (!container) return;
+  const locs = DATA.locations || [];
+  container.innerHTML = locs.map((loc, li) => {
+    const hoursRows = (loc.hours||[]).map((h, hi) => `
+      <div class="array-item" data-loc="${li}" data-hi="${hi}" style="margin-bottom:4px;">
+        <div class="array-item-header">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="array-item-label">#${hi+1}</span>
+          </div>
+          <button class="btn-remove" onclick="removeLocationHour(${li},${hi})">×</button>
+        </div>
+        <div class="form-row-2">
+          <div class="field-group" style="margin:0;"><label>Days</label><input type="text" data-loc="${li}" data-field="hours-days" data-hi="${hi}" value="${escHtml(h.days||'')}" placeholder="Mon – Fri"/></div>
+          <div class="field-group" style="margin:0;"><label>Hours</label><input type="text" data-loc="${li}" data-field="hours-time" data-hi="${hi}" value="${escHtml(h.hours||'')}" placeholder="9:00am – 5:00pm"/></div>
+        </div>
+      </div>`).join('');
+    const title = loc.name || ('Location #' + (li+1));
+    const isFirst = li === 0;
+    const isLast  = li === locs.length - 1;
+    return `<div class="panel open location-panel" data-loc-idx="${li}" draggable="false" style="margin-bottom:8px;">
+      <div class="panel-header" onclick="togglePanel(this)" style="cursor:pointer;">
+        <div class="panel-title" style="display:flex;align-items:center;gap:8px;">
+          <span class="location-drag-handle" title="Drag to reorder" style="cursor:grab;font-size:14px;color:var(--muted);padding:2px 4px;flex-shrink:0;" onclick="event.stopPropagation()">⠿</span>
+          <span class="panel-title-icon">📍</span>
+          <span class="location-label">${escHtml(title)}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <button class="cp-move-btn" onclick="moveLocation(${li},-1);event.stopPropagation();" title="Move up" ${isFirst?'disabled':''}>↑</button>
+          <button class="cp-move-btn" onclick="moveLocation(${li},1);event.stopPropagation();" title="Move down" ${isLast?'disabled':''}>↓</button>
+          ${locs.length > 1 ? `<button class="btn-remove" onclick="removeLocation(${li});event.stopPropagation();">×</button>` : ''}
+          <span class="panel-chevron">▼</span>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="field-group">
+          <label>Location Name</label>
+          <input type="text" data-loc="${li}" data-field="name" value="${escHtml(loc.name||'')}" placeholder="e.g. Birmingham Office" oninput="updateLocationLabel(this,${li})"/>
+        </div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin:10px 0 6px;">Phone &amp; Email</div>
+        <div class="form-row-2">
+          <div class="field-group" style="margin-bottom:6px;"><label>Phone (Display)</label><input type="tel" data-loc="${li}" data-field="phone" value="${escHtml(loc.phone||'')}" placeholder="(555) 000-0000"/></div>
+          <div class="field-group" style="margin-bottom:6px;"><label>Phone (Raw, for tel: link)</label><input type="text" data-loc="${li}" data-field="phoneRaw" value="${escHtml(loc.phoneRaw||'')}" placeholder="+15550000000"/></div>
+        </div>
+        <div class="form-row-2">
+          <div class="field-group" style="margin-bottom:6px;"><label>Fax</label><input type="tel" data-loc="${li}" data-field="fax" value="${escHtml(loc.fax||'')}"/></div>
+          <div class="field-group" style="margin-bottom:6px;"><label>Email Address</label><input type="email" data-loc="${li}" data-field="email" value="${escHtml(loc.email||'')}"/></div>
+        </div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin:10px 0 6px;">Address</div>
+        <div class="field-group" style="margin-bottom:6px;"><label>Street Address</label><input type="text" data-loc="${li}" data-field="address" value="${escHtml(loc.address||'')}"/></div>
+        <div class="form-row-3" style="margin-bottom:6px;">
+          <div class="field-group" style="margin:0;"><label>City</label><input type="text" data-loc="${li}" data-field="city" value="${escHtml(loc.city||'')}"/></div>
+          <div class="field-group" style="margin:0;"><label>State</label><input type="text" data-loc="${li}" data-field="state" value="${escHtml(loc.state||'')}"/></div>
+          <div class="field-group" style="margin:0;"><label>State Abbr.</label><input type="text" data-loc="${li}" data-field="stateAbbr" value="${escHtml(loc.stateAbbr||'')}" maxlength="2"/></div>
+        </div>
+        <div class="field-group" style="max-width:180px;margin-bottom:10px;"><label>ZIP Code</label><input type="text" data-loc="${li}" data-field="zip" value="${escHtml(loc.zip||'')}"/></div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin:10px 0 6px;">Office Hours</div>
+        <div class="array-list location-hours-list" data-loc="${li}">${hoursRows}</div>
+        <button class="btn-add" style="margin-top:4px;" onclick="addLocationHour(${li})">+ Add Hour Row</button>
+      </div>
+    </div>`;
+  }).join('');
+  initLocationsDragDrop();
 }
-function addHour() { DATA.hours.push({days:'',hours:''}); buildHoursList(); }
+
+function updateLocationLabel(input, li) {
+  const panel = input.closest('.location-panel');
+  if (panel) { const lbl = panel.querySelector('.location-label'); if (lbl) lbl.textContent = input.value || ('Location #' + (li+1)); }
+}
+
+function moveLocation(li, dir) {
+  collectData();
+  const locs = DATA.locations;
+  const newIdx = li + dir;
+  if (newIdx < 0 || newIdx >= locs.length) return;
+  [locs[li], locs[newIdx]] = [locs[newIdx], locs[li]];
+  buildLocationsList();
+  autosave();
+}
+
+function initLocationsDragDrop() {
+  const container = document.getElementById('locations-list');
+  if (!container) return;
+  let dragSrc = null;
+  container.querySelectorAll('.location-panel').forEach(panel => {
+    const handle = panel.querySelector('.location-drag-handle');
+    if (!handle) return;
+    panel.draggable = false;
+    handle.addEventListener('mousedown', () => { panel.draggable = true; });
+    handle.addEventListener('mouseup',   () => { panel.draggable = false; });
+    panel.addEventListener('dragstart', e => {
+      dragSrc = panel;
+      panel.style.opacity = '0.4';
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    panel.addEventListener('dragend', () => {
+      panel.draggable = false;
+      panel.style.opacity = '';
+      container.querySelectorAll('.location-panel').forEach(p => p.style.borderTop = '');
+    });
+    panel.addEventListener('dragover', e => {
+      e.preventDefault();
+      if (!dragSrc || panel === dragSrc) return;
+      container.querySelectorAll('.location-panel').forEach(p => p.style.borderTop = '');
+      panel.style.borderTop = '2px solid var(--gold)';
+    });
+    panel.addEventListener('drop', e => {
+      e.preventDefault();
+      if (!dragSrc || dragSrc === panel) return;
+      const fromIdx = parseInt(dragSrc.dataset.locIdx);
+      const toIdx   = parseInt(panel.dataset.locIdx);
+      collectData();
+      const moved = DATA.locations.splice(fromIdx, 1)[0];
+      DATA.locations.splice(toIdx, 0, moved);
+      buildLocationsList();
+      autosave();
+    });
+  });
+}
+
+function addLocation() {
+  collectData();
+  DATA.locations = DATA.locations || [];
+  DATA.locations.push({ name:'', phone:'', phoneRaw:'', fax:'', email:'', address:'', city:'', state:'', stateAbbr:'', zip:'', hours:[] });
+  buildLocationsList();
+  autosave();
+}
+
+function removeLocation(li) {
+  if (!confirm('Remove this location?')) return;
+  collectData();
+  DATA.locations.splice(li, 1);
+  buildLocationsList();
+  autosave();
+}
+
+function addLocationHour(li) {
+  collectData();
+  if (!DATA.locations[li]) return;
+  DATA.locations[li].hours = DATA.locations[li].hours || [];
+  DATA.locations[li].hours.push({ days:'', hours:'' });
+  buildLocationsList();
+  autosave();
+}
+
+function removeLocationHour(li, hi) {
+  collectData();
+  if (!DATA.locations[li]) return;
+  DATA.locations[li].hours.splice(hi, 1);
+  buildLocationsList();
+  autosave();
+}
+
+function collectLocations() {
+  const container = document.getElementById('locations-list');
+  if (!container) return DATA.locations || [];
+  return Array.from(container.querySelectorAll('.location-panel')).map((panel, li) => {
+    const g = f => panel.querySelector(`[data-loc="${li}"][data-field="${f}"]`)?.value.trim() || '';
+    const hours = Array.from(panel.querySelectorAll(`[data-loc="${li}"][data-field="hours-days"]`)).map((el, hi) => ({
+      days:  el.value.trim(),
+      hours: panel.querySelector(`[data-loc="${li}"][data-field="hours-time"][data-hi="${hi}"]`)?.value.trim() || '',
+    }));
+    return { name:g('name'), phone:g('phone'), phoneRaw:g('phoneRaw'), fax:g('fax'), email:g('email'), address:g('address'), city:g('city'), state:g('state'), stateAbbr:g('stateAbbr'), zip:g('zip'), hours };
+  });
+}
+
+function buildHoursList() {
+  // Hours are now managed per-location inside buildLocationsList()
+  // This function is kept as a no-op for backwards compatibility
+}
+function addHour() { /* no-op — use addLocationHour(li) instead */ }
 
 const SOCIAL_PLATFORMS = [
   { value:'facebook',  label:'Facebook' },
@@ -2977,6 +3250,13 @@ function getAnchorOptions(pageSlug, currentAnchor) {
 
 function updateAnchorSelect(anchorSel, pageSlug, currentVal) {
   if (!anchorSel) return;
+  // Ensure anchor IDs are generated before reading them
+  if (pageSlug === 'home' && Array.isArray(DATA.homeSections)) ensureAnchorIds(DATA.homeSections);
+  else if (pageSlug === 'about' && Array.isArray(DATA.aboutSections)) ensureAnchorIds(DATA.aboutSections);
+  else {
+    const cp = (DATA.customPages||[]).find(p => p.slug === pageSlug);
+    if (cp && Array.isArray(cp.sections)) ensureAnchorIds(cp.sections);
+  }
   anchorSel.innerHTML = getAnchorOptions(pageSlug, currentVal || '');
 }
 
@@ -3276,6 +3556,24 @@ function onJurisdictionLinkTypeChange(pi, si, sel) {
   if (anchorEl) anchorEl.style.display = val === 'internal' ? '' : 'none';
 }
 
+// Live-update row field labels when column label inputs are typed into
+function updateFeeLabels(pi, si) {
+  // Find the col1 input to locate the right section card
+  const colInput = document.querySelector(`[data-cp="${pi}"][data-sec="${si}"][data-fee-col]`);
+  if (!colInput) return;
+  const secCard = colInput.closest('.cp-section-card');
+  if (!secCard) return;
+
+  const defaults = { '1': 'Name', '2': 'Value', '3': 'Details' };
+  [1, 2, 3].forEach(col => {
+    const inp = secCard.querySelector(`[data-fee-col="${col}"]`);
+    const newLabel = inp ? (inp.value.trim() || defaults[String(col)]) : defaults[String(col)];
+    secCard.querySelectorAll(`[data-fee-label="${col}"]`).forEach(lbl => {
+      lbl.textContent = newLabel;
+    });
+  });
+}
+
 function onFeeLinkTypeChange(pi, si, ii, sel) {
   const val = sel.value;
   const intEl = document.getElementById('cp-fee-internal-' + pi + '-' + si + '-' + ii);
@@ -3391,6 +3689,22 @@ function onServiceBtnLinkTypeChange(pi, si, ii, sel) {
   const intEl = document.getElementById('cp-svc-internal-' + pi + '-' + si + '-' + ii);
   const urlEl = document.getElementById('cp-svc-url-' + pi + '-' + si + '-' + ii);
   const anchorEl = document.getElementById('cp-svc-anchor-' + pi + '-' + si + '-' + ii);
+  if (intEl) intEl.style.display = val === 'internal' ? '' : 'none';
+  if (urlEl) {
+    urlEl.style.display = (val === 'external' || val === 'file') ? '' : 'none';
+    const label = urlEl.querySelector('label');
+    const input = urlEl.querySelector('input');
+    if (label) label.textContent = val === 'file' ? 'File Path / URL' : 'External URL';
+    if (input) input.placeholder = val === 'file' ? 'files/doc.pdf' : 'https://';
+  }
+  if (anchorEl) anchorEl.style.display = val === 'internal' ? '' : 'none';
+}
+
+function onRcBtnLinkTypeChange(pi, si, ii, sel) {
+  const val = sel.value;
+  const intEl = document.getElementById('cp-rc-internal-' + pi + '-' + si + '-' + ii);
+  const urlEl = document.getElementById('cp-rc-url-' + pi + '-' + si + '-' + ii);
+  const anchorEl = document.getElementById('cp-rc-anchor-' + pi + '-' + si + '-' + ii);
   if (intEl) intEl.style.display = val === 'internal' ? '' : 'none';
   if (urlEl) {
     urlEl.style.display = (val === 'external' || val === 'file') ? '' : 'none';
@@ -3627,33 +3941,43 @@ function collectBlogPosts() {
    ============================================= */
 
 const CP_SECTION_TYPES = [
-  { value:'text',         label:'📝 Text Block' },
-  { value:'two-col',      label:'🖼️ Two Column (Text + Image)' },
-  { value:'stats',        label:'📊 Stats Bar' },
-  { value:'feature-cards',label:'🃏 Feature Cards' },
-  { value:'bullets',      label:'✅ Bullet / Checklist' },
-  { value:'services',     label:'⚖️ Services Grid' },
-  { value:'steps',        label:'🗺️ Process Steps' },
-  { value:'faq',          label:'❓ FAQ Accordion' },
-  { value:'testimonials', label:'💬 Testimonials' },
-  { value:'resources',    label:'📰 Resources / Blog Cards' },
-  { value:'cta',          label:'📣 CTA Banner' },
-  { value:'checklist',    label:'📋 Document Checklist' },
-  { value:'timeline',     label:'📅 Timeline' },
-  { value:'fees',         label:'📊 Data Table' },
-  { value:'jurisdiction', label:'⚠️ Jurisdiction Notice' },
-  { value:'team',         label:'👥 Team Block' },
-  { value:'form',         label:'📬 Custom Form' },
-  { value:'accordion',    label:'🪗 Accordion' },
-  { value:'logo-strip',   label:'🏷️ Logo / Partner Strip' },
-  { value:'marquee',      label:'📡 Marquee / Ticker' },
-  { value:'video',        label:'🎬 Video Embed' },
-  { value:'gallery',      label:'🖼️ Image Gallery' },
-  { value:'pricing',      label:'🏆 Tier Cards' },
-  { value:'flip-cards',  label:'🃏 Flip Cards' },
-  { value:'link',         label:'🔗 Link' },
-  { value:'button',       label:'🔘 Button' },
-  { value:'richtext',     label:'✍️ Rich Text Block' },
+  // 🗒️ Content & Text
+  { value:'text',           label:'🗒️ Text Block' },
+  { value:'two-col',        label:'🗒️ Two Column (Text + Image)' },
+  { value:'richtext',       label:'🗒️ Rich Text Block' },
+  // 🃏 Cards & Grids
+  { value:'feature-cards',  label:'🃏 Feature Cards' },
+  { value:'services',       label:'🃏 Services Grid' },
+  { value:'flip-cards',     label:'🃏 Flip Cards' },
+  { value:'rotating-cards', label:'🃏 Rotating Cards' },
+  { value:'pricing',        label:'🃏 Tier Cards' },
+  // 📋 Process & Information
+  { value:'steps',          label:'📋 Process Steps' },
+  { value:'timeline',       label:'📋 Timeline' },
+  { value:'checklist',      label:'📋 Document Checklist' },
+  { value:'bullets',        label:'📋 Bullet List' },
+  { value:'resources',      label:'📋 Resources / Blog Cards' },
+  // 📊 Data & Structure
+  { value:'stats',          label:'📊 Stats Bar' },
+  { value:'table',          label:'📊 Table' },
+  { value:'fees',           label:'📊 Data Table' },
+  { value:'jurisdiction',   label:'📊 Jurisdiction Notice' },
+  // 🎬 Media
+  { value:'gallery',        label:'🎬 Image Gallery' },
+  { value:'video',          label:'🎬 Video Embed' },
+  { value:'logo-strip',     label:'🎬 Logo / Partner Strip' },
+  { value:'marquee',        label:'🎬 Marquee / Ticker' },
+  // 👥 People & Social Proof
+  { value:'team',           label:'👥 Team Block' },
+  { value:'locations',      label:'👥 Locations' },
+  { value:'testimonials',   label:'👥 Testimonials' },
+  { value:'accordion',      label:'👥 Accordion' },
+  { value:'faq',            label:'👥 FAQ' },
+  { value:'form',           label:'👥 Custom Form' },
+  // 📐 Page Structure
+  { value:'cta',            label:'📐 CTA Banner' },
+  { value:'button',         label:'📐 Button' },
+  { value:'link',           label:'📐 Link' },
 ];
 
 const CP_BG_OPTIONS = [
@@ -3718,7 +4042,7 @@ function addHomeSection() {
   if (!sel) return;
   const type = sel.value;
   const defaults = { type, label: '', background: 'light' };
-  if (['stats','bullets','services','steps','faq','timeline','fees'].includes(type)) defaults.items = [];
+  if (['stats','bullets','services','steps','faq','timeline','fees','table','rotating-cards'].includes(type)) defaults.items = [];
   if (type === 'checklist') defaults.categories = [];
   if (type === 'form') { defaults.fields = []; defaults.submitLabel = 'Send Message'; defaults.successMsg = "Thank you! We'll be in touch soon."; }
   if (type === 'link') { defaults.linkType = 'none'; defaults.linkUrl = ''; defaults.linkLabel = ''; }
@@ -3730,6 +4054,9 @@ function addHomeSection() {
   if (type === 'video') { defaults.videoLayout = 'contained'; defaults.videoPosition = 'left'; defaults.embedUrl = ''; defaults.mp4Url = ''; }
   if (type === 'gallery') { defaults.items = []; defaults.galleryCols = 3; }
   if (type === 'pricing') { defaults.items = []; }
+  if (type === 'locations') { defaults.items = []; defaults.displayMode = 'cards'; defaults.layoutMode = 'top'; defaults.mapMode = 'linkout'; defaults.maxCols = 2; defaults.showHours = true; }
+  if (type === 'table') { defaults.cols = 2; defaults.col1Label = 'Column 1'; defaults.col2Label = 'Column 2'; defaults.col3Label = ''; defaults.col1Style = 'normal'; defaults.col2Style = 'normal'; defaults.col3Style = 'normal'; defaults.firstColHeader = false; defaults.items = []; }
+  if (type === 'rotating-cards') { defaults.items = []; defaults.visibleCards = 1; defaults.cardHeight = 420; defaults.showDots = true; defaults.showArrows = true; defaults.autoplay = false; defaults.autoplaySpeed = 4; }
   if (!Array.isArray(DATA.homeSections)) DATA.homeSections = [];
   DATA.homeSections.push(defaults);
   buildHomeSectionsList();
@@ -3784,7 +4111,7 @@ function addAboutSection() {
   if (!sel) return;
   const type = sel.value;
   const defaults = { type, label: '', background: 'light' };
-  if (['stats','bullets','services','steps','faq','timeline','fees'].includes(type)) defaults.items = [];
+  if (['stats','bullets','services','steps','faq','timeline','fees','table','rotating-cards'].includes(type)) defaults.items = [];
   if (type === 'checklist') defaults.categories = [];
   if (type === 'form') { defaults.fields = []; defaults.submitLabel = 'Send Message'; defaults.successMsg = "Thank you! We'll be in touch soon."; }
   if (type === 'link') { defaults.linkType = 'none'; defaults.linkUrl = ''; defaults.linkLabel = ''; }
@@ -3796,6 +4123,9 @@ function addAboutSection() {
   if (type === 'video') { defaults.videoLayout = 'contained'; defaults.videoPosition = 'left'; defaults.embedUrl = ''; defaults.mp4Url = ''; }
   if (type === 'gallery') { defaults.items = []; defaults.galleryCols = 3; }
   if (type === 'pricing') { defaults.items = []; }
+  if (type === 'locations') { defaults.items = []; defaults.displayMode = 'cards'; defaults.layoutMode = 'top'; defaults.mapMode = 'linkout'; defaults.maxCols = 2; defaults.showHours = true; }
+  if (type === 'table') { defaults.cols = 2; defaults.col1Label = 'Column 1'; defaults.col2Label = 'Column 2'; defaults.col3Label = ''; defaults.col1Style = 'normal'; defaults.col2Style = 'normal'; defaults.col3Style = 'normal'; defaults.firstColHeader = false; defaults.items = []; }
+  if (type === 'rotating-cards') { defaults.items = []; defaults.visibleCards = 1; defaults.cardHeight = 420; defaults.showDots = true; defaults.showArrows = true; defaults.autoplay = false; defaults.autoplaySpeed = 4; }
   if (!Array.isArray(DATA.aboutSections)) DATA.aboutSections = [];
   DATA.aboutSections.push(defaults);
   buildAboutSectionsList();
@@ -3882,6 +4212,9 @@ function collectHomeSingleSection_forPi(secCard, pi, si, existing) {
     testimonials: ['name','initials','stars','text','meta'],
     resources: ['tag','title','excerpt','date','readTime','featured','emoji','imagePath','linkType','linkUrl','ctaLabel'],
     team: ['name','title','photo','bio'],
+    locations: ['locationIndex','imagePath'],
+    table: ['cell1','cell2','cell3'],
+    'rotating-cards': ['title','body','imagePath','bgColor','fullBleed','textColor','btnLabel','btnLinkType','btnLinkUrl','btnAnchorId'],
   };
   if (arrTypes[type]) {
     sec.items = Array.from(secCard.querySelectorAll('.cp-sub-item')).map(item => {
@@ -4015,6 +4348,35 @@ function collectHomeSingleSection_forPi(secCard, pi, si, existing) {
     });
   }
 
+  // Locations
+  if (type === 'locations') {
+    sec.displayMode  = get('displayMode')  || 'cards';
+    sec.layoutMode   = get('layoutMode')   || 'top';
+    sec.featureSide  = get('featureSide')  || 'left';
+    sec.mapMode      = get('mapMode')      || 'linkout';
+    sec.maxCols      = parseInt(get('maxCols')) || 2;
+    sec.showHours    = secCard.querySelector('[data-field="showHours"]')?.checked !== false;
+  }
+
+  // Table
+  if (type === 'table') {
+    sec.cols           = parseInt(get('cols')) || 2;
+    sec.col1Label      = get('col1Label'); sec.col1Style = get('col1Style') || 'normal';
+    sec.col2Label      = get('col2Label'); sec.col2Style = get('col2Style') || 'normal';
+    sec.col3Label      = get('col3Label'); sec.col3Style = get('col3Style') || 'normal';
+    sec.firstColHeader = secCard.querySelector('[data-field="firstColHeader"]')?.checked === true;
+  }
+
+  // Rotating Cards
+  if (type === 'rotating-cards') {
+    sec.visibleCards  = parseInt(get('visibleCards')) || 1;
+    sec.cardHeight    = parseInt(get('cardHeight')) || 420;
+    sec.showDots      = secCard.querySelector('[data-field="showDots"]')?.checked !== false;
+    sec.showArrows    = secCard.querySelector('[data-field="showArrows"]')?.checked !== false;
+    sec.autoplay      = secCard.querySelector('[data-field="autoplay"]')?.checked === true;
+    sec.autoplaySpeed = parseInt(get('autoplaySpeed')) || 4;
+  }
+
   // Jurisdiction
   if (type === 'jurisdiction') {
     sec.jurisdictionText = get('jurisdictionText');
@@ -4107,6 +4469,7 @@ function collectHomeSingleSection_forPi(secCard, pi, si, existing) {
     sec.mqPause     = secCard.querySelector('[data-field="mqPause"]')?.checked !== false;
     sec.mqText      = get('mqText');
     sec.mqSeparator = get('mqSeparator') || '·';
+    sec.mqLogoSize  = get('mqLogoSize') || 'md';
     sec.items = Array.from(secCard.querySelectorAll('.cp-sub-item')).map(item => ({
       imagePath: item.querySelector('[data-field="imagePath"]')?.value.trim() || '',
       alt:       item.querySelector('[data-field="alt"]')?.value.trim() || '',
@@ -4286,7 +4649,7 @@ function buildCpPagePanel(page, pi) {
     '</div>' +
 
     // Page settings panel
-    '<div class="panel open" style="margin-bottom:20px;">' +
+    '<div class="panel" style="margin-bottom:20px;">' +
       '<div class="panel-header" onclick="togglePanel(this)">' +
         '<div class="panel-title"><span class="panel-title-icon">🏷️</span> Page Settings</div>' +
         '<span class="panel-chevron">▼</span>' +
@@ -4411,7 +4774,7 @@ function buildCustomSectionHtml(sec, pi, si) {
 
   let typeFields = buildCpSectionTypeFields(sec, pi, si);
 
-  return `<div class="cp-section-card open" data-pi="${pi}" data-si="${si}">
+  return `<div class="cp-section-card" data-pi="${pi}" data-si="${si}">
     <div class="cp-section-header" onclick="toggleCpSection(this)">
       <span class="cp-section-type-badge">${typeLabel}${sec.label ? ' — ' + escHtml(sec.label) : ''}</span>
       ${!isAppendage && !isRichtext ? `<div class="cp-anchor-field" onclick="event.stopPropagation()">
@@ -4475,9 +4838,10 @@ function buildCpSectionTypeFields(sec, pi, si) {
       return `
         <div class="field-group"><label>Heading</label><input type="text" ${p} data-field="heading" value="${v('heading')}"/></div>
         <div class="field-group"><label>Body Text</label><textarea ${p} data-field="body" rows="4">${v('body')}</textarea></div>
-        <div class="form-row-2">
-          <div class="field-group"><label>Image Path / URL</label><input type="text" ${p} data-field="imagePath" value="${v('imagePath')}" placeholder="images/page.jpg"/></div>
-          <div class="field-group"><label>Image Position</label>
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-bottom:14px;">
+          <div class="field-group" style="margin:0;"><label>Image Path / URL</label><input type="text" ${p} data-field="imagePath" value="${v('imagePath')}" placeholder="images/page.jpg"/></div>
+          <div class="field-group" style="margin:0;"><label>Max Width (px)</label><input type="number" ${p} data-field="imageMaxWidth" value="${v('imageMaxWidth')}" placeholder="e.g. 480" min="50" max="1200"/></div>
+          <div class="field-group" style="margin:0;"><label>Image Position</label>
             <select ${p} data-field="imagePosition">
               ${['left','right'].map(o=>`<option value="${o}"${sec.imagePosition===o?' selected':''}>${o==='left'?'Image Left':'Image Right'}</option>`).join('')}
             </select>
@@ -4528,6 +4892,16 @@ function buildCpSectionTypeFields(sec, pi, si) {
             <div class="field-group" style="margin:0;"><label>Card Number</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="num" value="${escHtml(it.num||defaultNum)}" placeholder="${defaultNum}"/></div>
             <div class="field-group" style="margin:0;"><label>Title</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="title" value="${escHtml(it.title||'')}"/></div>
           </div>
+          <div class="form-row-2" style="margin-bottom:6px;">
+            <div class="field-group" style="margin:0;"><label>Image Path (optional — replaces number)</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="imagePath" value="${escHtml(it.imagePath||'')}" placeholder="images/card.jpg"/></div>
+            <div class="field-group" style="margin:0;"><label>Image Size</label>
+              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="imageSize">
+                <option value="thumb"${(it.imageSize||'thumb')==='thumb'?' selected':''}>Thumbnail (80px)</option>
+                <option value="sm"${it.imageSize==='sm'?' selected':''}>Small (200px)</option>
+                <option value="full"${it.imageSize==='full'?' selected':''}>Full Width</option>
+              </select>
+            </div>
+          </div>
           <div class="field-group" style="margin-bottom:6px;"><label>Description</label><textarea data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="body" rows="2">${escHtml(it.body||'')}</textarea></div>
           <div class="form-row-2" style="margin-bottom:4px;">
             <div class="field-group" style="margin:0;"><label>Link Label (optional)</label>
@@ -4560,6 +4934,13 @@ function buildCpSectionTypeFields(sec, pi, si) {
         </div>`;
       }).join('');
       return `
+        <div class="field-group" style="margin-bottom:10px;"><label>Max Columns</label>
+          <select ${p} data-field="maxCols">
+                <option value="2"${(sec.maxCols||2)===2?' selected':''}>2 Columns</option>
+                <option value="3"${(sec.maxCols||2)===3?' selected':''}>3 Columns</option>
+                <option value="4"${(sec.maxCols||2)===4?' selected':''}>4 Columns</option>
+          </select>
+        </div>
         <div class="field-group"><label>Heading</label><input type="text" ${p} data-field="heading" value="${v('heading')}"/></div>
         <div class="field-group"><label>Body / Subtext</label><textarea ${p} data-field="body" rows="2">${v('body')}</textarea></div>
         <div class="form-row-2" style="margin-bottom:16px;">
@@ -4625,6 +5006,7 @@ function buildCpSectionTypeFields(sec, pi, si) {
 
     case 'services': {
       const items = (sec.items||[]);
+      const piArg = typeof pi === 'string' ? "'" + pi + "'" : pi;
       const rows = items.map((it,ii) => {
         const lt = it.btnLinkType || 'none';
         const intOpts = getInternalPageOptions(it.btnLinkUrl || '');
@@ -4632,53 +5014,83 @@ function buildCpSectionTypeFields(sec, pi, si) {
         const showUrl = (lt === 'external' || lt === 'file') ? '' : 'display:none;';
         const urlLabel = lt === 'file' ? 'File Path / URL' : 'External URL';
         const urlPlaceholder = lt === 'file' ? 'files/doc.pdf' : 'https://';
-        const selInt = lt === 'internal' ? ' selected' : '';
-        const selExt = lt === 'external' ? ' selected' : '';
-        const selFile = lt === 'file' ? ' selected' : '';
+        const selInt  = lt === 'internal' ? ' selected' : '';
+        const selExt  = lt === 'external' ? ' selected' : '';
+        const selFile = lt === 'file'     ? ' selected' : '';
         return `<div class="cp-sub-item" data-sub-idx="${ii}">
-          ${cpSubItemHeader(`Service #${ii+1}`, pi, si, 'items', ii)}
-          <div class="form-row-2">
-            <div class="field-group" style="margin-bottom:6px;"><label>Icon</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="icon" value="${escHtml(it.icon||'⚖️')}"/></div>
-            <div class="field-group" style="margin-bottom:6px;"><label>Title</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="title" value="${escHtml(it.title||'')}"/></div>
-          </div>
-          <div class="field-group" style="margin-bottom:6px;"><label>Short Description</label><textarea data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="desc" rows="2">${escHtml(it.desc||'')}</textarea></div>
-          <div class="field-group" style="margin-bottom:6px;"><label>Detail (modal popup)</label><textarea data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="detail" rows="2">${escHtml(it.detail||'')}</textarea></div>
-          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Modal Button</div>
-          <div class="form-row-2" style="margin-bottom:4px;">
-            <div class="field-group" style="margin:0;"><label>Button Label</label>
-              <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnLabel" value="${escHtml(it.btnLabel||'')}" placeholder="Schedule a Consultation"/>
+          <div class="cp-sub-item-header" style="cursor:pointer;" onclick="const b=this.nextElementSibling;b.style.display=b.style.display===''?'none':'';this.querySelector('.svc-chev').textContent=b.style.display==='none'?'&#9656;':'&#9662;';">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="cp-sub-item-drag-handle" title="Drag to reorder" onclick="event.stopPropagation();">&#8903;</span>
+              <span class="cp-sub-item-label">Service #${ii+1}</span>
+              <span class="svc-chev" style="font-size:10px;color:var(--muted);margin-left:2px;">&#9656;</span>
             </div>
-            <div class="field-group" style="margin:0;"><label>Link Type</label>
-              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnLinkType" onchange="onServiceBtnLinkTypeChange(${typeof pi==='string'?("'"+pi+"'"):pi},${si},${ii},this)">
-                <option value="none">None</option>
-                <option value="internal"${selInt}>Internal Page</option>
-                <option value="external"${selExt}>External URL</option>
-                <option value="file"${selFile}>File / Document</option>
-              </select>
+            <div style="display:flex;align-items:center;gap:4px;">
+              <button class="cp-move-btn" onclick="moveCpSubItem(${piArg},${si},'items',${ii},-1);event.stopPropagation();" title="Move up">&#8593;</button>
+              <button class="cp-move-btn" onclick="moveCpSubItem(${piArg},${si},'items',${ii},1);event.stopPropagation();" title="Move down">&#8595;</button>
+              <button class="btn-remove" onclick="removeCpSubItem(${piArg},${si},'items',${ii});event.stopPropagation();">&#215;</button>
             </div>
           </div>
-          <div class="field-group" id="cp-svc-internal-${pi}-${si}-${ii}" style="margin-bottom:4px;${showInt}">
-            <label>Internal Page</label>
-            <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnLinkUrl"
-              onchange="updateAnchorSelect(document.getElementById('cp-svc-anchor-sel-${pi}-${si}-${ii}'),this.value,'')">${intOpts}</select>
-            <div class="field-group cp-anchor-select" id="cp-svc-anchor-${pi}-${si}-${ii}" style="margin-top:6px;margin-bottom:0;">
-              <label>Scroll to Section (optional)</label>
-              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnAnchorId" id="cp-svc-anchor-sel-${pi}-${si}-${ii}">
-                ${getAnchorOptions(it.btnLinkUrl||'', it.btnAnchorId||'')}
-              </select>
+          <div class="cp-sub-item-body" style="padding-top:8px;display:none;">
+            <div class="form-row-2">
+              <div class="field-group" style="margin-bottom:6px;"><label>Icon</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="icon" value="${escHtml(it.icon||'&#9878;&#65039;')}"/></div>
+              <div class="field-group" style="margin-bottom:6px;"><label>Title</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="title" value="${escHtml(it.title||'')}"/></div>
             </div>
-          </div>
-          <div class="field-group" id="cp-svc-url-${pi}-${si}-${ii}" style="margin-bottom:4px;${showUrl}">
-            <label>${urlLabel}</label>
-            <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnLinkUrl" value="${escHtml(it.btnLinkUrl||'')}" placeholder="${urlPlaceholder}"/>
+            <div class="form-row-2" style="margin-bottom:6px;">
+              <div class="field-group" style="margin:0;"><label>Image Path (optional &mdash; replaces icon)</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="imagePath" value="${escHtml(it.imagePath||'')}" placeholder="images/service.jpg"/></div>
+              <div class="field-group" style="margin:0;"><label>Image Size</label>
+                <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="imageSize">
+                  <option value="thumb"${(it.imageSize||'thumb')==='thumb'?' selected':''}>Thumbnail (48px)</option>
+                  <option value="sm"${it.imageSize==='sm'?' selected':''}>Small (80px)</option>
+                  <option value="full"${it.imageSize==='full'?' selected':''}>Full Width</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-group" style="margin-bottom:6px;"><label>Short Description</label><textarea data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="desc" rows="2">${escHtml(it.desc||'')}</textarea></div>
+            <div class="field-group" style="margin-bottom:6px;"><label>Detail (modal popup)</label><textarea data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="detail" rows="2">${escHtml(it.detail||'')}</textarea></div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Modal Button</div>
+            <div class="form-row-2" style="margin-bottom:4px;">
+              <div class="field-group" style="margin:0;"><label>Button Label</label>
+                <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnLabel" value="${escHtml(it.btnLabel||'')}" placeholder="Schedule a Consultation"/>
+              </div>
+              <div class="field-group" style="margin:0;"><label>Link Type</label>
+                <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnLinkType" onchange="onServiceBtnLinkTypeChange(${piArg},${si},${ii},this)">
+                  <option value="none">None</option>
+                  <option value="internal"${selInt}>Internal Page</option>
+                  <option value="external"${selExt}>External URL</option>
+                  <option value="file"${selFile}>File / Document</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-group" id="cp-svc-internal-${pi}-${si}-${ii}" style="margin-bottom:4px;${showInt}">
+              <label>Internal Page</label>
+              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnLinkUrl"
+                onchange="updateAnchorSelect(document.getElementById('cp-svc-anchor-sel-${pi}-${si}-${ii}'),this.value,'')">${intOpts}</select>
+              <div class="field-group cp-anchor-select" id="cp-svc-anchor-${pi}-${si}-${ii}" style="margin-top:6px;margin-bottom:0;">
+                <label>Scroll to Section (optional)</label>
+                <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnAnchorId" id="cp-svc-anchor-sel-${pi}-${si}-${ii}">
+                  ${getAnchorOptions(it.btnLinkUrl||'', it.btnAnchorId||'')}
+                </select>
+              </div>
+            </div>
+            <div class="field-group" id="cp-svc-url-${pi}-${si}-${ii}" style="margin-bottom:4px;${showUrl}">
+              <label>${urlLabel}</label>
+              <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnLinkUrl" value="${escHtml(it.btnLinkUrl||'')}" placeholder="${urlPlaceholder}"/>
+            </div>
           </div>
         </div>`;
       }).join('');
       return `
+        <div class="field-group" style="margin-bottom:10px;"><label>Max Columns</label>
+          <select ${p} data-field="maxCols">
+            <option value="2"${(sec.maxCols||3)===2?' selected':''}>2 Columns</option>
+            <option value="3"${(sec.maxCols||3)===3?' selected':''}>3 Columns</option>
+            <option value="4"${(sec.maxCols||3)===4?' selected':''}>4 Columns</option>
+          </select>
+        </div>
         <div class="field-group"><label>Heading</label><input type="text" ${p} data-field="heading" value="${v('heading')}"/></div>
         <div class="field-group"><label>Subtitle</label><input type="text" ${p} data-field="subtitle" value="${v('subtitle')}"/></div>
         <div class="cp-sub-items" data-cp-drag="${pi}-${si}-items">${rows}</div>
-        <button class="btn-add" onclick="addCpSubItem(${typeof pi==='string'?("'"+pi+"'"):pi},${si},'items',{icon:'⚖️',title:'',desc:'',detail:'',btnLabel:'',btnLinkType:'none',btnLinkUrl:''})">+ Add Service</button>`;
+        <button class="btn-add" onclick="addCpSubItem(${piArg},${si},'items',{icon:'&#9878;&#65039;',title:'',desc:'',detail:'',btnLabel:'',btnLinkType:'none',btnLinkUrl:''})">+ Add Service</button>`;
     }
 
     case 'steps': {
@@ -4696,6 +5108,16 @@ function buildCpSectionTypeFields(sec, pi, si) {
         return `<div class="cp-sub-item" data-sub-idx="${ii}">
           ${cpSubItemHeader(`Step #${ii+1}`, pi, si, 'items', ii)}
           <div class="field-group" style="margin-bottom:6px;"><label>Title</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="title" value="${escHtml(it.title||'')}"/></div>
+          <div class="form-row-2" style="margin-bottom:6px;">
+            <div class="field-group" style="margin:0;"><label>Image Path (optional — replaces number)</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="imagePath" value="${escHtml(it.imagePath||'')}" placeholder="images/step.jpg"/></div>
+            <div class="field-group" style="margin:0;"><label>Image Size</label>
+              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="imageSize">
+                <option value="thumb"${(it.imageSize||'thumb')==='thumb'?' selected':''}>Thumbnail (48px)</option>
+                <option value="sm"${it.imageSize==='sm'?' selected':''}>Small (80px)</option>
+                <option value="full"${it.imageSize==='full'?' selected':''}>Full Width</option>
+              </select>
+            </div>
+          </div>
           <div class="field-group" style="margin-bottom:6px;"><label>Description</label><textarea data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="body" rows="2">${escHtml(it.body||'')}</textarea></div>
           <div class="form-row-2" style="margin-bottom:4px;">
             <div class="field-group" style="margin:0;"><label>Link Label (optional)</label>
@@ -4736,6 +5158,7 @@ function buildCpSectionTypeFields(sec, pi, si) {
 
     case 'faq': {
       const items = (sec.items||[]);
+      const piArg = typeof pi === 'string' ? "'" + pi + "'" : pi;
       const rows = items.map((it,ii) => {
         const lt = it.linkType || 'none';
         const intOpts = getInternalPageOptions(it.linkUrl || '');
@@ -4743,40 +5166,53 @@ function buildCpSectionTypeFields(sec, pi, si) {
         const showUrl = (lt === 'external' || lt === 'file') ? '' : 'display:none;';
         const urlLabel = lt === 'file' ? 'File Path / URL' : 'External URL';
         const urlPlaceholder = lt === 'file' ? 'files/doc.pdf' : 'https://';
-        const selInt = lt === 'internal' ? ' selected' : '';
-        const selExt = lt === 'external' ? ' selected' : '';
-        const selFile = lt === 'file' ? ' selected' : '';
+        const selInt  = lt === 'internal' ? ' selected' : '';
+        const selExt  = lt === 'external' ? ' selected' : '';
+        const selFile = lt === 'file'     ? ' selected' : '';
         return `<div class="cp-sub-item" data-sub-idx="${ii}">
-          ${cpSubItemHeader(`Q #${ii+1}`, pi, si, 'items', ii)}
-          <div class="field-group" style="margin-bottom:6px;"><label>Question</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="q" value="${escHtml(it.q||'')}"/></div>
-          <div class="field-group" style="margin-bottom:6px;"><label>Answer</label><textarea data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="a" rows="2">${escHtml(it.a||'')}</textarea></div>
-          <div class="form-row-2" style="margin-bottom:4px;">
-            <div class="field-group" style="margin:0;"><label>Link Label (optional)</label>
-              <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkLabel" value="${escHtml(it.linkLabel||'')}" placeholder="Learn More"/>
+          <div class="cp-sub-item-header" style="cursor:pointer;" onclick="const b=this.nextElementSibling;b.style.display=b.style.display===''?'none':'';this.querySelector('.faq-chev').textContent=b.style.display==='none'?'&#9656;':'&#9662;';">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="cp-sub-item-drag-handle" title="Drag to reorder" onclick="event.stopPropagation();">&#8903;</span>
+              <span class="cp-sub-item-label">Q #${ii+1}</span>
+              <span class="faq-chev" style="font-size:10px;color:var(--muted);margin-left:2px;">&#9656;</span>
             </div>
-            <div class="field-group" style="margin:0;"><label>Link Type</label>
-              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkType" onchange="onFaqLinkTypeChange(${typeof pi==='string'?("'"+pi+"'"):pi},${si},${ii},this)">
-                <option value="none">None</option>
-                <option value="internal"${selInt}>Internal Page</option>
-                <option value="external"${selExt}>External URL</option>
-                <option value="file"${selFile}>File / Document</option>
-              </select>
+            <div style="display:flex;align-items:center;gap:4px;">
+              <button class="cp-move-btn" onclick="moveCpSubItem(${piArg},${si},'items',${ii},-1);event.stopPropagation();" title="Move up">&#8593;</button>
+              <button class="cp-move-btn" onclick="moveCpSubItem(${piArg},${si},'items',${ii},1);event.stopPropagation();" title="Move down">&#8595;</button>
+              <button class="btn-remove" onclick="removeCpSubItem(${piArg},${si},'items',${ii});event.stopPropagation();">&#215;</button>
             </div>
           </div>
-          <div class="field-group" id="cp-faq-internal-${pi}-${si}-${ii}" style="margin-bottom:4px;${showInt}">
-            <label>Internal Page</label>
-            <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl"
-              onchange="updateAnchorSelect(document.getElementById('cp-faq-anchor-sel-${pi}-${si}-${ii}'),this.value,'')">${intOpts}</select>
-            <div class="field-group cp-anchor-select" id="cp-faq-anchor-${pi}-${si}-${ii}" style="margin-top:6px;margin-bottom:0;">
-              <label>Scroll to Section (optional)</label>
-              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="anchorId" id="cp-faq-anchor-sel-${pi}-${si}-${ii}">
-                ${getAnchorOptions(it.linkUrl||'', it.anchorId||'')}
-              </select>
+          <div class="cp-sub-item-body" style="padding-top:8px;display:none;">
+            <div class="field-group" style="margin-bottom:6px;"><label>Question</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="q" value="${escHtml(it.q||'')}"/></div>
+            <div class="field-group" style="margin-bottom:6px;"><label>Answer</label><textarea data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="a" rows="2">${escHtml(it.a||'')}</textarea></div>
+            <div class="form-row-2" style="margin-bottom:4px;">
+              <div class="field-group" style="margin:0;"><label>Link Label (optional)</label>
+                <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkLabel" value="${escHtml(it.linkLabel||'')}" placeholder="Learn More"/>
+              </div>
+              <div class="field-group" style="margin:0;"><label>Link Type</label>
+                <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkType" onchange="onFaqLinkTypeChange(${piArg},${si},${ii},this)">
+                  <option value="none">None</option>
+                  <option value="internal"${selInt}>Internal Page</option>
+                  <option value="external"${selExt}>External URL</option>
+                  <option value="file"${selFile}>File / Document</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div class="field-group" id="cp-faq-url-${pi}-${si}-${ii}" style="margin-bottom:4px;${showUrl}">
-            <label>${urlLabel}</label>
-            <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl" value="${escHtml(it.linkUrl||'')}" placeholder="${urlPlaceholder}"/>
+            <div class="field-group" id="cp-faq-internal-${pi}-${si}-${ii}" style="margin-bottom:4px;${showInt}">
+              <label>Internal Page</label>
+              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl"
+                onchange="updateAnchorSelect(document.getElementById('cp-faq-anchor-sel-${pi}-${si}-${ii}'),this.value,'')">${intOpts}</select>
+              <div class="field-group cp-anchor-select" id="cp-faq-anchor-${pi}-${si}-${ii}" style="margin-top:6px;margin-bottom:0;">
+                <label>Scroll to Section (optional)</label>
+                <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="anchorId" id="cp-faq-anchor-sel-${pi}-${si}-${ii}">
+                  ${getAnchorOptions(it.linkUrl||'', it.anchorId||'')}
+                </select>
+              </div>
+            </div>
+            <div class="field-group" id="cp-faq-url-${pi}-${si}-${ii}" style="margin-bottom:4px;${showUrl}">
+              <label>${urlLabel}</label>
+              <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl" value="${escHtml(it.linkUrl||'')}" placeholder="${urlPlaceholder}"/>
+            </div>
           </div>
         </div>`;
       }).join('');
@@ -4788,7 +5224,7 @@ function buildCpSectionTypeFields(sec, pi, si) {
           <label class="switch"><input type="checkbox" ${p} data-field="fullWidth" ${sec.fullWidth ? 'checked' : ''}/><span class="switch-slider"></span></label>
         </div>
         <div class="cp-sub-items" data-cp-drag="${pi}-${si}-items">${rows}</div>
-        <button class="btn-add" onclick="addCpSubItem(${typeof pi==='string'?("'"+pi+"'"):pi},${si},'items',{q:'',a:'',linkLabel:'',linkType:'none',linkUrl:''})">+ Add Q&amp;A</button>`;
+        <button class="btn-add" onclick="addCpSubItem(${piArg},${si},'items',{q:'',a:'',linkLabel:'',linkType:'none',linkUrl:''})">+ Add Q&amp;A</button>`;
     }
 
     case 'testimonials': {
@@ -5069,6 +5505,7 @@ function buildCpSectionTypeFields(sec, pi, si) {
 
     case 'timeline': {
       const items = (sec.items||[]);
+      const piArg = typeof pi === 'string' ? "'" + pi + "'" : pi;
       const rows = items.map((it,ii) => {
         const lt = it.linkType || 'none';
         const intOpts = getInternalPageOptions(it.linkUrl || '');
@@ -5076,43 +5513,56 @@ function buildCpSectionTypeFields(sec, pi, si) {
         const showUrl = (lt === 'external' || lt === 'file') ? '' : 'display:none;';
         const urlLabel = lt === 'file' ? 'File Path / URL' : 'External URL';
         const urlPlaceholder = lt === 'file' ? 'files/doc.pdf' : 'https://';
-        const selInt = lt === 'internal' ? ' selected' : '';
-        const selExt = lt === 'external' ? ' selected' : '';
-        const selFile = lt === 'file' ? ' selected' : '';
+        const selInt  = lt === 'internal' ? ' selected' : '';
+        const selExt  = lt === 'external' ? ' selected' : '';
+        const selFile = lt === 'file'     ? ' selected' : '';
         return `<div class="cp-sub-item" data-sub-idx="${ii}">
-          ${cpSubItemHeader(`Event #${ii+1}`, pi, si, 'items', ii)}
-          <div class="form-row-2">
-            <div class="field-group" style="margin-bottom:6px;"><label>Date / Phase</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="date" value="${escHtml(it.date||'')}" placeholder="Week 1–2"/></div>
-            <div class="field-group" style="margin-bottom:6px;"><label>Title</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="title" value="${escHtml(it.title||'')}"/></div>
-          </div>
-          <div class="field-group" style="margin-bottom:6px;"><label>Description</label><textarea data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="body" rows="2">${escHtml(it.body||'')}</textarea></div>
-          <div class="form-row-2" style="margin-bottom:4px;">
-            <div class="field-group" style="margin:0;"><label>Link Label (optional)</label>
-              <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkLabel" value="${escHtml(it.linkLabel||'')}" placeholder="Learn More"/>
+          <div class="cp-sub-item-header" style="cursor:pointer;" onclick="const b=this.nextElementSibling;b.style.display=b.style.display===''?'none':'';this.querySelector('.tl-chev').textContent=b.style.display==='none'?'&#9656;':'&#9662;';">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="cp-sub-item-drag-handle" title="Drag to reorder" onclick="event.stopPropagation();">&#8903;</span>
+              <span class="cp-sub-item-label">Event #${ii+1}</span>
+              <span class="tl-chev" style="font-size:10px;color:var(--muted);margin-left:2px;">&#9656;</span>
             </div>
-            <div class="field-group" style="margin:0;"><label>Link Type</label>
-              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkType" onchange="onTimelineLinkTypeChange(${typeof pi==='string'?("'"+pi+"'"):pi},${si},${ii},this)">
-                <option value="none">None</option>
-                <option value="internal"${selInt}>Internal Page</option>
-                <option value="external"${selExt}>External URL</option>
-                <option value="file"${selFile}>File / Document</option>
-              </select>
+            <div style="display:flex;align-items:center;gap:4px;">
+              <button class="cp-move-btn" onclick="moveCpSubItem(${piArg},${si},'items',${ii},-1);event.stopPropagation();" title="Move up">&#8593;</button>
+              <button class="cp-move-btn" onclick="moveCpSubItem(${piArg},${si},'items',${ii},1);event.stopPropagation();" title="Move down">&#8595;</button>
+              <button class="btn-remove" onclick="removeCpSubItem(${piArg},${si},'items',${ii});event.stopPropagation();">&#215;</button>
             </div>
           </div>
-          <div class="field-group" id="cp-tl-internal-${pi}-${si}-${ii}" style="margin-bottom:4px;${showInt}">
-            <label>Internal Page</label>
-            <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl"
-              onchange="updateAnchorSelect(document.getElementById('cp-tl-anchor-sel-${pi}-${si}-${ii}'),this.value,'')">${intOpts}</select>
-            <div class="field-group cp-anchor-select" id="cp-tl-anchor-${pi}-${si}-${ii}" style="margin-top:6px;margin-bottom:0;">
-              <label>Scroll to Section (optional)</label>
-              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="anchorId" id="cp-tl-anchor-sel-${pi}-${si}-${ii}">
-                ${getAnchorOptions(it.linkUrl||'', it.anchorId||'')}
-              </select>
+          <div class="cp-sub-item-body" style="padding-top:8px;display:none;">
+            <div class="form-row-2">
+              <div class="field-group" style="margin-bottom:6px;"><label>Date / Phase</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="date" value="${escHtml(it.date||'')}" placeholder="Week 1–2"/></div>
+              <div class="field-group" style="margin-bottom:6px;"><label>Title</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="title" value="${escHtml(it.title||'')}"/></div>
             </div>
-          </div>
-          <div class="field-group" id="cp-tl-url-${pi}-${si}-${ii}" style="margin-bottom:4px;${showUrl}">
-            <label>${urlLabel}</label>
-            <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl" value="${escHtml(it.linkUrl||'')}" placeholder="${urlPlaceholder}"/>
+            <div class="field-group" style="margin-bottom:6px;"><label>Description</label><textarea data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="body" rows="2">${escHtml(it.body||'')}</textarea></div>
+            <div class="form-row-2" style="margin-bottom:4px;">
+              <div class="field-group" style="margin:0;"><label>Link Label (optional)</label>
+                <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkLabel" value="${escHtml(it.linkLabel||'')}" placeholder="Learn More"/>
+              </div>
+              <div class="field-group" style="margin:0;"><label>Link Type</label>
+                <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkType" onchange="onTimelineLinkTypeChange(${piArg},${si},${ii},this)">
+                  <option value="none">None</option>
+                  <option value="internal"${selInt}>Internal Page</option>
+                  <option value="external"${selExt}>External URL</option>
+                  <option value="file"${selFile}>File / Document</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-group" id="cp-tl-internal-${pi}-${si}-${ii}" style="margin-bottom:4px;${showInt}">
+              <label>Internal Page</label>
+              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl"
+                onchange="updateAnchorSelect(document.getElementById('cp-tl-anchor-sel-${pi}-${si}-${ii}'),this.value,'')">${intOpts}</select>
+              <div class="field-group cp-anchor-select" id="cp-tl-anchor-${pi}-${si}-${ii}" style="margin-top:6px;margin-bottom:0;">
+                <label>Scroll to Section (optional)</label>
+                <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="anchorId" id="cp-tl-anchor-sel-${pi}-${si}-${ii}">
+                  ${getAnchorOptions(it.linkUrl||'', it.anchorId||'')}
+                </select>
+              </div>
+            </div>
+            <div class="field-group" id="cp-tl-url-${pi}-${si}-${ii}" style="margin-bottom:4px;${showUrl}">
+              <label>${urlLabel}</label>
+              <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="linkUrl" value="${escHtml(it.linkUrl||'')}" placeholder="${urlPlaceholder}"/>
+            </div>
           </div>
         </div>`;
       }).join('');
@@ -5120,8 +5570,9 @@ function buildCpSectionTypeFields(sec, pi, si) {
         <div class="field-group"><label>Heading</label><input type="text" ${p} data-field="heading" value="${v('heading')}"/></div>
         <div class="field-group"><label>Subtitle</label><input type="text" ${p} data-field="subtitle" value="${v('subtitle')}"/></div>
         <div class="cp-sub-items" data-cp-drag="${pi}-${si}-items">${rows}</div>
-        <button class="btn-add" onclick="addCpSubItem(${typeof pi==='string'?("'"+pi+"'"):pi},${si},'items',{date:'',title:'',body:'',linkLabel:'',linkType:'none',linkUrl:''})">+ Add Event</button>`;
+        <button class="btn-add" onclick="addCpSubItem(${piArg},${si},'items',{date:'',title:'',body:'',linkLabel:'',linkType:'none',linkUrl:''})">+ Add Event</button>`;
     }
+
 
     case 'fees': {
       const items = (sec.items||[]);
@@ -5138,11 +5589,11 @@ function buildCpSectionTypeFields(sec, pi, si) {
         return `<div class="cp-sub-item" data-sub-idx="${ii}">
           ${cpSubItemHeader(`Row #${ii+1}`, pi, si, 'items', ii)}
           <div class="form-row-2" style="margin-bottom:6px;">
-            <div class="field-group" style="margin-bottom:6px;"><label>Name</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="service" value="${escHtml(it.service||'')}"/></div>
-            <div class="field-group" style="margin-bottom:6px;"><label>Value</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="amount" value="${escHtml(it.amount||'')}" placeholder="$1,500 – $3,000"/></div>
+            <div class="field-group" style="margin-bottom:6px;"><label data-fee-label="1">${escHtml(sec.col1Label||'Name')}</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="service" value="${escHtml(it.service||'')}"/></div>
+            <div class="field-group" style="margin-bottom:6px;"><label data-fee-label="2">${escHtml(sec.col2Label||'Value')}</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="amount" value="${escHtml(it.amount||'')}" placeholder="$1,500 – $3,000"/></div>
           </div>
           <div class="form-row-2" style="margin-bottom:6px;">
-            <div class="field-group" style="margin:0;"><label>Details</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="detail" value="${escHtml(it.detail||'')}"/></div>
+            <div class="field-group" style="margin:0;"><label data-fee-label="3">${escHtml(sec.col3Label||'Details')}</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="detail" value="${escHtml(it.detail||'')}"/></div>
             <div class="field-group" style="margin:0;"><label>Note (small text)</label><input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="note" value="${escHtml(it.note||'')}"/></div>
           </div>
           <div class="form-row-2" style="margin-bottom:4px;">
@@ -5181,14 +5632,246 @@ function buildCpSectionTypeFields(sec, pi, si) {
           <div class="field-group" style="margin:0;"><label>Subtitle</label><input type="text" ${p} data-field="subtitle" value="${v('subtitle')}"/></div>
         </div>
         <div class="form-row-3" style="margin-bottom:16px;">
-          <div class="field-group" style="margin:0;"><label>Column 1 Label</label><input type="text" ${p} data-field="col1Label" value="${v('col1Label')}" placeholder="Service"/></div>
-          <div class="field-group" style="margin:0;"><label>Column 2 Label</label><input type="text" ${p} data-field="col2Label" value="${v('col2Label')}" placeholder="Value"/></div>
-          <div class="field-group" style="margin:0;"><label>Column 3 Label</label><input type="text" ${p} data-field="col3Label" value="${v('col3Label')}" placeholder="Notes"/></div>
+          <div class="field-group" style="margin:0;"><label>Column 1 Label</label><input type="text" ${p} data-field="col1Label" data-fee-col="1" oninput="updateFeeLabels('${pi}',${si})" value="${v('col1Label')}" placeholder="Service"/></div>
+          <div class="field-group" style="margin:0;"><label>Column 2 Label</label><input type="text" ${p} data-field="col2Label" data-fee-col="2" oninput="updateFeeLabels('${pi}',${si})" value="${v('col2Label')}" placeholder="Value"/></div>
+          <div class="field-group" style="margin:0;"><label>Column 3 Label</label><input type="text" ${p} data-field="col3Label" data-fee-col="3" oninput="updateFeeLabels('${pi}',${si})" value="${v('col3Label')}" placeholder="Notes"/></div>
         </div>
         <div class="cp-sub-items" data-cp-drag="${pi}-${si}-items">${rows}</div>
         <button class="btn-add" onclick="addCpSubItem(${typeof pi==='string'?("'"+pi+"'"):pi},${si},'items',{service:'',amount:'',detail:'',note:'',linkLabel:'',linkType:'none',linkUrl:''})">+ Add Row</button>
         <div class="field-group" style="margin-top:12px;"><label>Disclaimer (small text below table)</label><input type="text" ${p} data-field="disclaimer" value="${v('disclaimer')}" placeholder="Fees are estimates and may vary..."/></div>`;
     }
+
+    case 'table': {
+      const cols        = parseInt(sec.cols) || 2;
+      const col1Label   = sec.col1Label || 'Column 1';
+      const col2Label   = sec.col2Label || 'Column 2';
+      const col3Label   = sec.col3Label || 'Column 3';
+      const col1Style   = sec.col1Style || 'normal';
+      const col2Style   = sec.col2Style || 'normal';
+      const col3Style   = sec.col3Style || 'normal';
+      const firstColHdr = sec.firstColHeader === true;
+      const items       = sec.items || [];
+      const piArg       = typeof pi === 'string' ? "'" + pi + "'" : pi;
+
+      const styleOpts = (sel) => `
+        <option value="normal"${sel==='normal'?' selected':''}>Normal</option>
+        <option value="bold"${sel==='bold'?' selected':''}>Bold</option>
+        <option value="large"${sel==='large'?' selected':''}>Large</option>
+        <option value="bold-large"${sel==='bold-large'?' selected':''}>Bold + Large</option>`;
+
+      const col3Block = cols >= 3 ? `
+        <div class="field-group" style="margin:0;"><label>Column 3 Header</label>
+          <input type="text" ${p} data-field="col3Label" value="${escHtml(col3Label)}"/></div>
+        <div class="field-group" style="margin:0;"><label>Column 3 Style</label>
+          <select ${p} data-field="col3Style">${styleOpts(col3Style)}</select></div>` : '';
+
+      const rows = items.map((it, ii) => {
+        const cell1 = escHtml(it.cell1||'');
+        const cell2 = escHtml(it.cell2||'');
+        const cell3 = escHtml(it.cell3||'');
+        const c3field = cols >= 3 ? `
+            <div class="field-group" style="margin:0;"><label>${escHtml(col3Label)}</label>
+              <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="cell3" value="${cell3}"/></div>` : '';
+        return `<div class="cp-sub-item" data-sub-idx="${ii}">
+          <div class="cp-sub-item-header" style="cursor:pointer;" onclick="const b=this.nextElementSibling;b.style.display=b.style.display===''?'none':'';this.querySelector('.tbl-chev').textContent=b.style.display==='none'?'&#9656;':'&#9662;';">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="cp-sub-item-drag-handle" title="Drag to reorder" onclick="event.stopPropagation();">&#8903;</span>
+              <span class="cp-sub-item-label">Row #${ii+1}${it.cell1 ? ' — ' + it.cell1.substring(0,30) : ''}</span>
+              <span class="tbl-chev" style="font-size:10px;color:var(--muted);margin-left:2px;">&#9656;</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:4px;">
+              <button class="cp-move-btn" onclick="moveCpSubItem(${piArg},${si},'items',${ii},-1);event.stopPropagation();" title="Move up">&#8593;</button>
+              <button class="cp-move-btn" onclick="moveCpSubItem(${piArg},${si},'items',${ii},1);event.stopPropagation();" title="Move down">&#8595;</button>
+              <button class="btn-remove" onclick="removeCpSubItem(${piArg},${si},'items',${ii});event.stopPropagation();">&#215;</button>
+            </div>
+          </div>
+          <div class="cp-sub-item-body" style="padding-top:8px;display:none;">
+            <div class="form-row-2">
+              <div class="field-group" style="margin:0;"><label>${escHtml(col1Label)}</label>
+                <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="cell1" value="${cell1}"/></div>
+              <div class="field-group" style="margin:0;"><label>${escHtml(col2Label)}</label>
+                <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="cell2" value="${cell2}"/></div>
+            </div>${c3field}
+          </div>
+        </div>`;
+      }).join('');
+
+      return `
+        <div class="field-group"><label>Heading (optional)</label>
+          <input type="text" ${p} data-field="heading" value="${v('heading')}"/></div>
+        <div class="field-group"><label>Subtitle (optional)</label>
+          <input type="text" ${p} data-field="subtitle" value="${v('subtitle')}"/></div>
+        <div class="form-row-2" style="margin-bottom:10px;">
+          <div class="field-group" style="margin:0;"><label>Columns</label>
+            <select ${p} data-field="cols" onchange="collectData();rebuildAfterMutation(${piArg});">
+              <option value="2"${cols===2?' selected':''}>2 Columns</option>
+              <option value="3"${cols===3?' selected':''}>3 Columns</option>
+            </select>
+          </div>
+          <div class="field-group" style="margin:0;">
+            <div class="switch-row" style="margin:0;padding-top:22px;">
+              <span class="switch-label">First column as row header</span>
+              <label class="switch"><input type="checkbox" ${p} data-field="firstColHeader" ${firstColHdr?'checked':''}/><span class="switch-slider"></span></label>
+            </div>
+          </div>
+        </div>
+        <div class="form-row-2" style="margin-bottom:6px;">
+          <div class="field-group" style="margin:0;"><label>Column 1 Header</label>
+            <input type="text" ${p} data-field="col1Label" value="${escHtml(col1Label)}"/></div>
+          <div class="field-group" style="margin:0;"><label>Column 1 Style</label>
+            <select ${p} data-field="col1Style">${styleOpts(col1Style)}</select></div>
+        </div>
+        <div class="form-row-2" style="margin-bottom:6px;">
+          <div class="field-group" style="margin:0;"><label>Column 2 Header</label>
+            <input type="text" ${p} data-field="col2Label" value="${escHtml(col2Label)}"/></div>
+          <div class="field-group" style="margin:0;"><label>Column 2 Style</label>
+            <select ${p} data-field="col2Style">${styleOpts(col2Style)}</select></div>
+        </div>${col3Block}
+        <div class="cp-sub-items" data-cp-drag="${pi}-${si}-items">${rows}</div>
+        <button class="btn-add" onclick="addCpSubItem(${piArg},${si},'items',{cell1:'',cell2:'',cell3:''})">+ Add Row</button>`;
+    }
+
+
+    case 'rotating-cards': {
+      const visibleCards = parseInt(sec.visibleCards) || 1;
+      const cardHeight   = parseInt(sec.cardHeight) || 420;
+      const showDots     = sec.showDots !== false;
+      const showArrows   = sec.showArrows !== false;
+      const autoplay     = sec.autoplay === true;
+      const autoplaySpd  = sec.autoplaySpeed || 4;
+      const items        = sec.items || [];
+      const piArg        = typeof pi === 'string' ? "'" + pi + "'" : pi;
+
+      const selV1 = visibleCards === 1 ? ' selected' : '';
+      const selV2 = visibleCards === 2 ? ' selected' : '';
+      const selV3 = visibleCards === 3 ? ' selected' : '';
+
+      const rows = items.map((it, ii) => {
+        const lt = it.btnLinkType || 'none';
+        const intOpts = getInternalPageOptions(it.btnLinkUrl || '');
+        const showInt = lt === 'internal' ? '' : 'display:none;';
+        const showUrl = (lt === 'external' || lt === 'file') ? '' : 'display:none;';
+        const urlLabel = lt === 'file' ? 'File Path / URL' : 'External URL';
+        const urlPlaceholder = lt === 'file' ? 'files/doc.pdf' : 'https://';
+        const selInt  = lt === 'internal' ? ' selected' : '';
+        const selExt  = lt === 'external' ? ' selected' : '';
+        const selFile = lt === 'file'     ? ' selected' : '';
+        const isFullBleed = it.fullBleed === true || it.fullBleed === 'true';
+        const selLight = (it.textColor || 'dark') === 'light' ? ' selected' : '';
+        const selDark  = (it.textColor || 'dark') === 'dark'  ? ' selected' : '';
+        return `<div class="cp-sub-item" data-sub-idx="${ii}">
+          <div class="cp-sub-item-header" style="cursor:pointer;" onclick="const b=this.nextElementSibling;b.style.display=b.style.display===''?'none':'';this.querySelector('.rc-chev').textContent=b.style.display==='none'?'&#9656;':'&#9662;';">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="cp-sub-item-drag-handle" title="Drag to reorder" onclick="event.stopPropagation();">&#8903;</span>
+              <span class="cp-sub-item-label">Card #${ii+1}${it.title ? ' — ' + it.title.substring(0,30) : ''}</span>
+              <span class="rc-chev" style="font-size:10px;color:var(--muted);margin-left:2px;">&#9656;</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:4px;">
+              <button class="cp-move-btn" onclick="moveCpSubItem(${piArg},${si},'items',${ii},-1);event.stopPropagation();" title="Move up">&#8593;</button>
+              <button class="cp-move-btn" onclick="moveCpSubItem(${piArg},${si},'items',${ii},1);event.stopPropagation();" title="Move down">&#8595;</button>
+              <button class="btn-remove" onclick="removeCpSubItem(${piArg},${si},'items',${ii});event.stopPropagation();">&#215;</button>
+            </div>
+          </div>
+          <div class="cp-sub-item-body" style="padding-top:8px;display:none;">
+            <div class="form-row-2">
+              <div class="field-group" style="margin-bottom:6px;"><label>Title</label>
+                <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="title" value="${escHtml(it.title||'')}"/></div>
+              <div class="field-group" style="margin-bottom:6px;"><label>Image Path (optional)</label>
+                <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="imagePath" value="${escHtml(it.imagePath||'')}" placeholder="images/card.jpg"/></div>
+            </div>
+            <div class="field-group" style="margin-bottom:6px;"><label>Body Text</label>
+              <textarea data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="body" rows="2">${escHtml(it.body||'')}</textarea></div>
+            <div class="form-row-2" style="margin-bottom:6px;">
+              <div class="field-group" style="margin:0;"><label>Fallback Background Color</label>
+                <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="bgColor" value="${escHtml(it.bgColor||'')}" placeholder="#f5f0e8"/></div>
+              <div class="field-group" style="margin:0;">
+                <div class="switch-row" style="margin:0;padding-top:22px;">
+                  <span class="switch-label">Full bleed image (text overlay)</span>
+                  <label class="switch"><input type="checkbox" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="fullBleed" ${isFullBleed?'checked':''}/><span class="switch-slider"></span></label>
+                </div>
+              </div>
+            </div>
+            <div class="field-group" style="margin-bottom:6px;"><label>Text Color (for overlay mode)</label>
+              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="textColor">
+                <option value="dark"${selDark}>Dark (navy)</option>
+                <option value="light"${selLight}>Light (white)</option>
+              </select></div>
+            <div class="form-row-2" style="margin-bottom:4px;">
+              <div class="field-group" style="margin:0;"><label>Button Label (optional)</label>
+                <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnLabel" value="${escHtml(it.btnLabel||'')}"/></div>
+              <div class="field-group" style="margin:0;"><label>Button Link Type</label>
+                <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnLinkType" onchange="onRcBtnLinkTypeChange(${piArg},${si},${ii},this)">
+                  <option value="none">None</option>
+                  <option value="internal"${selInt}>Internal Page</option>
+                  <option value="external"${selExt}>External URL</option>
+                  <option value="file"${selFile}>File / Document</option>
+                </select></div>
+            </div>
+            <div class="field-group" id="cp-rc-internal-${pi}-${si}-${ii}" style="margin-bottom:4px;${showInt}">
+              <label>Internal Page</label>
+              <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnLinkUrl"
+                onchange="updateAnchorSelect(document.getElementById('cp-rc-anchor-sel-${pi}-${si}-${ii}'),this.value,'')">${intOpts}</select>
+              <div class="field-group cp-anchor-select" id="cp-rc-anchor-${pi}-${si}-${ii}" style="margin-top:6px;margin-bottom:0;">
+                <label>Scroll to Section (optional)</label>
+                <select data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnAnchorId" id="cp-rc-anchor-sel-${pi}-${si}-${ii}">
+                  ${getAnchorOptions(it.btnLinkUrl||'', it.btnAnchorId||'')}
+                </select>
+              </div>
+            </div>
+            <div class="field-group" id="cp-rc-url-${pi}-${si}-${ii}" style="margin-bottom:4px;${showUrl}">
+              <label>${urlLabel}</label>
+              <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="btnLinkUrl" value="${escHtml(it.btnLinkUrl||'')}" placeholder="${urlPlaceholder}"/>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+
+      return `
+        <div class="field-group"><label>Heading (optional)</label>
+          <input type="text" ${p} data-field="heading" value="${v('heading')}"/></div>
+        <div class="field-group"><label>Subtitle (optional)</label>
+          <input type="text" ${p} data-field="subtitle" value="${v('subtitle')}"/></div>
+        <div class="form-row-2" style="margin-bottom:10px;">
+          <div class="field-group" style="margin:0;"><label>Cards Visible (desktop)</label>
+            <select ${p} data-field="visibleCards">
+              <option value="1"${selV1}>1 Card</option>
+              <option value="2"${selV2}>2 Cards</option>
+              <option value="3"${selV3}>3 Cards</option>
+            </select>
+          </div>
+          <div class="field-group" style="margin:0;"><label>Card Height (px)</label>
+            <input type="number" ${p} data-field="cardHeight" value="${cardHeight}" min="200" max="900" step="10"/>
+          </div>
+        </div>
+        <div class="form-row-2" style="margin-bottom:10px;">
+          <div class="field-group" style="margin:0;"><label>Autoplay Speed (seconds)</label>
+            <input type="number" ${p} data-field="autoplaySpeed" value="${autoplaySpd}" min="2" max="10" step="1"/>
+          </div>
+        </div>
+        <div class="form-row-2" style="margin-bottom:16px;">
+          <div class="field-group" style="margin:0;">
+            <div class="switch-row" style="margin:0;">
+              <span class="switch-label">Show dots / lines</span>
+              <label class="switch"><input type="checkbox" ${p} data-field="showDots" ${showDots?'checked':''}/><span class="switch-slider"></span></label>
+            </div>
+          </div>
+          <div class="field-group" style="margin:0;">
+            <div class="switch-row" style="margin:0;">
+              <span class="switch-label">Show arrows</span>
+              <label class="switch"><input type="checkbox" ${p} data-field="showArrows" ${showArrows?'checked':''}/><span class="switch-slider"></span></label>
+            </div>
+          </div>
+        </div>
+        <div class="field-group" style="margin-bottom:16px;">
+          <div class="switch-row" style="margin:0;">
+            <span class="switch-label">Autoplay</span>
+            <label class="switch"><input type="checkbox" ${p} data-field="autoplay" ${autoplay?'checked':''}/><span class="switch-slider"></span></label>
+          </div>
+        </div>
+        <div class="cp-sub-items" data-cp-drag="${pi}-${si}-items">${rows}</div>
+        <button class="btn-add" onclick="addCpSubItem(${piArg},${si},'items',{title:'',body:'',imagePath:'',bgColor:'',fullBleed:false,textColor:'dark',btnLabel:'',btnLinkType:'none',btnLinkUrl:''})">+ Add Card</button>`;
+    }
+
 
     case 'jurisdiction': {
       const lt = sec.linkType || 'none';
@@ -5239,6 +5922,13 @@ function buildCpSectionTypeFields(sec, pi, si) {
 
     case 'team':
       return `
+        <div class="field-group" style="margin-bottom:10px;"><label>Max Columns</label>
+          <select ${p} data-field="maxCols">
+                <option value="2"${(sec.maxCols||3)===2?' selected':''}>2 Columns</option>
+                <option value="3"${(sec.maxCols||3)===3?' selected':''}>3 Columns</option>
+                <option value="4"${(sec.maxCols||3)===4?' selected':''}>4 Columns</option>
+          </select>
+        </div>
         <div class="field-group"><label>Heading</label><input type="text" ${p} data-field="heading" value="${v('heading')}"/></div>
         <div class="switch-row">
           <span class="switch-label">Use attorneys from About Us section</span>
@@ -5361,7 +6051,7 @@ function buildCpSectionTypeFields(sec, pi, si) {
             '<div style="display:flex;align-items:center;gap:6px;">' +
               '<span class="cp-sub-item-drag-handle" title="Drag to reorder" onclick="event.stopPropagation()">⠿</span>' +
               '<span class="cp-sub-item-label">' + tierLabel + '</span>' +
-              '<span class="tc-chev" style="font-size:10px;color:var(--muted);margin-left:2px;">▾</span>' +
+              '<span class="tc-chev" style="font-size:10px;color:var(--muted);margin-left:2px;">▸</span>' +
             '</div>' +
             '<div style="display:flex;align-items:center;gap:4px;">' +
               '<button class="cp-move-btn" onclick="moveCpSubItem(' + piArgT + ',' + si + ',\'items\',' + ci + ',-1);event.stopPropagation();" title="Move up">↑</button>' +
@@ -5369,12 +6059,12 @@ function buildCpSectionTypeFields(sec, pi, si) {
               '<button class="btn-remove" onclick="removeCpSubItem(' + piArgT + ',' + si + ',\'items\',' + ci + ');event.stopPropagation();">×</button>' +
             '</div>' +
           '</div>' +
-          '<div style="padding:12px;">' +
+          '<div style="padding:12px;display:none;">' +
           '<div class="form-row-2" style="margin-bottom:8px;">' +
             '<div class="field-group" style="margin:0;"><label>Tier Name</label>' +
               '<input type="text" data-cp="' + pi + '" data-sec="' + si + '" data-arr="items" data-idx="' + ci + '" data-field="name" value="' + escHtml(card.name||'') + '" placeholder="Pro"/></div>' +
             '<div class="field-group" style="margin:0;"><label>Tagline (optional)</label>' +
-              '<input type="text" data-cp="' + pi + '" data-sec="' + si + '" data-arr="items" data-idx="' + ci + '" data-field="tagline" value="' + escHtml(card.tagline||'') + '" placeholder="Most Popular"/></div>' +
+              '<textarea data-cp="' + pi + '" data-sec="' + si + '" data-arr="items" data-idx="' + ci + '" data-field="tagline" placeholder="Most Popular" rows="2">' + escHtml(card.tagline||'') + '</textarea></div>' +
           '</div>' +
           '<div class="form-row-2" style="margin-bottom:8px;">' +
             '<div class="field-group" style="margin:0;"><label>Price</label>' +
@@ -5445,8 +6135,15 @@ function buildCpSectionTypeFields(sec, pi, si) {
       }).join('');
 
       return `
+        <div class="field-group" style="margin-bottom:10px;"><label>Max Columns</label>
+          <select ${p} data-field="maxCols">
+                <option value="2"${(sec.maxCols||3)===2?' selected':''}>2 Columns</option>
+                <option value="3"${(sec.maxCols||3)===3?' selected':''}>3 Columns</option>
+                <option value="4"${(sec.maxCols||3)===4?' selected':''}>4 Columns</option>
+          </select>
+        </div>
         <div class="field-group"><label>Heading (optional)</label><input type="text" ${p} data-field="heading" value="${v('heading')}"/></div>
-        <div class="field-group"><label>Subtitle (optional)</label><input type="text" ${p} data-field="subtitle" value="${v('subtitle')}"/></div>
+        <div class="field-group"><label>Subtitle (optional)</label><textarea ${p} data-field="subtitle" rows="2">${v('subtitle')}</textarea></div>
         <div class="cp-sub-items" data-cp-drag="${pi}-${si}-items">${cardRows}</div>
         <button class="btn-add" onclick="addCpSubItem(${typeof pi==='string'?("'"+pi+"'"):pi},${si},'items',{name:'',tagline:'',price:'',period:'',icon:'',imagePath:'',imageSize:'md',ribbon:'',cardStyle:'light',featured:false,features:[],cta_linkType:'none',cta_linkLabel:'',cta_linkUrl:'',cta_anchorId:'',note:''})">+ Add Card</button>`;
     }
@@ -5496,7 +6193,7 @@ function buildCpSectionTypeFields(sec, pi, si) {
             '<div style="display:flex;align-items:center;gap:6px;">' +
               '<span class="cp-sub-item-drag-handle" title="Drag to reorder" onclick="event.stopPropagation()">⠿</span>' +
               '<span class="cp-sub-item-label">' + cardLabel + '</span>' +
-              '<span class="fc-chev" style="font-size:10px;color:var(--muted);margin-left:2px;">▾</span>' +
+              '<span class="fc-chev" style="font-size:10px;color:var(--muted);margin-left:2px;">▸</span>' +
             '</div>' +
             '<div style="display:flex;align-items:center;gap:4px;">' +
               '<button class="cp-move-btn" onclick="moveCpSubItem(' + piArg2 + ',' + si + ',\'items\',' + ci + ',-1);event.stopPropagation();" title="Move up">↑</button>' +
@@ -5504,7 +6201,7 @@ function buildCpSectionTypeFields(sec, pi, si) {
               '<button class="btn-remove" onclick="removeCpSubItem(' + piArg2 + ',' + si + ',\'items\',' + ci + ');event.stopPropagation();">×</button>' +
             '</div>' +
           '</div>' +
-          '<div style="padding:12px;">' +
+          '<div style="padding:12px;display:none;">' +
 
           // ── FRONT FACE FIELDS ──
           '<div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;">Front Face</div>' +
@@ -5512,7 +6209,7 @@ function buildCpSectionTypeFields(sec, pi, si) {
             '<div class="field-group" style="margin:0;"><label>Card Name</label>' +
               '<input type="text" data-cp="' + pi + '" data-sec="' + si + '" data-arr="items" data-idx="' + ci + '" data-field="name" value="' + escHtml(card.name||'') + '" placeholder="Gold"/></div>' +
             '<div class="field-group" style="margin:0;"><label>Tagline (optional)</label>' +
-              '<input type="text" data-cp="' + pi + '" data-sec="' + si + '" data-arr="items" data-idx="' + ci + '" data-field="tagline" value="' + escHtml(card.tagline||'') + '" placeholder="Most Popular"/></div>' +
+              '<textarea data-cp="' + pi + '" data-sec="' + si + '" data-arr="items" data-idx="' + ci + '" data-field="tagline" placeholder="Most Popular" rows="2">' + escHtml(card.tagline||'') + '</textarea></div>' +
           '</div>' +
           '<div class="form-row-2" style="margin-bottom:8px;">' +
             '<div class="field-group" style="margin:0;"><label>Price</label>' +
@@ -5590,8 +6287,15 @@ function buildCpSectionTypeFields(sec, pi, si) {
       }).join('');
 
       return `
+        <div class="field-group" style="margin-bottom:10px;"><label>Max Columns</label>
+          <select ${p} data-field="maxCols">
+                <option value="2"${(sec.maxCols||3)===2?' selected':''}>2 Columns</option>
+                <option value="3"${(sec.maxCols||3)===3?' selected':''}>3 Columns</option>
+                <option value="4"${(sec.maxCols||3)===4?' selected':''}>4 Columns</option>
+          </select>
+        </div>
         <div class="field-group"><label>Heading (optional)</label><input type="text" ${p} data-field="heading" value="${v('heading')}"/></div>
-        <div class="field-group"><label>Subtitle (optional)</label><input type="text" ${p} data-field="subtitle" value="${v('subtitle')}"/></div>
+        <div class="field-group"><label>Subtitle (optional)</label><textarea ${p} data-field="subtitle" rows="2">${v('subtitle')}</textarea></div>
         <div class="cp-sub-items" data-cp-drag="${pi}-${si}-items">${flipCardRows}</div>
         <button class="btn-add" onclick="addCpSubItem(${typeof pi==='string'?("'"+pi+"'"):pi},${si},'items',{name:'',tagline:'',price:'',period:'',icon:'',imagePath:'',imageSize:'md',ribbon:'',cardStyle:'light',featured:false,details:'',features:[],cta_linkType:'none',cta_linkLabel:'',cta_linkUrl:'',cta_anchorId:'',note:''})">+ Add Card</button>`;
     }
@@ -5599,17 +6303,31 @@ function buildCpSectionTypeFields(sec, pi, si) {
     case 'gallery': {
       const cols = sec.galleryCols || 3;
       const items = sec.items || [];
+      const piArg = typeof pi === 'string' ? "'" + pi + "'" : pi;
       const rows = items.map((it, ii) => `<div class="cp-sub-item" data-sub-idx="${ii}">
-        ${cpSubItemHeader('Image #' + (ii+1), pi, si, 'items', ii)}
-        <div class="field-group" style="margin-bottom:6px;"><label>Image Path</label>
-          <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="imagePath" value="${escHtml(it.imagePath||'')}" placeholder="images/photo.jpg"/></div>
-        <div class="field-group" style="margin-bottom:6px;"><label>Alt Text</label>
-          <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="alt" value="${escHtml(it.alt||'')}" placeholder="Describe the image…"/></div>
-        <div class="form-row-2">
-          <div class="field-group" style="margin:0;"><label>Title (optional)</label>
-            <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="title" value="${escHtml(it.title||'')}"/></div>
-          <div class="field-group" style="margin:0;"><label>Caption (optional)</label>
-            <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="caption" value="${escHtml(it.caption||'')}"/></div>
+        <div class="cp-sub-item-header" style="cursor:pointer;" onclick="const b=this.nextElementSibling;b.style.display=b.style.display===''?'none':'';this.querySelector('.gal-chev').textContent=b.style.display==='none'?'&#9656;':'&#9662;';">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span class="cp-sub-item-drag-handle" title="Drag to reorder" onclick="event.stopPropagation();">&#8903;</span>
+            <span class="cp-sub-item-label">Image #${ii+1}</span>
+            <span class="gal-chev" style="font-size:10px;color:var(--muted);margin-left:2px;">&#9656;</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:4px;">
+            <button class="cp-move-btn" onclick="moveCpSubItem(${piArg},${si},'items',${ii},-1);event.stopPropagation();" title="Move up">&#8593;</button>
+            <button class="cp-move-btn" onclick="moveCpSubItem(${piArg},${si},'items',${ii},1);event.stopPropagation();" title="Move down">&#8595;</button>
+            <button class="btn-remove" onclick="removeCpSubItem(${piArg},${si},'items',${ii});event.stopPropagation();">&#215;</button>
+          </div>
+        </div>
+        <div class="cp-sub-item-body" style="padding-top:8px;display:none;">
+          <div class="field-group" style="margin-bottom:6px;"><label>Image Path</label>
+            <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="imagePath" value="${escHtml(it.imagePath||'')}" placeholder="images/photo.jpg"/></div>
+          <div class="field-group" style="margin-bottom:6px;"><label>Alt Text</label>
+            <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="alt" value="${escHtml(it.alt||'')}" placeholder="Describe the image…"/></div>
+          <div class="form-row-2">
+            <div class="field-group" style="margin:0;"><label>Title (optional)</label>
+              <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="title" value="${escHtml(it.title||'')}"/></div>
+            <div class="field-group" style="margin:0;"><label>Caption (optional)</label>
+              <input type="text" data-cp="${pi}" data-sec="${si}" data-arr="items" data-idx="${ii}" data-field="caption" value="${escHtml(it.caption||'')}"/></div>
+          </div>
         </div>
       </div>`).join('');
       return `
@@ -5624,7 +6342,7 @@ function buildCpSectionTypeFields(sec, pi, si) {
             <option value="6" ${cols==6?'selected':''}>6 Columns</option>
           </select></div>
         <div class="cp-sub-items" data-cp-drag="${pi}-${si}-items">${rows}</div>
-        <button class="btn-add" onclick="addCpSubItem(${typeof pi==='string'?("'"+pi+"'"):pi},${si},'items',{imagePath:'',alt:'',title:'',caption:''})">+ Add Image</button>`;
+        <button class="btn-add" onclick="addCpSubItem(${piArg},${si},'items',{imagePath:'',alt:'',title:'',caption:''})">+ Add Image</button>`;
     }
 
     case 'accordion': {
@@ -5738,6 +6456,14 @@ function buildCpSectionTypeFields(sec, pi, si) {
             <input type="text" ${p} data-field="mqSeparator" value="${v('mqSeparator','·')}" placeholder="·" style="max-width:80px;"/></div>
         </div>
         <div data-mq-logo-fields style="${mqMode==='logos'?'':'display:none;'}">
+          <div class="field-group" style="margin-bottom:12px;"><label>Logo Size</label>
+            <select ${p} data-field="mqLogoSize">
+              <option value="sm"  ${(sec.mqLogoSize||'md')==='sm' ?'selected':''}>Small (32px)</option>
+              <option value="md"  ${(sec.mqLogoSize||'md')==='md' ?'selected':''}>Medium (48px)</option>
+              <option value="lg"  ${(sec.mqLogoSize||'md')==='lg' ?'selected':''}>Large (64px)</option>
+              <option value="xl"  ${(sec.mqLogoSize||'md')==='xl' ?'selected':''}>X-Large (96px)</option>
+            </select>
+          </div>
           <div class="cp-sub-items" data-cp-drag="${pi}-${si}-items">${logoRows}</div>
           <button class="btn-add" onclick="addCpSubItem(${typeof pi==='string'?("'"+pi+"'"):pi},${si},'items',{imagePath:'',alt:'',linkUrl:''})">+ Add Logo</button>
         </div>`;
@@ -5828,6 +6554,103 @@ function buildCpSectionTypeFields(sec, pi, si) {
         </div>`;
     }
 
+    case 'locations': {
+      const dispMode   = sec.displayMode  || 'cards';
+      const layoutMode = sec.layoutMode   || 'top';
+      const featureSide = sec.featureSide || 'left';
+      const mapMode    = sec.mapMode      || 'linkout';
+      const maxCols    = sec.maxCols      || 2;
+      const showHours  = sec.showHours !== false;
+      const items      = sec.items || [];
+      const piArg      = typeof pi === 'string' ? "'" + pi + "'" : pi;
+      const itemsHtml  = items.map((item, ii) => {
+        const selLoc = parseInt(item.locationIndex) || 0;
+        const locOptsForItem = (DATA.locations || []).map((loc, li) =>
+          '<option value="' + li + '"' + (li === selLoc ? ' selected' : '') + '>' + escHtml(loc.name || ('Location ' + (li+1))) + '</option>'
+        ).join('');
+        return '<div class="cp-sub-item" data-sub-idx="' + ii + '" style="margin-bottom:12px;">' +
+          '<div class="cp-sub-item-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display===\'none\'?\'block\':\'none\'">' +
+            '<span class="cp-sub-item-label">Location ' + (ii+1) + '</span>' +
+            '<div style="display:flex;gap:4px;">' +
+              '<button class="cp-move-btn" onclick="moveCpSubItem(' + piArg + ',' + si + ',\'items\',' + ii + ',-1);event.stopPropagation();" title="Move up">&#8593;</button>' +
+              '<button class="cp-move-btn" onclick="moveCpSubItem(' + piArg + ',' + si + ',\'items\',' + ii + ',1);event.stopPropagation();" title="Move down">&#8595;</button>' +
+              '<button class="btn-remove" onclick="removeCpSubItem(' + piArg + ',' + si + ',\'items\',' + ii + ');event.stopPropagation();">&#215;</button>' +
+            '</div>' +
+          '</div>' +
+          '<div style="padding:12px 0 4px;">' +
+            '<div class="field-group" style="margin-bottom:10px;"><label>Location</label>' +
+              '<select data-cp="' + pi + '" data-sec="' + si + '" data-arr="items" data-idx="' + ii + '" data-field="locationIndex">' + locOptsForItem + '</select>' +
+            '</div>' +
+            '<div class="field-group" style="margin-bottom:0;"><label>Image Path (optional)</label>' +
+              '<input type="text" data-cp="' + pi + '" data-sec="' + si + '" data-arr="items" data-idx="' + ii + '" data-field="imagePath" value="' + escHtml(item.imagePath||'') + '" placeholder="images/office.jpg"/>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+      const selCards   = dispMode === 'cards'       ? ' selected' : '';
+      const selFeature = dispMode === 'feature'      ? ' selected' : '';
+      const selInter   = mapMode === 'interactive'   ? ' selected' : '';
+      const selLinkout = mapMode === 'linkout'       ? ' selected' : '';
+      const selNone    = mapMode === 'none'          ? ' selected' : '';
+      const selTop     = layoutMode === 'top'        ? ' selected' : '';
+      const selSide    = layoutMode === 'side'       ? ' selected' : '';
+      const selFLeft   = featureSide === 'left'      ? ' selected' : '';
+      const selFRight  = featureSide === 'right'     ? ' selected' : '';
+      const selCol2    = maxCols === 2 ? ' selected' : '';
+      const selCol3    = maxCols === 3 ? ' selected' : '';
+      return `
+        <div class="form-row-2" style="margin-bottom:12px;">
+          <div class="field-group" style="margin:0;">
+            <label>Display Mode</label>
+            <select ${p} data-field="displayMode">
+              <option value="cards"${selCards}>Cards</option>
+              <option value="feature"${selFeature}>Feature (cardless)</option>
+            </select>
+          </div>
+          <div class="field-group" style="margin:0;">
+            <label>Map Mode</label>
+            <select ${p} data-field="mapMode">
+              <option value="interactive"${selInter}>Interactive (API key required)</option>
+              <option value="linkout"${selLinkout}>Link-out button</option>
+              <option value="none"${selNone}>No map</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row-2" style="margin-bottom:12px;">
+          <div class="field-group" style="margin:0;">
+            <label>Card Layout <span style="font-weight:400;font-size:11px;">(cards mode)</span></label>
+            <select ${p} data-field="layoutMode">
+              <option value="top"${selTop}>Image on top</option>
+              <option value="side"${selSide}>Image on side</option>
+            </select>
+          </div>
+          <div class="field-group" style="margin:0;">
+            <label>Max Columns <span style="font-weight:400;font-size:11px;">(cards mode)</span></label>
+            <select ${p} data-field="maxCols">
+              <option value="2"${selCol2}>2 columns</option>
+              <option value="3"${selCol3}>3 columns</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row-2" style="margin-bottom:12px;">
+          <div class="field-group" style="margin:0;">
+            <label>Media Side <span style="font-weight:400;font-size:11px;">(feature mode)</span></label>
+            <select ${p} data-field="featureSide">
+              <option value="left"${selFLeft}>Image &amp; map on left</option>
+              <option value="right"${selFRight}>Image &amp; map on right</option>
+            </select>
+          </div>
+          <div class="field-group" style="margin:0;">
+            <div class="switch-row" style="margin:0;padding-top:22px;">
+              <span class="switch-label">Show hours on card</span>
+              <label class="switch"><input type="checkbox" ${p} data-field="showHours" ${showHours ? 'checked' : ''}/><span class="switch-slider"></span></label>
+            </div>
+          </div>
+        </div>
+        <div id="loc-items-${pi}-${si}">${itemsHtml}</div>
+        <button class="btn-add" onclick="addLocItem(${piArg},${si})">+ Add Location</button>`;
+    }
+
     default:
       return `<p class="field-hint">No editor for section type: ${sec.type}</p>`;
   }
@@ -5890,7 +6713,7 @@ function buildFormFieldEditorHtml(f, pi, si, fi) {
   const fv = (key, def='') => escHtml(f[key] != null ? f[key] : def);
   const fieldTypes = ['text','email','phone','textarea','select','radio','checkbox'];
   const typeOpts = fieldTypes.map(t => `<option value="${t}"${f.type===t?' selected':''}>${t}</option>`).join('');
-  const showOptions = (f.type==='select'||f.type==='radio');
+  const showOptions = (f.type==='select'||f.type==='radio'||f.type==='checkbox');
   return `<div class="cp-sub-item cp-form-field-item" data-fi="${fi}" data-sub-idx="${fi}">
     <div class="cp-sub-item-header">
       <div style="display:flex;align-items:center;gap:6px;">
@@ -5984,7 +6807,7 @@ function onFormFieldTypeChange(pi, si, fi, selectEl) {
   if (!item) return;
   const optRow = item.querySelector('.cp-form-options-row');
   if (!optRow) return;
-  const showOptions = selectEl.value === 'select' || selectEl.value === 'radio';
+  const showOptions = selectEl.value === 'select' || selectEl.value === 'radio' || selectEl.value === 'checkbox';
   optRow.style.display = showOptions ? 'block' : 'none';
 }
 
@@ -6194,7 +7017,7 @@ function addCpSection(pi) {
   const type = sel.value;
   const defaults = { type, label:'', background:'light' };
   // Seed empty items for array-based types
-  if (['stats','bullets','services','steps','faq','timeline','fees'].includes(type)) defaults.items = [];
+  if (['stats','bullets','services','steps','faq','timeline','fees','table','rotating-cards'].includes(type)) defaults.items = [];
   if (type === 'checklist') defaults.categories = [];
   if (type === 'form') { defaults.fields = []; defaults.submitLabel = 'Send Message'; defaults.successMsg = "Thank you! We'll be in touch soon."; }
   if (type === 'link') { defaults.linkType = 'none'; defaults.linkUrl = ''; defaults.linkLabel = ''; }
@@ -6206,6 +7029,9 @@ function addCpSection(pi) {
   if (type === 'video') { defaults.videoLayout = 'contained'; defaults.videoPosition = 'left'; defaults.embedUrl = ''; defaults.mp4Url = ''; }
   if (type === 'gallery') { defaults.items = []; defaults.galleryCols = 3; }
   if (type === 'pricing') { defaults.items = []; }
+  if (type === 'locations') { defaults.items = []; defaults.displayMode = 'cards'; defaults.layoutMode = 'top'; defaults.mapMode = 'linkout'; defaults.maxCols = 2; defaults.showHours = true; }
+  if (type === 'table') { defaults.cols = 2; defaults.col1Label = 'Column 1'; defaults.col2Label = 'Column 2'; defaults.col3Label = ''; defaults.col1Style = 'normal'; defaults.col2Style = 'normal'; defaults.col3Style = 'normal'; defaults.firstColHeader = false; defaults.items = []; }
+  if (type === 'rotating-cards') { defaults.items = []; defaults.visibleCards = 1; defaults.cardHeight = 420; defaults.showDots = true; defaults.showArrows = true; defaults.autoplay = false; defaults.autoplaySpeed = 4; }
   if (!DATA.customPages[pi]) return;
   DATA.customPages[pi].sections = DATA.customPages[pi].sections || [];
   DATA.customPages[pi].sections.push(defaults);
@@ -6224,6 +7050,17 @@ function addCpSection(pi) {
   toast('Section added.','success');
 }
 
+function addLocItem(pi, si) {
+  collectData();
+  const secs = cpSections(pi);
+  if (!secs?.[si]) return;
+  const sec = secs[si];
+  if (!sec.items) sec.items = [];
+  sec.items.push({ locationIndex: 0, imagePath: '' });
+  rebuildAfterMutation(pi);
+  autosave();
+}
+
 // Resolve pi to the correct sections array ('h' = homeSections, 'a' = aboutSections, number = customPages[pi].sections)
 function cpSections(pi) {
   if (pi === 'h') return DATA.homeSections || (DATA.homeSections = []);
@@ -6231,72 +7068,108 @@ function cpSections(pi) {
   return DATA.customPages[pi]?.sections;
 }
 function rebuildAfterMutation(pi) {
-  // Snapshot collapsed section cards by data-si
-  const collapsedSis = new Set(
-    Array.from(document.querySelectorAll(`.cp-section-card[data-pi="${pi}"]:not(.open)`))
+  // Snapshot OPEN section cards by data-si (cards default collapsed, track what's open)
+  const openSis = new Set(
+    Array.from(document.querySelectorAll(`.cp-section-card[data-pi="${pi}"].open`))
       .map(el => el.dataset.si)
   );
 
-  // Snapshot collapsed review cards: key = "si-subIdx"
-  const collapsedReviews = new Set();
+  // Snapshot EXPANDED sub-items (inverted logic — track open, restore open, leave rest collapsed)
+  // Helper: get key for a chev element
+  function chevKey(chev) {
+    const card = chev.closest('.cp-section-card');
+    const subItem = chev.closest('[data-sub-idx]');
+    return (card && subItem) ? card.dataset.si + '-' + subItem.dataset.subIdx : null;
+  }
+
+  // rev-chevron: body is nextSibling of onclick ancestor
+  const expandedReviews = new Set();
   document.querySelectorAll(`.cp-section-card[data-pi="${pi}"] .rev-chevron`).forEach(chev => {
     const body = chev.closest('[onclick]')?.nextElementSibling;
-    if (body && body.style.display === 'none') {
-      const card = chev.closest('.cp-section-card');
-      const subItem = chev.closest('[data-sub-idx]');
-      if (card && subItem) collapsedReviews.add(card.dataset.si + '-' + subItem.dataset.subIdx);
-    }
+    if (body && body.style.display !== 'none') { const k = chevKey(chev); if (k) expandedReviews.add(k); }
   });
 
-  // Snapshot collapsed tier feature lists: key = "si-ci" (card index within section)
-  const collapsedFeatures = new Set();
+  // tf-chevron: tier/flip feature lists
+  const expandedFeatures = new Set();
   document.querySelectorAll(`.cp-section-card[data-pi="${pi}"] .tf-chevron`).forEach(chev => {
     const body = chev.closest('[onclick]')?.nextElementSibling;
-    if (body && body.style.display === 'none') {
-      const card = chev.closest('.cp-section-card');
-      const subItem = chev.closest('[data-sub-idx]');
-      if (card && subItem) collapsedFeatures.add(card.dataset.si + '-' + subItem.dataset.subIdx);
-    }
+    if (body && body.style.display !== 'none') { const k = chevKey(chev); if (k) expandedFeatures.add(k); }
   });
+
+  // tc-chev, fc-chev, svc-chev, faq-chev, gal-chev, tl-chev: body is nextSibling of header
+  function snapshotExpanded(selector) {
+    const set = new Set();
+    document.querySelectorAll(`.cp-section-card[data-pi="${pi}"] ${selector}`).forEach(chev => {
+      const header = chev.closest('.cp-sub-item-header');
+      const body = header?.nextElementSibling;
+      if (body && body.style.display !== 'none') { const k = chevKey(chev); if (k) set.add(k); }
+    });
+    return set;
+  }
+  const expandedTierCards = snapshotExpanded('.tc-chev');
+  const expandedFlipCards = snapshotExpanded('.fc-chev');
+  const expandedServices  = snapshotExpanded('.svc-chev');
+  const expandedFaqs      = snapshotExpanded('.faq-chev');
+  const expandedGallery   = snapshotExpanded('.gal-chev');
+  const expandedTimeline  = snapshotExpanded('.tl-chev');
+  const expandedTable     = snapshotExpanded('.tbl-chev');
+  const expandedRcCards   = snapshotExpanded('.rc-chev');
 
   if (pi === 'h') buildHomeSectionsList();
   else if (pi === 'a') buildAboutSectionsList();
   else buildCustomPagesList();
 
-  // Restore collapsed section cards
-  if (collapsedSis.size) {
+  // Restore open section cards
+  if (openSis.size) {
     document.querySelectorAll(`.cp-section-card[data-pi="${pi}"]`).forEach(el => {
-      if (collapsedSis.has(el.dataset.si)) el.classList.remove('open');
+      if (openSis.has(el.dataset.si)) el.classList.add('open');
     });
   }
 
-  // Restore collapsed review cards
-  if (collapsedReviews.size) {
-    document.querySelectorAll(`.cp-section-card[data-pi="${pi}"] .rev-chevron`).forEach(chev => {
+  // Restore EXPANDED sub-items — re-open anything that was open before the rebuild
+  function restoreExpanded(selector, expandedSet, getBody) {
+    if (!expandedSet.size) return;
+    document.querySelectorAll(`.cp-section-card[data-pi="${pi}"] ${selector}`).forEach(chev => {
       const card = chev.closest('.cp-section-card');
       const subItem = chev.closest('[data-sub-idx]');
       if (!card || !subItem) return;
       const key = card.dataset.si + '-' + subItem.dataset.subIdx;
-      if (collapsedReviews.has(key)) {
-        const body = chev.closest('[onclick]')?.nextElementSibling;
-        if (body) { body.style.display = 'none'; chev.textContent = '▸'; }
+      if (expandedSet.has(key)) {
+        const body = getBody(chev);
+        if (body) { body.style.display = ''; chev.textContent = '▾'; }
       }
     });
   }
 
-  // Restore collapsed tier feature lists
-  if (collapsedFeatures.size) {
-    document.querySelectorAll(`.cp-section-card[data-pi="${pi}"] .tf-chevron`).forEach(chev => {
-      const card = chev.closest('.cp-section-card');
-      const subItem = chev.closest('[data-sub-idx]');
-      if (!card || !subItem) return;
-      const key = card.dataset.si + '-' + subItem.dataset.subIdx;
-      if (collapsedFeatures.has(key)) {
-        const body = chev.closest('[onclick]')?.nextElementSibling;
-        if (body) { body.style.display = 'none'; chev.textContent = '▸'; }
-      }
-    });
-  }
+  restoreExpanded('.rev-chevron', expandedReviews,
+    chev => chev.closest('[onclick]')?.nextElementSibling);
+
+  restoreExpanded('.tf-chevron', expandedFeatures,
+    chev => chev.closest('[onclick]')?.nextElementSibling);
+
+  restoreExpanded('.tc-chev', expandedTierCards,
+    chev => chev.closest('.cp-sub-item-header')?.nextElementSibling);
+
+  restoreExpanded('.fc-chev', expandedFlipCards,
+    chev => chev.closest('.cp-sub-item-header')?.nextElementSibling);
+
+  restoreExpanded('.svc-chev', expandedServices,
+    chev => chev.closest('.cp-sub-item-header')?.nextElementSibling);
+
+  restoreExpanded('.faq-chev', expandedFaqs,
+    chev => chev.closest('.cp-sub-item-header')?.nextElementSibling);
+
+  restoreExpanded('.gal-chev', expandedGallery,
+    chev => chev.closest('.cp-sub-item-header')?.nextElementSibling);
+
+  restoreExpanded('.tl-chev', expandedTimeline,
+    chev => chev.closest('.cp-sub-item-header')?.nextElementSibling);
+
+  restoreExpanded('.tbl-chev', expandedTable,
+    chev => chev.closest('.cp-sub-item-header')?.nextElementSibling);
+
+  restoreExpanded('.rc-chev', expandedRcCards,
+    chev => chev.closest('.cp-sub-item-header')?.nextElementSibling);
 }
 
 function exportCpSection(pi, si) {
@@ -6350,11 +7223,13 @@ function confirmSectionImport() {
     return;
   }
   sec.anchorId = '';
-  const destSecs = cpSections(_importTargetPi);
+  const targetPi = _importTargetPi;
+  collectData();
+  const destSecs = cpSections(targetPi);
   if (!destSecs) { errEl.textContent = 'Could not find destination page.'; errEl.style.display = ''; return; }
   destSecs.push(sec);
   closeSectionImport();
-  rebuildAfterMutation(_importTargetPi);
+  rebuildAfterMutation(targetPi);
   autosave();
   toast('Section imported successfully');
 }
@@ -6621,6 +7496,54 @@ function toggleCpSection(header) {
       const body = chev.closest('[onclick]')?.nextElementSibling;
       if (body) { body.style.display = 'none'; chev.textContent = '▸'; }
     });
+    // Collapse tier card sub-items (tc-chev pattern)
+    card.querySelectorAll('.tc-chev').forEach(chev => {
+      const header = chev.closest('.cp-sub-item-header');
+      const body = header?.nextElementSibling;
+      if (body) { body.style.display = 'none'; chev.textContent = '▸'; }
+    });
+    // Collapse flip card sub-items (fc-chev pattern)
+    card.querySelectorAll('.fc-chev').forEach(chev => {
+      const header = chev.closest('.cp-sub-item-header');
+      const body = header?.nextElementSibling;
+      if (body) { body.style.display = 'none'; chev.textContent = '▸'; }
+    });
+    // Collapse service sub-items (svc-chev pattern)
+    card.querySelectorAll('.svc-chev').forEach(chev => {
+      const header = chev.closest('.cp-sub-item-header');
+      const body = header?.nextElementSibling;
+      if (body) { body.style.display = 'none'; chev.textContent = '▸'; }
+    });
+    // Collapse FAQ sub-items (faq-chev pattern)
+    card.querySelectorAll('.faq-chev').forEach(chev => {
+      const header = chev.closest('.cp-sub-item-header');
+      const body = header?.nextElementSibling;
+      if (body) { body.style.display = 'none'; chev.textContent = '▸'; }
+    });
+    // Collapse gallery sub-items (gal-chev pattern)
+    card.querySelectorAll('.gal-chev').forEach(chev => {
+      const header = chev.closest('.cp-sub-item-header');
+      const body = header?.nextElementSibling;
+      if (body) { body.style.display = 'none'; chev.textContent = '▸'; }
+    });
+    // Collapse timeline sub-items (tl-chev pattern)
+    card.querySelectorAll('.tl-chev').forEach(chev => {
+      const header = chev.closest('.cp-sub-item-header');
+      const body = header?.nextElementSibling;
+      if (body) { body.style.display = 'none'; chev.textContent = '▸'; }
+    });
+    // Collapse table rows (tbl-chev pattern)
+    card.querySelectorAll('.tbl-chev').forEach(chev => {
+      const header = chev.closest('.cp-sub-item-header');
+      const body = header?.nextElementSibling;
+      if (body) { body.style.display = 'none'; chev.textContent = '▸'; }
+    });
+    // Collapse rotating card sub-items (rc-chev pattern)
+    card.querySelectorAll('.rc-chev').forEach(chev => {
+      const header = chev.closest('.cp-sub-item-header');
+      const body = header?.nextElementSibling;
+      if (body) { body.style.display = 'none'; chev.textContent = '▸'; }
+    });
   }
 }
 
@@ -6781,6 +7704,7 @@ function collectCpSections(card, pi, existingSections) {
       case 'two-col':
         sec.heading = get('heading'); sec.body = get('body');
         sec.imagePath = get('imagePath'); sec.imagePosition = get('imagePosition');
+        sec.imageMaxWidth = get('imageMaxWidth');
         sec.cta_linkType = get('cta_linkType'); sec.cta_linkUrl = get('cta_linkUrl');
         sec.cta_linkLabel = get('cta_linkLabel'); break;
       case 'stats':
@@ -6791,17 +7715,19 @@ function collectCpSections(card, pi, existingSections) {
         sec.label = get('label'); sec.heading = get('heading'); sec.body = get('body');
         sec.badgeNum = get('badgeNum'); sec.badgeLabel = get('badgeLabel');
         sec.fullWidth = secCard.querySelector('[data-field="fullWidth"]')?.checked || false;
-        sec.items = collectCpSubItems(secCard, pi, si, ['num','title','body','linkLabel','linkType','linkUrl','anchorId']); break;
+        sec.maxCols = parseInt(get('maxCols')) || 2;
+        sec.items = collectCpSubItems(secCard, pi, si, ['num','title','body','linkLabel','linkType','linkUrl','anchorId','imagePath','imageSize']); break;
       case 'bullets':
         sec.heading = get('heading'); sec.subtitle = get('subtitle');
         sec.fullWidth = secCard.querySelector('[data-field="fullWidth"]')?.checked || false;
         sec.items = collectCpSubItems(secCard, pi, si, ['icon','title','desc','linkType','linkUrl','anchorId']); break;
       case 'services':
         sec.heading = get('heading'); sec.subtitle = get('subtitle');
-        sec.items = collectCpSubItems(secCard, pi, si, ['icon','title','desc','detail','btnLabel','btnLinkType','btnLinkUrl','btnAnchorId']); break;
+        sec.maxCols = parseInt(get('maxCols')) || 3;
+        sec.items = collectCpSubItems(secCard, pi, si, ['icon','title','desc','detail','btnLabel','btnLinkType','btnLinkUrl','btnAnchorId','imagePath','imageSize']); break;
       case 'steps':
         sec.heading = get('heading'); sec.subtitle = get('subtitle');
-        sec.items = collectCpSubItems(secCard, pi, si, ['title','body','linkLabel','linkType','linkUrl','anchorId']); break;
+        sec.items = collectCpSubItems(secCard, pi, si, ['title','body','linkLabel','linkType','linkUrl','anchorId','imagePath','imageSize']); break;
       case 'faq':
         sec.heading = get('heading'); sec.subtitle = get('subtitle');
         sec.fullWidth = secCard.querySelector('[data-field="fullWidth"]')?.checked || false;
@@ -6841,13 +7767,30 @@ function collectCpSections(card, pi, existingSections) {
         sec.col1Label = get('col1Label'); sec.col2Label = get('col2Label'); sec.col3Label = get('col3Label');
         sec.disclaimer = get('disclaimer');
         sec.items = collectCpSubItems(secCard, pi, si, ['service','amount','detail','note','linkLabel','linkType','linkUrl','anchorId']); break;
+      case 'table':
+        sec.heading        = get('heading'); sec.subtitle = get('subtitle');
+        sec.cols           = parseInt(get('cols')) || 2;
+        sec.col1Label      = get('col1Label'); sec.col1Style = get('col1Style') || 'normal';
+        sec.col2Label      = get('col2Label'); sec.col2Style = get('col2Style') || 'normal';
+        sec.col3Label      = get('col3Label'); sec.col3Style = get('col3Style') || 'normal';
+        sec.firstColHeader = secCard.querySelector('[data-field="firstColHeader"]')?.checked === true;
+        sec.items          = collectCpSubItems(secCard, pi, si, ['cell1','cell2','cell3']); break;
+      case 'rotating-cards':
+        sec.heading       = get('heading'); sec.subtitle = get('subtitle');
+        sec.visibleCards  = parseInt(get('visibleCards')) || 1;
+        sec.cardHeight    = parseInt(get('cardHeight')) || 420;
+        sec.showDots      = secCard.querySelector('[data-field="showDots"]')?.checked !== false;
+        sec.showArrows    = secCard.querySelector('[data-field="showArrows"]')?.checked !== false;
+        sec.autoplay      = secCard.querySelector('[data-field="autoplay"]')?.checked === true;
+        sec.autoplaySpeed = parseInt(get('autoplaySpeed')) || 4;
+        sec.items         = collectCpSubItems(secCard, pi, si, ['title','body','imagePath','bgColor','fullBleed','textColor','btnLabel','btnLinkType','btnLinkUrl','btnAnchorId']); break;
       case 'jurisdiction':
         sec.icon = get('icon'); sec.title = get('title');
         sec.heading = get('heading'); sec.body = get('body');
         sec.linkLabel = get('linkLabel'); sec.linkType = get('linkType'); sec.linkUrl = get('linkUrl');
         sec.jur_anchorId = get('jur_anchorId'); break;
       case 'team':
-        sec.heading = get('heading'); sec.useAttorneys = getCheck('useAttorneys'); break;
+        sec.heading = get('heading'); sec.useAttorneys = getCheck('useAttorneys'); sec.maxCols = parseInt(get('maxCols')) || 3; break;
       case 'form':
         sec.heading = get('heading'); sec.intro = get('intro');
         sec.submitLabel = get('submitLabel'); sec.successMsg = get('successMsg');
@@ -6866,7 +7809,7 @@ function collectCpSections(card, pi, existingSections) {
         sec.cta_anchorId  = get('cta_anchorId');
         break;
       case 'pricing':
-        sec.heading   = get('heading'); sec.subtitle = get('subtitle');
+        sec.heading   = get('heading'); sec.subtitle = get('subtitle'); sec.maxCols = parseInt(get('maxCols')) || 3;
         sec.items = Array.from(secCard.querySelectorAll('.cp-sub-item[data-sub-idx]')).map((cardEl, ci) => {
           const cg  = f => cardEl.querySelector('[data-field="' + f + '"]')?.value.trim() || '';
           const cgb = f => cardEl.querySelector('[data-field="' + f + '"]')?.checked || false;
@@ -6889,7 +7832,7 @@ function collectCpSections(card, pi, existingSections) {
         });
         break;
       case 'flip-cards':
-        sec.heading   = get('heading'); sec.subtitle = get('subtitle');
+        sec.heading   = get('heading'); sec.subtitle = get('subtitle'); sec.maxCols = parseInt(get('maxCols')) || 3;
         sec.items = Array.from(secCard.querySelectorAll('.cp-sub-item[data-sub-idx]')).map((cardEl, ci) => {
           const cg  = f => cardEl.querySelector('[data-field="' + f + '"]')?.value.trim() || '';
           const cgb = f => cardEl.querySelector('[data-field="' + f + '"]')?.checked || false;
@@ -6931,7 +7874,17 @@ function collectCpSections(card, pi, existingSections) {
         sec.mqPause = secCard.querySelector('[data-field="mqPause"]')?.checked !== false;
         sec.mqText = get('mqText');
         sec.mqSeparator = get('mqSeparator') || '·';
+        sec.mqLogoSize = get('mqLogoSize') || 'md';
         sec.items = collectCpSubItems(secCard, pi, si, ['imagePath','alt','linkUrl']); break;
+      case 'locations':
+        sec.displayMode  = get('displayMode')  || 'cards';
+        sec.layoutMode   = get('layoutMode')   || 'top';
+        sec.featureSide  = get('featureSide')  || 'left';
+        sec.mapMode      = get('mapMode')      || 'linkout';
+        sec.maxCols      = parseInt(get('maxCols')) || 2;
+        sec.showHours    = secCard.querySelector('[data-field="showHours"]')?.checked !== false;
+        sec.items        = collectCpSubItems(secCard, pi, si, ['locationIndex','imagePath']);
+        break;
       case 'link':
         sec.linkType = get('linkType'); sec.linkLabel = get('linkLabel');
         sec.linkUrl = collectCpSmartLinkUrl(secCard, pi, renderedSi, '', sec.linkType);
@@ -6977,7 +7930,9 @@ function collectCpSubItems(secCard, pi, si, fields) {
         }
         return true;
       });
-      obj[f] = (visible || matches[0]).value.trim();
+      const el = visible || matches[0];
+      if (el.type === 'checkbox') obj[f] = el.checked;
+      else obj[f] = el.value.trim();
     });
     items.push(obj);
   });
@@ -7207,9 +8162,10 @@ function collectHeroVideoClips() {
    FONT PREVIEW
    ============================================= */
 function updateFontPreview() {
-  const fd = document.getElementById('f_fontDisplay').value;
-  const fb = document.getElementById('f_fontBody').value;
-  const link = document.querySelector('link[rel="stylesheet"]');
+  const fdCustom = (document.getElementById('f_fontDisplayCustom')?.value || '').trim();
+  const fbCustom = (document.getElementById('f_fontBodyCustom')?.value || '').trim();
+  const fd = fdCustom || document.getElementById('f_fontDisplay').value;
+  const fb = fbCustom || document.getElementById('f_fontBody').value;
   const fdE = fd.replace(/ /g,'+'), fbE = fb.replace(/ /g,'+');
   const newLink = document.createElement('link');
   newLink.rel = 'stylesheet';
